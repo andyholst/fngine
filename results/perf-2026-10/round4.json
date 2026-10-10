@@ -1,0 +1,478 @@
+{
+  "description": "Fourth pass: per-step adaptive expert swaps planned on the GPU, swaps through backed (loan and elastic) slots, elastic expert slots in the unwritten context tail, kernel-copied step I/O, L2 prefetch after the shared-expert join. FNGINE_NO_ROUTING_STATS=1, no routing-stats.bin, 575-W cap, PCIe x4, desktop compositor on the same GPU. Coding chat = fngine-bench --coding-chat -n512 -r3 (one warmup).",
+  "routing_trace_coding_chat_auto_spec": {
+    "method": "per-step routed expert ids and GPU residency recorded inside routing selection (temporary instrumentation, removed); one coding-chat run each",
+    "previous_policy_32_swaps_per_256_tokens": {
+      "steps": 1710,
+      "positions_per_step": 3.26,
+      "cold_experts_per_step": 96.23,
+      "cold_weight_mb_per_step": 195.6,
+      "cold_routed_pairs": 0.0675,
+      "cold_experts_per_layer_by_width": {
+        "3": 1.81,
+        "4": 2.49
+      },
+      "layers_without_cold_experts": 0.297
+    },
+    "per_step_budget_8": {
+      "steps": 1827,
+      "positions_per_step": 2.91,
+      "cold_experts_per_step": 50.67,
+      "cold_weight_mb_per_step": 102.6,
+      "cold_routed_pairs": 0.0387,
+      "cold_experts_per_layer_by_width": {
+        "2": 1.05,
+        "3": 1.0,
+        "4": 1.98
+      },
+      "layers_without_cold_experts": 0.485
+    },
+    "per_step_budget_4_shipped": {
+      "steps": 1517,
+      "positions_per_step": 3.95,
+      "cold_experts_per_step": 75.19,
+      "cold_weight_mb_per_step": 152.3,
+      "cold_routed_pairs": 0.0435,
+      "cold_experts_per_layer_by_width": {
+        "2": 1.19,
+        "4": 1.56
+      },
+      "note": "the speculation controller chose width 4 for 1,476 of 1,517 steps in this run (width 3 in the others)"
+    }
+  },
+  "trace_replay": {
+    "method": "the previous-policy trace replayed against engine-faithful swap timing (plan at a boundary, upload during the next step, regular victims downloaded one step later, loan victims released at once; ~11.5% least-used residents as loan slots)",
+    "cold_experts_per_step": {
+      "observed_previous_policy": 96.23,
+      "static_placement": 116.56,
+      "every_2_steps_budget_4_decay_0.998_ratio_1.5": 64.96,
+      "every_step_budget_4_decay_0.998_ratio_1.5": 58.94,
+      "every_step_budget_8_decay_0.998_ratio_1.5": 56.11,
+      "every_step_budget_8_decay_0.999_ratio_2.0": 56.26,
+      "every_step_budget_4_decay_0.999_ratio_2.0": 58.9,
+      "every_step_budget_16_decay_0.999_ratio_2.0": 55.53,
+      "every_step_budget_48_decay_0.998_ratio_1.5": 54.76,
+      "every_step_budget_8_decay_0.999_ratio_2.0_planned_one_step_late": 56.57
+    },
+    "swaps_per_step": {
+      "every_step_budget_8_decay_0.999_ratio_2.0": 2.19,
+      "every_step_budget_4_decay_0.999_ratio_2.0": 1.77
+    }
+  },
+  "swap_policy_width1_coding_chat": {
+    "method": "--spec none, three interleaved rounds per arm, decode tok/s per round",
+    "budget_8": {
+      "turn1": [
+        128.2,
+        130.4,
+        124.4
+      ],
+      "turn2": [
+        127.7,
+        127.6,
+        127.1
+      ],
+      "gpu_hit": [
+        0.9789,
+        0.9777
+      ],
+      "cpu_wait_us_per_layer": [
+        13.4,
+        14.2
+      ]
+    },
+    "budget_16": {
+      "turn1": [
+        132.4,
+        131.3,
+        128.1
+      ],
+      "turn2": [
+        123.7,
+        123.7,
+        126.2
+      ],
+      "gpu_hit": [
+        0.9792,
+        0.9767
+      ],
+      "cpu_wait_us_per_layer": [
+        13.0,
+        14.7
+      ]
+    },
+    "budget_4_shipped": {
+      "turn1": [
+        125.8,
+        131.4,
+        132.8
+      ],
+      "turn2": [
+        133.7,
+        133.5,
+        126.5
+      ],
+      "gpu_hit": [
+        0.9801,
+        0.9782
+      ],
+      "cpu_wait_us_per_layer": [
+        12.7,
+        13.7
+      ]
+    },
+    "static_no_adaptive_experts": {
+      "turn1": [
+        117.3,
+        121.1,
+        119.1
+      ],
+      "turn2": [
+        111.3,
+        117.4,
+        110.7
+      ],
+      "gpu_hit": [
+        0.9462,
+        0.9201
+      ],
+      "cpu_wait_us_per_layer": [
+        33.4,
+        45.9
+      ]
+    }
+  },
+  "swap_boundary_cost_us_per_step": {
+    "host_collected_counts_first_attempt": {
+      "routing_counter_d2h_and_delta": 485.7,
+      "plan": 69.3,
+      "upload_starts": 9.3,
+      "note": "the counter copy queued behind 2 MB swap downloads on the copy engine"
+    },
+    "gpu_candidates_copies_after_launch": {
+      "coding_chat_boundary": 6.5,
+      "short_bench_boundary_first_steps": 16.1
+    }
+  },
+  "copy_engine_contention": {
+    "method": "1 KB stream-ordered memcpy on a high-priority stream while 2.2 MB copies run on a low-priority stream (20 repetitions)",
+    "h2d_alone_us": {
+      "mean": 3.1,
+      "best": 2.1
+    },
+    "h2d_with_4_or_8_bulk_h2d_us": {
+      "mean": [
+        49.5,
+        48.3
+      ],
+      "best": [
+        32.8,
+        33.8
+      ]
+    },
+    "d2h_with_bulk_d2h_us": {
+      "mean": [
+        4.1,
+        6.3
+      ],
+      "best": [
+        0.7,
+        1.0
+      ]
+    }
+  },
+  "elastic_context_coding_chat": {
+    "method": "two interleaved rounds per arm; bench automatic ctx is 8,192",
+    "without_elastic": {
+      "gpu_experts": {
+        "8192": 12108,
+        "131072": 11247
+      },
+      "turn1": {
+        "8192": [
+          197.7,
+          197.3
+        ],
+        "131072": [
+          175.9,
+          177.5
+        ]
+      },
+      "turn2": {
+        "8192": [
+          202.4,
+          217.5
+        ],
+        "131072": [
+          175.3,
+          191.3
+        ]
+      },
+      "gpu_hit_turn2": {
+        "8192": 0.974,
+        "131072": 0.9592
+      }
+    },
+    "with_elastic": {
+      "gpu_experts": {
+        "8192": "12108 + 36 elastic",
+        "131072": "11247 + 869 elastic"
+      },
+      "turn1": {
+        "8192": [
+          196.3,
+          194.8
+        ],
+        "131072": [
+          205.3,
+          189.6
+        ]
+      },
+      "turn2": {
+        "8192": [
+          213.8,
+          198.5
+        ],
+        "131072": [
+          195.4,
+          201.5
+        ]
+      },
+      "gpu_hit_turn2": {
+        "8192": 0.9713,
+        "131072": 0.9727
+      }
+    }
+  },
+  "l2_prefetch_teacher_forced_g1": {
+    "method": "fngine-validate --golden g1 --expert-vram-mib 22000 --decode-width W --timing --limit 512 (adaptive placement), ms per step of the second (adapted) repetition, two interleaved rounds",
+    "fork_after_hot_experts_previous": {
+      "0_mib": {
+        "1": [
+          9.207,
+          9.12
+        ],
+        "2": [
+          11.052,
+          11.535
+        ],
+        "3": [
+          13.475,
+          12.483
+        ],
+        "4": [
+          12.972,
+          13.34
+        ]
+      },
+      "40_mib": {
+        "1": [
+          8.938,
+          8.925
+        ],
+        "2": [
+          11.15,
+          11.193
+        ],
+        "3": [
+          12.698,
+          12.631
+        ],
+        "4": [
+          13.589,
+          13.939
+        ]
+      },
+      "80_mib": {
+        "1": [
+          8.883,
+          8.536
+        ],
+        "2": [
+          11.201,
+          11.234
+        ],
+        "3": [
+          12.093,
+          13.109
+        ],
+        "4": [
+          13.877,
+          13.683
+        ]
+      }
+    },
+    "second_session": {
+      "before_join_80_mib": {
+        "1": [
+          8.904,
+          8.657
+        ],
+        "3": [
+          12.638,
+          12.317
+        ],
+        "4": [
+          13.122,
+          14.057
+        ]
+      },
+      "after_join_80_mib_shipped": {
+        "1": [
+          8.879,
+          8.848
+        ],
+        "3": [
+          12.148,
+          11.75
+        ],
+        "4": [
+          14.335,
+          13.382
+        ]
+      },
+      "none": {
+        "1": [
+          9.215,
+          9.077
+        ],
+        "3": [
+          12.704,
+          13.457
+        ],
+        "4": [
+          12.515,
+          14.741
+        ]
+      }
+    }
+  },
+  "speculation": {
+    "mtp_drafter_cost_teacher_forced_g1": {
+      "method": "fngine-validate --golden g1 --expert-vram-mib 22000 --no-adaptive --decode-width W --timing --limit 512, with and without --mtp (k = 0 drafting still runs the drafter), ms per step of the second repetition, interleaved",
+      "with_mtp_ms": {
+        "1": [
+          12.421,
+          12.408
+        ],
+        "4": [
+          23.894,
+          23.923
+        ],
+        "8": [
+          35.529
+        ]
+      },
+      "without_mtp_ms": {
+        "1": [
+          11.606,
+          11.657
+        ],
+        "4": [
+          23.114,
+          23.231
+        ],
+        "8": [
+          36.238
+        ]
+      },
+      "note": "the drafter (MTP bridge, two autoregressive draft steps) costs 0.74-0.78 ms per step; skipping it in prompt-lookup rounds could save at most that much per lookup round, and the coding chat chose lookup in 1-5% of rounds"
+    },
+    "mtp_draft_limit_coding_chat": {
+      "method": "three interleaved rounds per arm, decode tok/s",
+      "up_to_3_drafts_default": {
+        "turn1": [
+          207.7,
+          185.7,
+          192.8
+        ],
+        "turn2": [
+          204.3,
+          195.2,
+          197.9
+        ]
+      },
+      "up_to_2_drafts": {
+        "turn1": [
+          183.8,
+          189.9,
+          162.5
+        ],
+        "turn2": [
+          188.2,
+          191.6,
+          160.6
+        ]
+      }
+    },
+    "server_thinking_chat": {
+      "method": "fngine-serve defaults (ctx 131072), four coding prompts, 768 completion tokens with thinking, two passes (the second after adaptation); decode tok/s and accepted/offered drafts from the server log",
+      "greedy_second_pass": {
+        "decode_tok_s": [
+          166.7,
+          181.4,
+          181.5,
+          185.2
+        ],
+        "accepted_offered": [
+          [
+            427,
+            591
+          ],
+          [
+            513,
+            808
+          ],
+          [
+            475,
+            871
+          ],
+          [
+            485,
+            846
+          ]
+        ]
+      },
+      "sampled_t0.6_top_p0.95_top_k20_second_pass": {
+        "decode_tok_s": [
+          167.3,
+          170.8,
+          185.7,
+          187.7
+        ],
+        "accepted_offered": [
+          [
+            476,
+            720
+          ],
+          [
+            397,
+            667
+          ],
+          [
+            474,
+            879
+          ],
+          [
+            463,
+            912
+          ]
+        ]
+      },
+      "first_pass": {
+        "greedy_decode_tok_s": [
+          141.0,
+          167.1,
+          159.4,
+          144.5
+        ],
+        "sampled_decode_tok_s": [
+          166.6,
+          181.1,
+          174.7,
+          168.0
+        ]
+      }
+    }
+  }
+}

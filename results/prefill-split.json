@@ -1,0 +1,48 @@
+{
+  "type": "fngine_bench_report",
+  "schema_version": 1,
+  "command": "build-main/apps/fngine-bench --pack /mnt/data/fngine/pack -p32768 -n256 -r3 --spec none --no-adaptive-experts -ojson -f results/prefill-split.json",
+  "environment": {
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "pack": "/mnt/data/fngine/pack",
+    "model": "Qwen3.8-Flash-Next",
+    "spec": "none",
+    "kv": "k8v8",
+    "dense": "fp8",
+    "max_context": 33041,
+    "prefill_chunk": 4096,
+    "cpu_workers": 10,
+    "use_cuda_graph": true,
+    "gpu_experts": 12496,
+    "total_experts": 24576,
+    "predicted_gpu_hit_rate": 0.918827227,
+    "repetitions": 3,
+    "warmup": 1,
+    "corpus": "/home/obelisk/Projects/cinference (README.md + docs/**/*.md)",
+    "corpus_tokens": 136002
+  },
+  "tests": [
+    {
+      "label": "pp32768+tg256",
+      "n_prompt": 32768,
+      "n_gen": 256,
+      "prefill_tok_s_mean": 1866.127987,
+      "prefill_tok_s_stddev": 49.1805365,
+      "decode_tok_s_mean": 71.95527252,
+      "decode_tok_s_stddev": 1.337161519,
+      "gpu_hit_rate_by_routing_mass": 0.7555343706,
+      "interval_gpu_hit_rate_by_routing_mass": 0.7555343706,
+      "expert_swaps": 0,
+      "gpu_routed_pairs": 273297,
+      "routed_pairs": 368640,
+      "cpu_wait_us_per_layer": 122.9680124,
+      "accepted_tokens_per_round_mtp": 0,
+      "mtp_rounds": 0,
+      "accepted_tokens_per_round_lookup": 0,
+      "lookup_rounds": 0,
+      "ngram_cache_hit_rate": 1,
+      "reused_prompt_tokens": 0,
+      "reps": [{"prefill_seconds": 17.78803439, "decode_seconds": 3.501445035, "total_seconds": 21.29965676, "generated_tokens": 257, "spec_rounds": 256, "spec_accepted": 0, "gpu_hit_rate_by_routing_mass": 0.7555343706, "expert_swaps": 0}, {"prefill_seconds": 17.87137212, "decode_seconds": 3.542682438, "total_seconds": 21.42345417, "generated_tokens": 257, "spec_rounds": 256, "spec_accepted": 0, "gpu_hit_rate_by_routing_mass": 0.7555343706, "expert_swaps": 0}, {"prefill_seconds": 17.04270219, "decode_seconds": 3.631642586, "total_seconds": 20.68465475, "generated_tokens": 257, "spec_rounds": 256, "spec_accepted": 0, "gpu_hit_rate_by_routing_mass": 0.7555343706, "expert_swaps": 0}]
+    }
+  ]
+}

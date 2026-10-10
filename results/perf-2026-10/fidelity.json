@@ -1,0 +1,326 @@
+{
+ "description": "Teacher-forced fidelity against the HF BF16 goldens (fngine-validate), baseline-v1 build versus the October 2026 build, same pack and machine. top1 = top-1 agreement, kld = mean KLD over 256 rows.",
+ "default_fp8_k8v8": {
+  "baseline_by_expert_vram_cap": {
+   "default": {
+    "g1": {
+     "top1": 0.8706,
+     "kld": 0.06189
+    },
+    "g2": {
+     "top1": 0.9121,
+     "kld": 0.02997
+    }
+   },
+   "21000": {
+    "g1": {
+     "top1": 0.8955,
+     "kld": 0.06429
+    },
+    "g2": {
+     "top1": 0.9108,
+     "kld": 0.03211
+    }
+   },
+   "22000": {
+    "g1": {
+     "top1": 0.8618,
+     "kld": 0.07181
+    },
+    "g2": {
+     "top1": 0.9102,
+     "kld": 0.03177
+    }
+   },
+   "23000": {
+    "g1": {
+     "top1": 0.7632,
+     "kld": 0.17945
+    },
+    "g2": {
+     "top1": 0.912,
+     "kld": 0.03112
+    }
+   }
+  },
+  "baseline_identical_repeats": [
+   {
+    "g1": {
+     "top1": 0.8267,
+     "kld": 0.10308
+    },
+    "g2": {
+     "top1": 0.9121,
+     "kld": 0.02997
+    }
+   },
+   {
+    "g1": {
+     "top1": 0.8267,
+     "kld": 0.10308
+    },
+    "g2": {
+     "top1": 0.9121,
+     "kld": 0.02997
+    }
+   },
+   {
+    "g1": {
+     "top1": 0.8267,
+     "kld": 0.10308
+    },
+    "g2": {
+     "top1": 0.9121,
+     "kld": 0.02997
+    }
+   }
+  ],
+  "current_identical_repeats": [
+   {
+    "g1": {
+     "top1": 0.8281,
+     "kld": 0.09811
+    },
+    "g2": {
+     "top1": 0.9095,
+     "kld": 0.032
+    }
+   },
+   {
+    "g1": {
+     "top1": 0.7925,
+     "kld": 0.1329
+    },
+    "g2": {
+     "top1": 0.912,
+     "kld": 0.0316
+    }
+   },
+   {
+    "g1": {
+     "top1": 0.8496,
+     "kld": 0.09307
+    },
+    "g2": {
+     "top1": 0.9091,
+     "kld": 0.02995
+    }
+   },
+   {
+    "g1": {
+     "top1": 0.8154,
+     "kld": 0.12737
+    },
+    "g2": {
+     "top1": 0.9086,
+     "kld": 0.03177
+    }
+   }
+  ],
+  "same_build_prefill_logits_between_runs": {
+   "g1_top1_agreement": 0.95264,
+   "g1_mean_kld": 0.0133
+  }
+ },
+ "decode_path_no_adaptive_expert_vram_22000": {
+  "baseline_width1": {
+   "g1": {
+    "top1": 0.8427,
+    "kld": 0.08873
+   },
+   "g2": {
+    "top1": 0.9103,
+    "kld": 0.03022
+   }
+  },
+  "current_width1": {
+   "g1": {
+    "top1": 0.8735,
+    "kld": 0.06376
+   },
+   "g2": {
+    "top1": 0.9106,
+    "kld": 0.03091
+   }
+  },
+  "previous_weight_width1_and_width4_g1": {
+   "top1": 0.8769,
+   "kld": 0.06445,
+   "note": "widths 1 and 4 gave identical logits"
+  }
+ },
+ "dense_bf16_kv_bf16_single_runs": {
+  "baseline": {
+   "g1": {
+    "top1": 0.9067,
+    "kld": 0.05113
+   },
+   "g2": {
+    "top1": 0.9496,
+    "kld": 0.00962
+   }
+  },
+  "current_stream_plan_previous_weight": {
+   "g1": {
+    "top1": 0.9019,
+    "kld": 0.05506
+   },
+   "g2": {
+    "top1": 0.949,
+    "kld": 0.01039
+   }
+  },
+  "current_no_prefill_stream_previous_weight": {
+   "g1": {
+    "top1": 0.9082,
+    "kld": 0.04463
+   },
+   "g2": {
+    "top1": 0.9474,
+    "kld": 0.00968
+   }
+  }
+ },
+ "mtp_first_draft_acceptance_test_speculative_real": {
+  "draft_vocabulary_32768": 0.741,
+  "full_lm_head": 0.829
+ },
+ "round2_decode_kernels": {
+  "description": "After the round-2 decode work (fused GR norm/down, aux stream, select_publish, PDL with coherent predecessor reads, 12 CPU workers). Same pack, machine and commands as above.",
+  "default_fp8_k8v8": {
+   "g0": {
+    "top1": 0.9908,
+    "kld": 0.00815
+   },
+   "g1": {
+    "top1": 0.8203,
+    "kld": 0.09702
+   },
+   "g2": {
+    "top1": 0.9093,
+    "kld": 0.03031
+   }
+  },
+  "decode_path_no_adaptive_expert_vram_22000": {
+   "width1_g2": {
+    "top1": 0.9105,
+    "kld": 0.03227
+   },
+   "width4_g2": {
+    "top1": 0.9105,
+    "kld": 0.03227,
+    "vs_width1_top1_agreement": 1.0,
+    "vs_width1_mean_kld": 4.373e-13
+   },
+   "note": "identical to the same build without PDL; the fused GR read alone moved decode-path G2 from 0.9106 / 0.03091 to 0.9105 / 0.03227, the same logit KLD (1.1e-2) as reordering the unfused kernel's warp reduction"
+  },
+  "speculative_real": {
+   "check1_first_divergence": [
+    -1,
+    -1,
+    -1
+   ],
+   "check2_first_draft_acceptance": 0.756,
+   "check3_worst_rel_diff": 0.0,
+   "check4": "pass"
+  }
+ },
+ "round3_decode_scheduling": {
+  "description": "After round 3 (programmatic dependent launch on the remaining decode kernels, two-stage k2560 K-split for 8 tokens, single-poller CPU-tier waits). No kernel arithmetic changed. Same pack, machine and commands as above.",
+  "default_fp8_k8v8": {
+   "process_1": {
+    "g0": {
+     "top1": 0.9815,
+     "kld": 0.00834
+    },
+    "g1": {
+     "top1": 0.833,
+     "kld": 0.10731
+    },
+    "g2": {
+     "top1": 0.9077,
+     "kld": 0.03199
+    }
+   },
+   "process_2": {
+    "g1": {
+     "top1": 0.8169,
+     "kld": 0.13413
+    },
+    "g2": {
+     "top1": 0.9064,
+     "kld": 0.03006
+    }
+   },
+   "note": "the default path differs between processes (startup-measured prefill CPU/GPU split); within one process two prefills of G1 and G2 are bit-identical (--repeat-diff: 0 at every layer; repeated goldens give identical metrics)"
+  },
+  "decode_path_no_adaptive_expert_vram_22000": {
+   "width1_g2_vs_round2_logits": {
+    "top1_agreement": 1.0,
+    "mean_kld": 0.0,
+    "max_kld": 0.0
+   },
+   "width4_g2_vs_round2_width1_logits": {
+    "top1_agreement": 1.0,
+    "mean_kld": 4.373e-13,
+    "max_kld": 3.967e-12
+   },
+   "note": "bit-identical to the round-2 decode path at width 1"
+  },
+  "speculative_real": {
+   "check1_first_divergence": [
+    -1,
+    -1,
+    -1
+   ],
+   "check2_first_draft_acceptance": [
+    0.75,
+    0.74
+   ],
+   "check3_worst_rel_diff": 0.0,
+   "check4": "pass (state identical, continuation identical)",
+   "note": "two processes; acceptance follows the per-process prefill split, as in rounds 1-2 (0.741-0.756)"
+  }
+ },
+ "round4_placement": {
+  "description": "After round 4 (per-step adaptive swaps planned on the GPU, swaps through backed slots, elastic expert slots in the context tail, kernel-copied step I/O, L2 prefetch after the shared-expert join). No kernel arithmetic changed; the default path places different experts on the GPU, which changes CPU/GPU numerics.",
+  "default_fp8_k8v8": {
+   "g0": {
+    "top1": 0.9877,
+    "kld": 0.00888
+   },
+   "g1": {
+    "top1": 0.8521,
+    "kld": 0.08261
+   },
+   "g2": {
+    "top1": 0.911,
+    "kld": 0.02947
+   },
+   "note": "one process, adaptive placement with 34 elastic experts (validator ctx 8,256); round 3 measured G0 0.9815 / 0.00834, G1 0.833 / 0.107 and 0.8169 / 0.134, G2 0.9077 / 0.0320 and 0.9064 / 0.0301"
+  },
+  "decode_path_no_adaptive_expert_vram_22000": {
+   "width1_g2_vs_round3_logits": {
+    "top1_agreement": 1.0,
+    "mean_kld": 0.0,
+    "max_kld": 0.0
+   },
+   "width4_g2_vs_width1_logits": {
+    "top1_agreement": 1.0,
+    "mean_kld": 4.373e-13,
+    "max_kld": 3.967e-12
+   },
+   "note": "reference saved from this tree before the round-4 changes; g2 top-1 0.9105 / mean KLD 0.03227 as in rounds 2 and 3"
+  },
+  "speculative_real": {
+   "check1_first_divergence": [
+    -1,
+    -1,
+    -1
+   ],
+   "check2_first_draft_acceptance": 0.729,
+   "check3_worst_rel_diff": 0.0,
+   "check4": "pass (ctest test_speculative_real)"
+  }
+ }
+}

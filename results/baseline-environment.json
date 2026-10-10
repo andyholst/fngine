@@ -1,0 +1,16 @@
+{
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "gpu_memory_total_mib": 32607,
+  "gpu_memory_used_before_benchmark_mib": 1286,
+  "gpu_power_limit_watts": 575.0,
+  "pcie_link_width_current": 4,
+  "pcie_link_width_maximum": 16,
+  "routing_stats_persistence": false,
+  "command": "FNGINE_NO_ROUTING_STATS=1 build-main/apps/fngine-bench --pack /mnt/data/fngine/pack -p1024,4096,32768 -n256 -r3 --spec auto -ojson -f results/baseline.json",
+  "historical_strata": {
+    "prompt_44_decode_tokens_per_second": 104.5,
+    "prompt_38861_decode_tokens_per_second": 108.0,
+    "prompt_38861_prefill_tokens_per_second": 2507.9,
+    "source": "Historical strata-iq3_s.log figures in the approved build plan; not a paired run"
+  }
+}

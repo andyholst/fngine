@@ -1,0 +1,129 @@
+=== Earlier GR+QSA suite: elastic test stream race ===
+Test project /home/obelisk/Projects/fngine/build-main
+      Start  1: test_exchange_layout
+ 1/44 Test  #1: test_exchange_layout .............   Passed    0.20 sec
+      Start  2: test_host_memory
+ 2/44 Test  #2: test_host_memory .................   Passed    0.29 sec
+      Start  3: test_cpu_topology
+ 3/44 Test  #3: test_cpu_topology ................   Passed    0.01 sec
+      Start  4: cpu_q8_quant
+ 4/44 Test  #4: cpu_q8_quant .....................   Passed    0.02 sec
+      Start  5: cpu_iq_kernels
+ 5/44 Test  #5: cpu_iq_kernels ...................   Passed    2.19 sec
+      Start  6: cpu_expert_pool
+ 6/44 Test  #6: cpu_expert_pool ..................   Passed    1.73 sec
+      Start  7: cpu_doorbell
+ 7/44 Test  #7: cpu_doorbell .....................   Passed    1.40 sec
+      Start  8: test_engine_session
+ 8/44 Test  #8: test_engine_session ..............   Passed    0.05 sec
+      Start  9: test_engine_real
+ 9/44 Test  #9: test_engine_real .................   Passed   29.88 sec
+      Start 10: test_adaptive_experts
+10/44 Test #10: test_adaptive_experts ............   Passed   46.76 sec
+      Start 11: test_speculation
+11/44 Test #11: test_speculation .................   Passed    0.00 sec
+      Start 12: test_ngram
+12/44 Test #12: test_ngram .......................   Passed    2.38 sec
+      Start 13: kernels_gdn_recurrent
+13/44 Test #13: kernels_gdn_recurrent ............   Passed    1.51 sec
+      Start 14: kernels_gdn_fold
+14/44 Test #14: kernels_gdn_fold .................   Passed    0.65 sec
+      Start 15: kernels_gdn_ops
+15/44 Test #15: kernels_gdn_ops ..................   Passed    0.23 sec
+      Start 16: kernels_head
+16/44 Test #16: kernels_head .....................   Passed    5.12 sec
+      Start 17: kernels_linear
+17/44 Test #17: kernels_linear ...................   Passed   30.08 sec
+      Start 18: kernels_gr
+18/44 Test #18: kernels_gr .......................   Passed    3.39 sec
+      Start 19: kernels_moe_experts
+19/44 Test #19: kernels_moe_experts ..............   Passed    3.08 sec
+      Start 20: kernels_moe_exchange
+20/44 Test #20: kernels_moe_exchange .............   Passed    0.31 sec
+      Start 21: kernels_mtp
+21/44 Test #21: kernels_mtp ......................   Passed    0.16 sec
+      Start 22: kernels_ple
+22/44 Test #22: kernels_ple ......................   Passed    0.43 sec
+      Start 23: kernels_qsa_norm_rope
+23/44 Test #23: kernels_qsa_norm_rope ............   Passed    0.32 sec
+      Start 24: kernels_qsa_kv_append
+24/44 Test #24: kernels_qsa_kv_append ............   Passed    0.71 sec
+      Start 25: kernels_qsa_indexer
+25/44 Test #25: kernels_qsa_indexer ..............   Passed    1.94 sec
+      Start 26: kernels_qsa_attention
+26/44 Test #26: kernels_qsa_attention ............   Passed    3.17 sec
+      Start 27: kernels_qsa_determinism
+27/44 Test #27: kernels_qsa_determinism ..........   Passed    5.34 sec
+      Start 28: test_pack_load
+28/44 Test #28: test_pack_load ...................   Passed    3.58 sec
+      Start 29: test_expert_swap
+29/44 Test #29: test_expert_swap .................   Passed    0.89 sec
+      Start 30: test_routing_stats
+30/44 Test #30: test_routing_stats ...............   Passed    0.23 sec
+      Start 31: test_prefill_stream
+31/44 Test #31: test_prefill_stream ..............   Passed    2.84 sec
+      Start 32: test_prefill_stream_pageable
+32/44 Test #32: test_prefill_stream_pageable .....   Passed    2.99 sec
+      Start 33: test_elastic_experts
+33/44 Test #33: test_elastic_experts .............***Failed    0.92 sec
+[2026-10-04 02:37:55.940] [info] expert scores: 19144320 decode-profile pairs + 0 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 02:37:56.527] [info] expert placement: 3 layers; GPU 106 experts + 1 spare slot per layer (0.19 GiB of 0.19 GiB budget, 28.65 GiB free) + 94 elastic in the context tail (0.16 GiB), RAM 1430 experts (2.52 GiB, registered); predicted hit rate 32.0% (of decode routing); GPU upload 5.48 GB/s, RAM fill 6.26 GB/s in 0.43 s, register 0.02 s
+/home/obelisk/Projects/fngine/tests/model/test_elastic_experts.cpp:147: check failed: placement.elastic_resident() == 0 && maps_agree()
+
+      Start 34: test_speculative_real
+34/44 Test #34: test_speculative_real ............   Passed   61.66 sec
+      Start 35: test_openai_schema
+35/44 Test #35: test_openai_schema ...............   Passed    0.00 sec
+      Start 36: test_serve_options
+36/44 Test #36: test_serve_options ...............   Passed    0.00 sec
+      Start 37: test_http_transport
+37/44 Test #37: test_http_transport ..............   Passed    0.00 sec
+      Start 38: test_cli_options
+38/44 Test #38: test_cli_options .................   Passed    0.00 sec
+      Start 39: test_bench_support
+39/44 Test #39: test_bench_support ...............   Passed    0.00 sec
+      Start 40: test_tokenizer
+40/44 Test #40: test_tokenizer ...................   Passed    0.44 sec
+      Start 41: test_chat_template
+41/44 Test #41: test_chat_template ...............   Passed    0.83 sec
+      Start 42: text_output_session
+42/44 Test #42: text_output_session ..............   Passed    0.45 sec
+      Start 43: text_tool_call_parser
+43/44 Test #43: text_tool_call_parser ............   Passed    0.00 sec
+      Start 44: text_prompt_lookup
+44/44 Test #44: text_prompt_lookup ...............   Passed    0.00 sec
+
+98% tests passed, 1 tests failed out of 44
+
+Total Test time (real) = 216.20 sec
+
+The following tests FAILED:
+	 33 - test_elastic_experts (Failed)
+Errors while running CTest
+
+=== After test-side stream ordering fix: ten consecutive runs ===
+Test project /home/obelisk/Projects/fngine/build-main
+    Start 33: test_elastic_experts
+    Test #33: test_elastic_experts .............   Passed    1.07 sec
+    Start 33: test_elastic_experts
+    Test #33: test_elastic_experts .............   Passed    1.04 sec
+    Start 33: test_elastic_experts
+    Test #33: test_elastic_experts .............   Passed    1.01 sec
+    Start 33: test_elastic_experts
+    Test #33: test_elastic_experts .............   Passed    1.03 sec
+    Start 33: test_elastic_experts
+    Test #33: test_elastic_experts .............   Passed    1.04 sec
+    Start 33: test_elastic_experts
+    Test #33: test_elastic_experts .............   Passed    1.02 sec
+    Start 33: test_elastic_experts
+    Test #33: test_elastic_experts .............   Passed    1.01 sec
+    Start 33: test_elastic_experts
+    Test #33: test_elastic_experts .............   Passed    1.03 sec
+    Start 33: test_elastic_experts
+    Test #33: test_elastic_experts .............   Passed    1.03 sec
+    Start 33: test_elastic_experts
+1/1 Test #33: test_elastic_experts .............   Passed    1.01 sec
+
+100% tests passed out of 1
+
+Total Test time (real) =  10.28 sec

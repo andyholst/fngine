@@ -1,0 +1,424 @@
+{
+  "kernel": "gr_norm_down",
+  "seed": 9123,
+  "calls_per_graph": 64,
+  "warmup_graph_repetitions": 20,
+  "measured_graph_repetitions": 100,
+  "units": "microseconds per kernel call",
+  "baseline": [
+    {
+      "weight_copies": 1,
+      "tokens": 1,
+      "minimum_us": 3.197,
+      "median_us": 3.26
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 2,
+      "minimum_us": 4.226,
+      "median_us": 4.345
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 3,
+      "minimum_us": 4.814,
+      "median_us": 4.852
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 4,
+      "minimum_us": 5.29,
+      "median_us": 5.321
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 8,
+      "minimum_us": 9.807,
+      "median_us": 9.859
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 16,
+      "minimum_us": 18.526,
+      "median_us": 18.609
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 1,
+      "minimum_us": 3.197,
+      "median_us": 3.269
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 2,
+      "minimum_us": 4.506,
+      "median_us": 4.696
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 3,
+      "minimum_us": 5.093,
+      "median_us": 5.128
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 4,
+      "minimum_us": 5.535,
+      "median_us": 5.568
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 8,
+      "minimum_us": 9.665,
+      "median_us": 9.712
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 16,
+      "minimum_us": 18.444,
+      "median_us": 18.501
+    }
+  ],
+  "output_comparisons": [
+    {
+      "tokens": 1,
+      "bytes": 21264,
+      "bit_identical": true,
+      "sha256": "59b57b7c5d8a71f30f30f698e00a0ce69c00cedebff93543f7cad05667afe828"
+    },
+    {
+      "tokens": 2,
+      "bytes": 42528,
+      "bit_identical": true,
+      "sha256": "4706eb0d47f3b568da92f77506b197376c978f351d78bdb9e06a2d99171a5593"
+    },
+    {
+      "tokens": 3,
+      "bytes": 63792,
+      "bit_identical": true,
+      "sha256": "22db8949b79123612ca54ebb60d7399bedf0b18c741ceb64dc9164f6091f29bd"
+    },
+    {
+      "tokens": 4,
+      "bytes": 85056,
+      "bit_identical": true,
+      "sha256": "9039d0f4121bf109675291a39c3444c1a505925d95e1fc3e67758a7074633521"
+    },
+    {
+      "tokens": 8,
+      "bytes": 170112,
+      "bit_identical": true,
+      "sha256": "b06991df6e79cb92731581acc14bde15f407eec9416b32ee10eef788c97b780f"
+    },
+    {
+      "tokens": 16,
+      "bytes": 340224,
+      "bit_identical": true,
+      "sha256": "475c22300123e6abd091af05ae2c49fdc87606d2e9bea76c22c4ac5ea9b46f72"
+    }
+  ],
+  "output_fields": [
+    "normalized_x_bf16",
+    "projection_r_bf16",
+    "injection_fp32"
+  ],
+  "token_parallel_candidate": [
+    {
+      "weight_copies": 1,
+      "tokens": 1,
+      "minimum_us": 2.855,
+      "median_us": 2.909
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 2,
+      "minimum_us": 3.643,
+      "median_us": 3.699
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 3,
+      "minimum_us": 4.729,
+      "median_us": 4.782
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 4,
+      "minimum_us": 4.929,
+      "median_us": 4.98
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 8,
+      "minimum_us": 9.137,
+      "median_us": 9.201
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 16,
+      "minimum_us": 16.562,
+      "median_us": 16.645
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 1,
+      "minimum_us": 2.842,
+      "median_us": 2.905
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 2,
+      "minimum_us": 3.964,
+      "median_us": 4.019
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 3,
+      "minimum_us": 4.862,
+      "median_us": 4.941
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 4,
+      "minimum_us": 5.016,
+      "median_us": 5.055
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 8,
+      "minimum_us": 9.142,
+      "median_us": 9.198
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 16,
+      "minimum_us": 16.551,
+      "median_us": 16.676
+    }
+  ],
+  "token_parallel_candidate_source_sha256": "2acef3ba7be9c74f9139443d658a8508c65776006ebb5ce87a4fc34d6d49568c",
+  "baseline_repeat": [
+    {
+      "weight_copies": 1,
+      "tokens": 1,
+      "minimum_us": 3.204,
+      "median_us": 3.269
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 2,
+      "minimum_us": 4.279,
+      "median_us": 4.353
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 3,
+      "minimum_us": 4.819,
+      "median_us": 4.848
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 4,
+      "minimum_us": 5.284,
+      "median_us": 5.314
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 8,
+      "minimum_us": 9.808,
+      "median_us": 9.86
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 16,
+      "minimum_us": 18.418,
+      "median_us": 18.509
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 1,
+      "minimum_us": 3.206,
+      "median_us": 3.265
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 2,
+      "minimum_us": 4.51,
+      "median_us": 4.705
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 3,
+      "minimum_us": 5.085,
+      "median_us": 5.119
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 4,
+      "minimum_us": 5.528,
+      "median_us": 5.548
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 8,
+      "minimum_us": 9.664,
+      "median_us": 9.721
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 16,
+      "minimum_us": 18.361,
+      "median_us": 18.427
+    }
+  ],
+  "scratch_only_trial": [
+    {
+      "weight_copies": 1,
+      "tokens": 1,
+      "minimum_us": 3.141,
+      "median_us": 3.234
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 2,
+      "minimum_us": 4.263,
+      "median_us": 4.345
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 3,
+      "minimum_us": 4.823,
+      "median_us": 4.849
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 4,
+      "minimum_us": 5.277,
+      "median_us": 5.314
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 8,
+      "minimum_us": 9.809,
+      "median_us": 9.854
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 16,
+      "minimum_us": 18.365,
+      "median_us": 18.462
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 1,
+      "minimum_us": 3.161,
+      "median_us": 3.23
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 2,
+      "minimum_us": 4.477,
+      "median_us": 4.692
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 3,
+      "minimum_us": 5.068,
+      "median_us": 5.104
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 4,
+      "minimum_us": 5.499,
+      "median_us": 5.534
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 8,
+      "minimum_us": 9.63,
+      "median_us": 9.697
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 16,
+      "minimum_us": 18.331,
+      "median_us": 18.424
+    }
+  ],
+  "selected": [
+    {
+      "weight_copies": 1,
+      "tokens": 1,
+      "minimum_us": 2.714,
+      "median_us": 2.797
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 2,
+      "minimum_us": 3.845,
+      "median_us": 3.911
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 3,
+      "minimum_us": 4.817,
+      "median_us": 4.84
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 4,
+      "minimum_us": 5.28,
+      "median_us": 5.311
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 8,
+      "minimum_us": 9.802,
+      "median_us": 9.848
+    },
+    {
+      "weight_copies": 1,
+      "tokens": 16,
+      "minimum_us": 18.388,
+      "median_us": 18.465
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 1,
+      "minimum_us": 2.884,
+      "median_us": 2.94
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 2,
+      "minimum_us": 3.934,
+      "median_us": 3.996
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 3,
+      "minimum_us": 5.069,
+      "median_us": 5.098
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 4,
+      "minimum_us": 5.502,
+      "median_us": 5.534
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 8,
+      "minimum_us": 9.648,
+      "median_us": 9.707
+    },
+    {
+      "weight_copies": 64,
+      "tokens": 16,
+      "minimum_us": 18.315,
+      "median_us": 18.427
+    }
+  ],
+  "selected_source_sha256": "db1276b83f192287c13cbda041124de1bbfac9a234fc585b933eadc939745c5b",
+  "selected_change": "Exact compile-time token count and reduced shared scratch only for existing one/two-token specializations; original launch geometry and wider-token path preserved."
+}

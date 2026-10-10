@@ -1,0 +1,26 @@
+{
+  "scope": "Practical smoke samples, not a broad capability evaluation",
+  "model": "qwen3.8-flash-next",
+  "dense": "fp8",
+  "kv": "k8v8",
+  "temperature": 0,
+  "thinking": false,
+  "coding": {
+    "task": "In-place iterative C singly linked-list reversal, O(n) time and O(1) extra space",
+    "finish_reason": "stop",
+    "generated_tokens": 79,
+    "compiler": "cc -std=c11 -O2 -Wall -Wextra -Werror -fsanitize=address,undefined",
+    "tested_lengths": {"minimum": 0, "maximum": 1024},
+    "checks": ["reversed pointer order", "preserved node values", "NULL termination", "double reversal restores original order"],
+    "passed": true,
+    "generated_function": "struct Node *reverse(struct Node *head) {\n    struct Node *prev = NULL;\n    struct Node *curr = head;\n    while (curr != NULL) {\n        struct Node *next = curr->next;\n        curr->next = prev;\n        prev = curr;\n        curr = next;\n    }\n    return prev;\n}"
+  },
+  "other_observed_samples": {
+    "haiku": "Silent fans spin fast,\nParallel threads dance in sync,\nPixels bloom to life.",
+    "arithmetic": "17 × 23 = 391",
+    "first_three_primes": "2, 3, 5",
+    "next_prime": "7",
+    "long_context_retrieval": "INDIGO-73921 at 100045 prompt tokens"
+  },
+  "numerical_limits": "Original HF-reference top-1/KLD/layer-cosine and split-path KLD targets are not all met; see validation JSON and README. Validator thresholds remain unchanged."
+}

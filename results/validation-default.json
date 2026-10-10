@@ -1,0 +1,27 @@
+{
+ "g1": {
+  "kld_rows": 256,
+  "max_kld": 1.6714080383613676,
+  "mean_kld": 0.09811356826565777,
+  "positions": 2048,
+  "seconds": 2.523443759,
+  "top1": 0.828125
+ },
+ "g2": {
+  "kld_rows": 256,
+  "max_kld": 0.5618977299421207,
+  "mean_kld": 0.03200021825833504,
+  "positions": 8192,
+  "seconds": 5.655584605,
+  "top1": 0.9095458984375
+ },
+ "mode": {
+  "decode_width": 0,
+  "dense": "fp8",
+  "kv": "k8v8",
+  "prefill_borrow": true,
+  "prefill_stream": true,
+  "ref_dtype": "bf16"
+ },
+ "status": "fail"
+}

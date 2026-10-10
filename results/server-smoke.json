@@ -1,0 +1,30 @@
+{
+  "endpoint": "http://127.0.0.1:8002/v1",
+  "model": "qwen3.8-flash-next",
+  "passed": true,
+  "checks": {
+    "health": true,
+    "models": true,
+    "reject_media_and_multiple_completions": true,
+    "developer_role_and_nonthinking": "2, 3, 5",
+    "second_turn": "7",
+    "second_turn_reused_tokens": 42,
+    "sse_done_and_usage": true,
+    "reasoning_then_answer": "17 × 23 = 391",
+    "structured_tool_call": {
+      "name": "get_weather",
+      "arguments": {"city": "Paris"}
+    },
+    "curl_streamed_primes": [2, 3, 5]
+  },
+  "needle": {
+    "raw_text_tokens": 100033,
+    "request_prompt_tokens": 100045,
+    "fact_position": "middle",
+    "expected": "INDIGO-73921",
+    "answer": "INDIGO-73921",
+    "prefill_seconds": 111.985173557,
+    "prefill_tokens_per_second": 893.377192910966
+  },
+  "scope": "Actual model and HTTP server; smoke checks, not a broad quality benchmark"
+}

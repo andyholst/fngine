@@ -1,0 +1,18 @@
+{
+ "g2": {
+  "kld_rows": 256,
+  "max_kld": 0.27802762548945764,
+  "mean_kld": 0.02985672883253235,
+  "positions": 8192,
+  "seconds": 8.75182202,
+  "top1": 0.9097900390625
+ },
+ "mode": {
+  "dense": "fp8",
+  "kv": "k8v8",
+  "prefill_borrow": false,
+  "prefill_stream": false,
+  "ref_dtype": "fp32"
+ },
+ "status": "fail"
+}

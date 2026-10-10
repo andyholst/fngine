@@ -1,0 +1,4 @@
+add_library(fngine_kernels_mtp STATIC mtp.cu)
+fngine_cuda_target(fngine_kernels_mtp)
+fngine_internal_includes(fngine_kernels_mtp)
+target_link_libraries(fngine_kernels_mtp PUBLIC fngine_core)

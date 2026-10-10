@@ -1,0 +1,51 @@
+{
+  "type": "fngine_bench_report",
+  "schema_version": 1,
+  "command": "/mnt/data/fngine/baseline-v1/bin/fngine-bench --pack /mnt/data/fngine/pack -p 1024 -n 256 -r 3 --spec none -o json -f /tmp/fngine-r4/final/baseline-nospec.json.part",
+  "environment": {
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "pack": "/mnt/data/fngine/pack",
+    "model": "Qwen3.8-Flash-Next",
+    "spec": "none",
+    "kv": "k8v8",
+    "dense": "fp8",
+    "max_context": 1297,
+    "prefill_chunk": 4096,
+    "cpu_workers": 10,
+    "use_cuda_graph": true,
+    "adaptive_experts": true,
+    "prefill_stream": true,
+    "prefill_borrow": true,
+    "gpu_experts": 12902,
+    "total_experts": 24576,
+    "predicted_gpu_hit_rate": 0.9257535737,
+    "repetitions": 3,
+    "warmup": 1,
+    "corpus": "/home/obelisk/Projects/cinference (README.md + docs/**/*.md)",
+    "corpus_tokens": 136002
+  },
+  "tests": [
+    {
+      "label": "pp1024+tg256",
+      "n_prompt": 1024,
+      "n_gen": 256,
+      "prefill_tok_s_mean": 925.8957209,
+      "prefill_tok_s_stddev": 3.35989952,
+      "decode_tok_s_mean": 83.86825744,
+      "decode_tok_s_stddev": 7.893801349,
+      "gpu_hit_rate_by_routing_mass": 0.8755388914,
+      "interval_gpu_hit_rate_by_routing_mass": 0.8755388914,
+      "expert_swaps": 96,
+      "gpu_routed_pairs": 315148,
+      "routed_pairs": 368640,
+      "cpu_wait_us_per_layer": 66.18994404,
+      "accepted_tokens_per_round_mtp": 0,
+      "mtp_rounds": 0,
+      "accepted_tokens_per_round_lookup": 0,
+      "lookup_rounds": 0,
+      "ngram_cache_hit_rate": 0.8912923177,
+      "reused_prompt_tokens": 0,
+      "reps": [{"prefill_seconds": 1.110493978, "decode_seconds": 3.337306615, "total_seconds": 4.457029806, "prompt_tokens": 1024, "reused_prompt_tokens": 0, "generated_tokens": 257, "spec_rounds": 256, "spec_accepted": 0, "gpu_hit_rate_by_routing_mass": 0.8371063372, "expert_swaps": 32}, {"prefill_seconds": 1.104585891, "decode_seconds": 3.100670053, "total_seconds": 4.216084997, "prompt_tokens": 1024, "reused_prompt_tokens": 0, "generated_tokens": 257, "spec_rounds": 256, "spec_accepted": 0, "gpu_hit_rate_by_routing_mass": 0.8692954605, "expert_swaps": 32}, {"prefill_seconds": 1.10281754, "decode_seconds": 2.772560929, "total_seconds": 3.88673538, "prompt_tokens": 1024, "reused_prompt_tokens": 0, "generated_tokens": 257, "spec_rounds": 256, "spec_accepted": 0, "gpu_hit_rate_by_routing_mass": 0.9202148765, "expert_swaps": 32}]
+    }
+  ]
+}

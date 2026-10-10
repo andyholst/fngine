@@ -1,0 +1,88 @@
+{
+  "baseline": "round4",
+  "thresholds_unchanged": true,
+  "hf_reference_gates_passed": false,
+  "comparisons": {
+    "1": {
+      "g2": {
+        "comparison": {
+          "baseline": "/tmp/fngine-round5/final/base-w1.bin",
+          "kld_rows": 127,
+          "max_kld": 0.0,
+          "mean_kld": 0.0,
+          "pass": true,
+          "top1": 1.0
+        },
+        "kld_rows": 31,
+        "max_kld": 0.12031011139445721,
+        "mean_kld": 0.025788910413447455,
+        "positions": 1023,
+        "seconds": 11.116241788,
+        "top1": 0.8934506353861192
+      },
+      "mode": {
+        "decode_width": 1,
+        "dense": "fp8",
+        "kv": "k8v8",
+        "prefill_borrow": true,
+        "prefill_stream": true,
+        "ref_dtype": "bf16"
+      },
+      "status": "fail"
+    },
+    "2": {
+      "g2": {
+        "comparison": {
+          "baseline": "/tmp/fngine-round5/final/release-base-w2.bin",
+          "kld_rows": 127,
+          "max_kld": 0.0,
+          "mean_kld": 0.0,
+          "pass": true,
+          "top1": 1.0
+        },
+        "kld_rows": 31,
+        "max_kld": 0.1203102386827503,
+        "mean_kld": 0.02578890213754688,
+        "positions": 1023,
+        "seconds": 10.975560714,
+        "top1": 0.8934506353861192
+      },
+      "mode": {
+        "decode_width": 2,
+        "dense": "fp8",
+        "kv": "k8v8",
+        "prefill_borrow": true,
+        "prefill_stream": true,
+        "ref_dtype": "bf16"
+      },
+      "status": "fail"
+    },
+    "4": {
+      "g2": {
+        "comparison": {
+          "baseline": "/tmp/fngine-round5/final/base-w4.bin",
+          "kld_rows": 127,
+          "max_kld": 0.0,
+          "mean_kld": 0.0,
+          "pass": true,
+          "top1": 1.0
+        },
+        "kld_rows": 31,
+        "max_kld": 0.1203102386827503,
+        "mean_kld": 0.02578890213754688,
+        "positions": 1023,
+        "seconds": 12.923523135,
+        "top1": 0.8934506353861192
+      },
+      "mode": {
+        "decode_width": 4,
+        "dense": "fp8",
+        "kv": "k8v8",
+        "prefill_borrow": true,
+        "prefill_stream": true,
+        "ref_dtype": "bf16"
+      },
+      "status": "fail"
+    }
+  }
+}

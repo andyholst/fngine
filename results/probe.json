@@ -1,0 +1,7 @@
+{
+  "gpu": {"name": "NVIDIA GeForce RTX 5090", "sms": 170, "cc": "12.0", "free_mib": 30277, "total_mib": 32116},
+  "pcie": {"h2d_gbs": 11.28, "d2h_gbs": 12.79, "device": "/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0", "link_width_during_copy": "4", "link_speed_during_copy": "32.0 GT/s PCIe", "port_link_width_during_copy": "4", "port_link_speed_during_copy": "32.0 GT/s PCIe", "max_link_width": "16", "max_link_speed": "32.0 GT/s PCIe"},
+  "cpu_stream_read_gbs": {"1": 37.18, "4": 39.26, "8": 46.16, "10": 49.91, "12": 50.49},
+  "doorbell_rtt_us_median": 1.92,
+  "io_uring_odirect_4k_qd64": {"file": "/home/obelisk/Projects/exploresrata/Strata-data/models/IQ3_S/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_S-00002-of-00002.gguf", "ok": true, "error": "", "iops": 328404, "gbs": 1.345}
+}

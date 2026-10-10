@@ -1,0 +1,76 @@
+{
+ "build": {
+  "command": "cmake --build build-main -j 12",
+  "passed": true
+ },
+ "cpp_cuda": {
+  "command": "prlimit --core=0:0 -- env FNGINE_TEST_PACK=/mnt/data/fngine/pack FNGINE_TEST_REF=/mnt/data/fngine/ref ctest --test-dir build-main --output-on-failure -j1",
+  "passed": 44,
+  "failed": 0,
+  "skipped": 0,
+  "seconds": 192.98
+ },
+ "python_tools": {
+  "command": "tools/.venv/bin/pytest -q tools/tests",
+  "passed": 23,
+  "failed": 0,
+  "seconds": 2.46
+ },
+ "cuda_memcheck": {
+  "tool": "compute-sanitizer --tool memcheck --error-exitcode 99",
+  "targets": ["kernels_gr", "kernels_qsa_attention"],
+  "errors": 0
+ },
+ "actual_runtime_evidence": [
+  "server-smoke.json",
+  "quality-smoke.json",
+  "speculation.json",
+  "baseline.json",
+  "prefill-split.json",
+  "prefill-cpu.json",
+  "adaptive-on.json",
+  "adaptive-off.json",
+  "perf-2026-10/baseline-corpus.json",
+  "perf-2026-10/current-corpus.json",
+  "perf-2026-10/baseline-coding.json",
+  "perf-2026-10/current-coding.json",
+  "perf-2026-10/baseline-ctx131072.json",
+  "perf-2026-10/current-ctx131072.json",
+  "perf-2026-10/baseline-short.json",
+  "perf-2026-10/current-short.json",
+  "perf-2026-10/baseline-nospec.json",
+  "perf-2026-10/current-nospec.json",
+  "perf-2026-10/round4.json",
+  "perf-2026-10/compositor.json",
+  "perf-2026-10/round5.json"
+ ],
+ "numerical_validation": {
+  "original_gates_all_passed": false,
+  "thresholds_unchanged": true,
+  "reports": [
+   "validation-default.json",
+   "validation-bf16.json",
+   "validation-prefill-split.json",
+   "validation-forced-swaps.json",
+   "perf-2026-10/fidelity.json",
+   "perf-2026-10/round5/fidelity.json"
+  ],
+  "forced_swap_interval_tokens": 16,
+  "forced_swaps_completed": 21248
+ },
+ "limitations": [
+  "HF-reference top-1/KLD/layer-cosine and split-path KLD targets are not all met; validators return failure.",
+  "Practical smoke samples are not a broad capability benchmark.",
+  "Historical Strata throughput is not a matched-workload comparison.",
+  "The workstation's GPU link trains at PCIe 5.0 x4 in an x16 slot (11.3 GB/s host-to-device); prefill streaming, swaps and loading are bandwidth-limited by it.",
+  "The 32,768-token MTP draft vocabulary lowers first-draft acceptance on prose (74.1% versus 82.9% with the full lm_head on the speculative test prompts).",
+  "Prefill CPU/GPU expert splits follow the startup cost measurement, so separate processes round prefill differently; results repeat exactly within a process.",
+  "The RTX 5090 also drives the desktop: Hyprland takes the GPU about 300 times per second for ~1.2 ms time slices (20-29% of decode time measured inside fngine's context; pausing Hyprland made fixed-placement G1 decode steps 28-30% shorter). Every throughput number includes it.",
+  "Adaptive placement follows the routing of the running workload; the first steps of a new topic (or a new process) run with the startup ranking until swaps catch up (up to four per step).",
+  "Elastic expert slots are vacated as a sequence's context grows (a step or prefill chunk reaching their bytes) and refilled only by adaptive swaps after a new or truncated sequence; long contexts therefore run with fewer GPU experts, as before.",
+  "Fifth-pass paired throughput has mixed signs and substantial variance. Only the exact-width GR kernel improvement is established; no across-the-board whole-model speedup is claimed.",
+  "An earlier fifth-pass speculative test aborted in CUDA graph instantiation with an allocation error. Later uninstrumented full suites passed, but the allocator failure's root cause was not proven. The root-owned 26.5 GiB diagnostic core requires privileged cleanup; its exact path and command are recorded in perf-2026-10/round5.json."
+ ],
+ "http_smoke_server_stopped": true,
+ "temporary_smoke_harnesses_removed": true
+}

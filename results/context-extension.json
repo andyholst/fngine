@@ -1,0 +1,1936 @@
+{
+  "date_utc": "2026-10-09T00:54:48.841975+00:00",
+  "model": "qwen3.8-flash-next",
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "changes": {
+    "native_context": 262144,
+    "default_context_unchanged": 131072,
+    "precision_unchanged": {
+      "dense": "fp8",
+      "kv": "k8v8",
+      "experts": "existing mixed quantized pack"
+    },
+    "runtime": [
+      "Bound logical context by the pack native positional limit and reject signed/page-rounding overflow.",
+      "Size borrowed prefill score scratch to the actual final prompt frontier, including prefix reuse.",
+      "Omit unused MTP proposals when their extra writes would exceed context; retain licensed target tokens and normal graphs."
+    ],
+    "extra_k8v8_position_bytes_128k_to_256k": 1867513856,
+    "extra_decode_score_bytes_128k_to_256k": 2097152,
+    "short_context_gpu_experts": {
+      "131072": 11783,
+      "262144": 11774
+    }
+  },
+  "build": {
+    "command": "cmake --build build-main -j 8",
+    "exit_code": 0,
+    "bench_sha256": "7cea79de90a4f9db749eeaa3e39231054ebb1852b3d04484d684dc237d830650",
+    "serve_sha256": "ec08676aec3d741ccacb3bf677f5494fb8078e0d2bf2864ddfbcc1402a3e520a"
+  },
+  "tests": {
+    "command": "FNGINE_TEST_PACK=/mnt/data/fngine/pack FNGINE_TEST_REF=/mnt/data/fngine/ref FNGINE_NO_ROUTING_STATS=1 ctest --test-dir build-main --output-on-failure -j 1",
+    "passed": 45,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 172.1,
+    "python_tests_rerun": false,
+    "boundary_coverage": [
+      "Native final RoPE positions and 65536-block indexer boundary",
+      "Logical and page-rounded capacity layout across every KV format",
+      "Previously captured MTP graph transitioning into context tail: exact target tokens and byte-identical persistent state"
+    ]
+  },
+  "benchmark_method": {
+    "same_binary": true,
+    "order_per_suite": [
+      131072,
+      262144,
+      262144,
+      131072
+    ],
+    "warmup": 1,
+    "repetitions_per_process": 3,
+    "routing_stats_persistence": false,
+    "desktop_running": true,
+    "unchanged_dense": "fp8",
+    "unchanged_kv": "k8v8"
+  },
+  "benchmark_summary": [
+    {
+      "case": "coding-turn1",
+      "131072": {
+        "samples": 6,
+        "decode_tok_s_mean": 178.30290812104528,
+        "decode_tok_s_stdev": 6.672911955310888,
+        "prefill_seconds_mean": 0.37015846133333336,
+        "total_seconds_mean": 3.2550440966666665
+      },
+      "262144": {
+        "samples": 6,
+        "decode_tok_s_mean": 191.2400040701389,
+        "decode_tok_s_stdev": 14.680815820342238,
+        "prefill_seconds_mean": 0.3847156095,
+        "total_seconds_mean": 3.0849951131666664
+      },
+      "decode_change_percent": 7.255684209205926,
+      "total_seconds_change_percent": -5.224168350718783
+    },
+    {
+      "case": "coding-turn2",
+      "131072": {
+        "samples": 6,
+        "decode_tok_s_mean": 192.46638324903367,
+        "decode_tok_s_stdev": 10.071200214476983,
+        "prefill_seconds_mean": 0.8723319715,
+        "total_seconds_mean": 3.5500298485
+      },
+      "262144": {
+        "samples": 6,
+        "decode_tok_s_mean": 197.31684469658592,
+        "decode_tok_s_stdev": 15.19538970741789,
+        "prefill_seconds_mean": 0.8912651661666666,
+        "total_seconds_mean": 3.5102468416666666
+      },
+      "decode_change_percent": 2.5201603343250945,
+      "total_seconds_change_percent": -1.120638657450812
+    },
+    {
+      "case": "pp64+tg256",
+      "131072": {
+        "samples": 6,
+        "decode_tok_s_mean": 158.73100658079443,
+        "decode_tok_s_stdev": 26.615641208143316,
+        "prefill_seconds_mean": 0.3376164251666667,
+        "total_seconds_mean": 1.9993034456666667
+      },
+      "262144": {
+        "samples": 6,
+        "decode_tok_s_mean": 150.938928148556,
+        "decode_tok_s_stdev": 14.774952555514883,
+        "prefill_seconds_mean": 0.34298226016666666,
+        "total_seconds_mean": 2.062879167833333
+      },
+      "decode_change_percent": -4.908983191177752,
+      "total_seconds_change_percent": 3.179893592664085
+    },
+    {
+      "case": "pp512+tg256",
+      "131072": {
+        "samples": 6,
+        "decode_tok_s_mean": 144.56987345852826,
+        "decode_tok_s_stdev": 41.54394715110177,
+        "prefill_seconds_mean": 0.8125883291666667,
+        "total_seconds_mean": 2.715674764
+      },
+      "262144": {
+        "samples": 6,
+        "decode_tok_s_mean": 145.49239815226767,
+        "decode_tok_s_stdev": 27.740545671545394,
+        "prefill_seconds_mean": 0.8124792313333333,
+        "total_seconds_mean": 2.636959303333333
+      },
+      "decode_change_percent": 0.6381168300628293,
+      "total_seconds_change_percent": -2.8985599347222446
+    },
+    {
+      "case": "pp4096+tg256",
+      "131072": {
+        "samples": 6,
+        "decode_tok_s_mean": 152.78384069654635,
+        "decode_tok_s_stdev": 13.832805869062478,
+        "prefill_seconds_mean": 1.4577332973333332,
+        "total_seconds_mean": 3.154994029
+      },
+      "262144": {
+        "samples": 6,
+        "decode_tok_s_mean": 148.46780295652772,
+        "decode_tok_s_stdev": 19.17301621449436,
+        "prefill_seconds_mean": 1.4648238058333334,
+        "total_seconds_mean": 3.2250397028333335
+      },
+      "decode_change_percent": -2.8249307782430844,
+      "total_seconds_change_percent": 2.220152342270354
+    }
+  ],
+  "benchmarks": [
+    {
+      "name": "coding-1-ctx131072",
+      "capacity": 131072,
+      "suite": "coding",
+      "report": {
+        "type": "fngine_bench_report",
+        "schema_version": 1,
+        "command": "/home/obelisk/Projects/fngine/build-main/apps/fngine-bench --pack /mnt/data/fngine/pack --ctx 131072 --coding-chat -n 512 -r 3 --warmup 1 -o json -f /tmp/fngine-timeout-context/coding-1-ctx131072.json",
+        "environment": {
+          "gpu": "NVIDIA GeForce RTX 5090",
+          "pack": "/mnt/data/fngine/pack",
+          "model": "Qwen3.8-Flash-Next",
+          "spec": "auto",
+          "kv": "k8v8",
+          "dense": "fp8",
+          "max_context": 131072,
+          "prefill_chunk": 4096,
+          "cpu_workers": 0,
+          "use_cuda_graph": true,
+          "adaptive_experts": true,
+          "prefill_stream": true,
+          "prefill_borrow": true,
+          "gpu_experts": 11783,
+          "total_experts": 24576,
+          "predicted_gpu_hit_rate": 0.822517624,
+          "repetitions": 3,
+          "warmup": 1,
+          "corpus": "built-in two-turn linked-list coding chat",
+          "corpus_tokens": 0
+        },
+        "tests": [
+          {
+            "label": "coding-turn1",
+            "n_prompt": 0,
+            "n_gen": 512,
+            "prefill_tok_s_mean": 188.9177231,
+            "prefill_tok_s_stddev": 3.153722218,
+            "decode_tok_s_mean": 175.6421406,
+            "decode_tok_s_stddev": 7.020507949,
+            "gpu_hit_rate_by_routing_mass": 0.9737142483,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9737142483,
+            "expert_swaps": 1010,
+            "gpu_routed_pairs": 954087,
+            "routed_pairs": 988800,
+            "cpu_wait_us_per_layer": 44.94778236,
+            "accepted_tokens_per_round_mtp": 1.236070381,
+            "mtp_rounds": 682,
+            "accepted_tokens_per_round_lookup": 2,
+            "lookup_rounds": 3,
+            "ngram_cache_hit_rate": 0.6735682819,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.363796612,
+                "decode_seconds": 3.047556551,
+                "total_seconds": 3.421532577,
+                "prompt_tokens": 70,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 232,
+                "spec_accepted": 280,
+                "gpu_hit_rate_by_routing_mass": 0.9738858639,
+                "expert_swaps": 831
+              },
+              {
+                "prefill_seconds": 0.372246509,
+                "decode_seconds": 2.816094508,
+                "total_seconds": 3.198850937,
+                "prompt_tokens": 70,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 223,
+                "spec_accepted": 289,
+                "gpu_hit_rate_by_routing_mass": 0.9731787733,
+                "expert_swaps": 111
+              },
+              {
+                "prefill_seconds": 0.375757154,
+                "decode_seconds": 2.890844155,
+                "total_seconds": 3.276198012,
+                "prompt_tokens": 70,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 232,
+                "spec_accepted": 280,
+                "gpu_hit_rate_by_routing_mass": 0.9740598634,
+                "expert_swaps": 68
+              }
+            ]
+          },
+          {
+            "label": "coding-turn2",
+            "n_prompt": 0,
+            "n_gen": 512,
+            "prefill_tok_s_mean": 702.6811074,
+            "prefill_tok_s_stddev": 0.8393524945,
+            "decode_tok_s_mean": 186.8577768,
+            "decode_tok_s_stddev": 9.596609178,
+            "gpu_hit_rate_by_routing_mass": 0.9663677669,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9663677669,
+            "expert_swaps": 506,
+            "gpu_routed_pairs": 907501,
+            "routed_pairs": 949440,
+            "cpu_wait_us_per_layer": 59.49738766,
+            "accepted_tokens_per_round_mtp": 1.328646749,
+            "mtp_rounds": 569,
+            "accepted_tokens_per_round_lookup": 3.952380952,
+            "lookup_rounds": 42,
+            "ngram_cache_hit_rate": 0.8528120084,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.871579407,
+                "decode_seconds": 2.868605487,
+                "total_seconds": 3.751898136,
+                "prompt_tokens": 612,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 205,
+                "spec_accepted": 307,
+                "gpu_hit_rate_by_routing_mass": 0.9601887928,
+                "expert_swaps": 344
+              },
+              {
+                "prefill_seconds": 0.871521944,
+                "decode_seconds": 2.594639497,
+                "total_seconds": 3.478635163,
+                "prompt_tokens": 612,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 192,
+                "spec_accepted": 320,
+                "gpu_hit_rate_by_routing_mass": 0.9696728604,
+                "expert_swaps": 119
+              },
+              {
+                "prefill_seconds": 0.869750661,
+                "decode_seconds": 2.771170457,
+                "total_seconds": 3.651724565,
+                "prompt_tokens": 612,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 217,
+                "spec_accepted": 295,
+                "gpu_hit_rate_by_routing_mass": 0.9691790657,
+                "expert_swaps": 43
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "coding-2-ctx262144",
+      "capacity": 262144,
+      "suite": "coding",
+      "report": {
+        "type": "fngine_bench_report",
+        "schema_version": 1,
+        "command": "/home/obelisk/Projects/fngine/build-main/apps/fngine-bench --pack /mnt/data/fngine/pack --ctx 262144 --coding-chat -n 512 -r 3 --warmup 1 -o json -f /tmp/fngine-timeout-context/coding-2-ctx262144.json",
+        "environment": {
+          "gpu": "NVIDIA GeForce RTX 5090",
+          "pack": "/mnt/data/fngine/pack",
+          "model": "Qwen3.8-Flash-Next",
+          "spec": "auto",
+          "kv": "k8v8",
+          "dense": "fp8",
+          "max_context": 262144,
+          "prefill_chunk": 4096,
+          "cpu_workers": 0,
+          "use_cuda_graph": true,
+          "adaptive_experts": true,
+          "prefill_stream": true,
+          "prefill_borrow": true,
+          "gpu_experts": 11774,
+          "total_experts": 24576,
+          "predicted_gpu_hit_rate": 0.8222019218,
+          "repetitions": 3,
+          "warmup": 1,
+          "corpus": "built-in two-turn linked-list coding chat",
+          "corpus_tokens": 0
+        },
+        "tests": [
+          {
+            "label": "coding-turn1",
+            "n_prompt": 0,
+            "n_gen": 512,
+            "prefill_tok_s_mean": 184.4593701,
+            "prefill_tok_s_stddev": 2.44137127,
+            "decode_tok_s_mean": 189.8229835,
+            "decode_tok_s_stddev": 22.61655304,
+            "gpu_hit_rate_by_routing_mass": 0.9740020265,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9740020265,
+            "expert_swaps": 986,
+            "gpu_routed_pairs": 1173707,
+            "routed_pairs": 1215840,
+            "cpu_wait_us_per_layer": 56.13297585,
+            "accepted_tokens_per_round_mtp": 1.412420382,
+            "mtp_rounds": 628,
+            "accepted_tokens_per_round_lookup": 5,
+            "lookup_rounds": 3,
+            "ngram_cache_hit_rate": 0.6611830113,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.373854305,
+                "decode_seconds": 2.917882646,
+                "total_seconds": 3.302193917,
+                "prompt_tokens": 70,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 210,
+                "spec_accepted": 302,
+                "gpu_hit_rate_by_routing_mass": 0.9726718312,
+                "expert_swaps": 821
+              },
+              {
+                "prefill_seconds": 0.381517104,
+                "decode_seconds": 2.874704106,
+                "total_seconds": 3.266161493,
+                "prompt_tokens": 70,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 212,
+                "spec_accepted": 300,
+                "gpu_hit_rate_by_routing_mass": 0.974058348,
+                "expert_swaps": 86
+              },
+              {
+                "prefill_seconds": 0.383222766,
+                "decode_seconds": 2.371534609,
+                "total_seconds": 2.763380766,
+                "prompt_tokens": 70,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 212,
+                "spec_accepted": 300,
+                "gpu_hit_rate_by_routing_mass": 0.9752616994,
+                "expert_swaps": 79
+              }
+            ]
+          },
+          {
+            "label": "coding-turn2",
+            "n_prompt": 0,
+            "n_gen": 512,
+            "prefill_tok_s_mean": 696.3615111,
+            "prefill_tok_s_stddev": 7.525312973,
+            "decode_tok_s_mean": 196.1161369,
+            "decode_tok_s_stddev": 22.28923033,
+            "gpu_hit_rate_by_routing_mass": 0.9649840322,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9649840322,
+            "expert_swaps": 576,
+            "gpu_routed_pairs": 1024705,
+            "routed_pairs": 1074720,
+            "cpu_wait_us_per_layer": 76.62524216,
+            "accepted_tokens_per_round_mtp": 1.742592593,
+            "mtp_rounds": 540,
+            "accepted_tokens_per_round_lookup": 3.5,
+            "lookup_rounds": 12,
+            "ngram_cache_hit_rate": 0.8043404908,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.884230769,
+                "decode_seconds": 2.945702161,
+                "total_seconds": 3.843189597,
+                "prompt_tokens": 612,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 197,
+                "spec_accepted": 315,
+                "gpu_hit_rate_by_routing_mass": 0.960117007,
+                "expert_swaps": 459
+              },
+              {
+                "prefill_seconds": 0.884511358,
+                "decode_seconds": 2.344419154,
+                "total_seconds": 3.23925086,
+                "prompt_tokens": 612,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 173,
+                "spec_accepted": 339,
+                "gpu_hit_rate_by_routing_mass": 0.9668862953,
+                "expert_swaps": 73
+              },
+              {
+                "prefill_seconds": 0.868023459,
+                "decode_seconds": 2.610315387,
+                "total_seconds": 3.488584746,
+                "prompt_tokens": 612,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 183,
+                "spec_accepted": 329,
+                "gpu_hit_rate_by_routing_mass": 0.9683561342,
+                "expert_swaps": 44
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "coding-3-ctx262144",
+      "capacity": 262144,
+      "suite": "coding",
+      "report": {
+        "type": "fngine_bench_report",
+        "schema_version": 1,
+        "command": "/home/obelisk/Projects/fngine/build-main/apps/fngine-bench --pack /mnt/data/fngine/pack --ctx 262144 --coding-chat -n 512 -r 3 --warmup 1 -o json -f /tmp/fngine-timeout-context/coding-3-ctx262144.json",
+        "environment": {
+          "gpu": "NVIDIA GeForce RTX 5090",
+          "pack": "/mnt/data/fngine/pack",
+          "model": "Qwen3.8-Flash-Next",
+          "spec": "auto",
+          "kv": "k8v8",
+          "dense": "fp8",
+          "max_context": 262144,
+          "prefill_chunk": 4096,
+          "cpu_workers": 0,
+          "use_cuda_graph": true,
+          "adaptive_experts": true,
+          "prefill_stream": true,
+          "prefill_borrow": true,
+          "gpu_experts": 11774,
+          "total_experts": 24576,
+          "predicted_gpu_hit_rate": 0.8222019218,
+          "repetitions": 3,
+          "warmup": 1,
+          "corpus": "built-in two-turn linked-list coding chat",
+          "corpus_tokens": 0
+        },
+        "tests": [
+          {
+            "label": "coding-turn1",
+            "n_prompt": 0,
+            "n_gen": 512,
+            "prefill_tok_s_mean": 179.5562084,
+            "prefill_tok_s_stddev": 2.491303444,
+            "decode_tok_s_mean": 192.6570247,
+            "decode_tok_s_stddev": 4.613411899,
+            "gpu_hit_rate_by_routing_mass": 0.9729925448,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9729925448,
+            "expert_swaps": 981,
+            "gpu_routed_pairs": 1088818,
+            "routed_pairs": 1129920,
+            "cpu_wait_us_per_layer": 60.37996017,
+            "accepted_tokens_per_round_mtp": 1.6,
+            "mtp_rounds": 580,
+            "accepted_tokens_per_round_lookup": 2.375,
+            "lookup_rounds": 8,
+            "ngram_cache_hit_rate": 0.7038319033,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.383909398,
+                "decode_seconds": 2.719159615,
+                "total_seconds": 3.11381766,
+                "prompt_tokens": 70,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 201,
+                "spec_accepted": 311,
+                "gpu_hit_rate_by_routing_mass": 0.9693748389,
+                "expert_swaps": 804
+              },
+              {
+                "prefill_seconds": 0.394318442,
+                "decode_seconds": 2.592600111,
+                "total_seconds": 2.997249917,
+                "prompt_tokens": 70,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 189,
+                "spec_accepted": 323,
+                "gpu_hit_rate_by_routing_mass": 0.9734456402,
+                "expert_swaps": 133
+              },
+              {
+                "prefill_seconds": 0.391471642,
+                "decode_seconds": 2.663996258,
+                "total_seconds": 3.067166926,
+                "prompt_tokens": 70,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 199,
+                "spec_accepted": 313,
+                "gpu_hit_rate_by_routing_mass": 0.9762279073,
+                "expert_swaps": 44
+              }
+            ]
+          },
+          {
+            "label": "coding-turn2",
+            "n_prompt": 0,
+            "n_gen": 512,
+            "prefill_tok_s_mean": 676.9430939,
+            "prefill_tok_s_stddev": 5.563861108,
+            "decode_tok_s_mean": 198.5175525,
+            "decode_tok_s_stddev": 8.724378736,
+            "gpu_hit_rate_by_routing_mass": 0.9667074087,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9667074087,
+            "expert_swaps": 492,
+            "gpu_routed_pairs": 980891,
+            "routed_pairs": 1026720,
+            "cpu_wait_us_per_layer": 74.25450811,
+            "accepted_tokens_per_round_mtp": 1.854368932,
+            "mtp_rounds": 515,
+            "accepted_tokens_per_round_lookup": 2.9375,
+            "lookup_rounds": 16,
+            "ngram_cache_hit_rate": 0.8458889029,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.909905028,
+                "decode_seconds": 2.579731437,
+                "total_seconds": 3.49986099,
+                "prompt_tokens": 611,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 168,
+                "spec_accepted": 344,
+                "gpu_hit_rate_by_routing_mass": 0.9614292013,
+                "expert_swaps": 348
+              },
+              {
+                "prefill_seconds": 0.904373593,
+                "decode_seconds": 2.697336079,
+                "total_seconds": 3.61171843,
+                "prompt_tokens": 612,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 192,
+                "spec_accepted": 320,
+                "gpu_hit_rate_by_routing_mass": 0.970613801,
+                "expert_swaps": 99
+              },
+              {
+                "prefill_seconds": 0.89654679,
+                "decode_seconds": 2.470261866,
+                "total_seconds": 3.378876427,
+                "prompt_tokens": 612,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 174,
+                "spec_accepted": 338,
+                "gpu_hit_rate_by_routing_mass": 0.9674981852,
+                "expert_swaps": 45
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "coding-4-ctx131072",
+      "capacity": 131072,
+      "suite": "coding",
+      "report": {
+        "type": "fngine_bench_report",
+        "schema_version": 1,
+        "command": "/home/obelisk/Projects/fngine/build-main/apps/fngine-bench --pack /mnt/data/fngine/pack --ctx 131072 --coding-chat -n 512 -r 3 --warmup 1 -o json -f /tmp/fngine-timeout-context/coding-4-ctx131072.json",
+        "environment": {
+          "gpu": "NVIDIA GeForce RTX 5090",
+          "pack": "/mnt/data/fngine/pack",
+          "model": "Qwen3.8-Flash-Next",
+          "spec": "auto",
+          "kv": "k8v8",
+          "dense": "fp8",
+          "max_context": 131072,
+          "prefill_chunk": 4096,
+          "cpu_workers": 0,
+          "use_cuda_graph": true,
+          "adaptive_experts": true,
+          "prefill_stream": true,
+          "prefill_borrow": true,
+          "gpu_experts": 11783,
+          "total_experts": 24576,
+          "predicted_gpu_hit_rate": 0.822517624,
+          "repetitions": 3,
+          "warmup": 1,
+          "corpus": "built-in two-turn linked-list coding chat",
+          "corpus_tokens": 0
+        },
+        "tests": [
+          {
+            "label": "coding-turn1",
+            "n_prompt": 0,
+            "n_gen": 512,
+            "prefill_tok_s_mean": 189.3612481,
+            "prefill_tok_s_stddev": 2.783776841,
+            "decode_tok_s_mean": 180.9636757,
+            "decode_tok_s_stddev": 6.386924241,
+            "gpu_hit_rate_by_routing_mass": 0.9732351261,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9732351261,
+            "expert_swaps": 1026,
+            "gpu_routed_pairs": 937422,
+            "routed_pairs": 972000,
+            "cpu_wait_us_per_layer": 45.24112032,
+            "accepted_tokens_per_round_mtp": 1.275862069,
+            "mtp_rounds": 667,
+            "accepted_tokens_per_round_lookup": 1.125,
+            "lookup_rounds": 8,
+            "ngram_cache_hit_rate": 0.7659955257,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.363820646,
+                "decode_seconds": 2.942569322,
+                "total_seconds": 3.316703355,
+                "prompt_tokens": 70,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 233,
+                "spec_accepted": 279,
+                "gpu_hit_rate_by_routing_mass": 0.971259539,
+                "expert_swaps": 888
+              },
+              {
+                "prefill_seconds": 0.370876593,
+                "decode_seconds": 2.807794333,
+                "total_seconds": 3.187867369,
+                "prompt_tokens": 70,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 223,
+                "spec_accepted": 289,
+                "gpu_hit_rate_by_routing_mass": 0.9733867862,
+                "expert_swaps": 88
+              },
+              {
+                "prefill_seconds": 0.374453254,
+                "decode_seconds": 2.744662414,
+                "total_seconds": 3.12911233,
+                "prompt_tokens": 70,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 220,
+                "spec_accepted": 292,
+                "gpu_hit_rate_by_routing_mass": 0.9751766143,
+                "expert_swaps": 50
+              }
+            ]
+          },
+          {
+            "label": "coding-turn2",
+            "n_prompt": 0,
+            "n_gen": 512,
+            "prefill_tok_s_mean": 700.4629669,
+            "prefill_tok_s_stddev": 2.134162116,
+            "decode_tok_s_mean": 198.0749897,
+            "decode_tok_s_stddev": 8.191970326,
+            "gpu_hit_rate_by_routing_mass": 0.969810697,
+            "interval_gpu_hit_rate_by_routing_mass": 0.969810697,
+            "expert_swaps": 494,
+            "gpu_routed_pairs": 903205,
+            "routed_pairs": 940320,
+            "cpu_wait_us_per_layer": 48.72824955,
+            "accepted_tokens_per_round_mtp": 1.329526917,
+            "mtp_rounds": 613,
+            "accepted_tokens_per_round_lookup": 1.65,
+            "lookup_rounds": 40,
+            "ngram_cache_hit_rate": 0.8232048748,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.876614133,
+                "decode_seconds": 2.594757512,
+                "total_seconds": 3.481299547,
+                "prompt_tokens": 612,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 223,
+                "spec_accepted": 289,
+                "gpu_hit_rate_by_routing_mass": 0.9681079812,
+                "expert_swaps": 298
+              },
+              {
+                "prefill_seconds": 0.873150614,
+                "decode_seconds": 2.478003918,
+                "total_seconds": 3.363907198,
+                "prompt_tokens": 612,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 214,
+                "spec_accepted": 298,
+                "gpu_hit_rate_by_routing_mass": 0.964309388,
+                "expert_swaps": 143
+              },
+              {
+                "prefill_seconds": 0.87137507,
+                "decode_seconds": 2.690685068,
+                "total_seconds": 3.572714482,
+                "prompt_tokens": 612,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 513,
+                "spec_rounds": 218,
+                "spec_accepted": 294,
+                "gpu_hit_rate_by_routing_mass": 0.976944916,
+                "expert_swaps": 53
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "corpus-1-ctx131072",
+      "capacity": 131072,
+      "suite": "corpus",
+      "report": {
+        "type": "fngine_bench_report",
+        "schema_version": 1,
+        "command": "/home/obelisk/Projects/fngine/build-main/apps/fngine-bench --pack /mnt/data/fngine/pack --ctx 131072 -p 64,512,4096 -n 256 -r 3 --warmup 1 -o json -f /tmp/fngine-timeout-context/corpus-1-ctx131072.json",
+        "environment": {
+          "gpu": "NVIDIA GeForce RTX 5090",
+          "pack": "/mnt/data/fngine/pack",
+          "model": "Qwen3.8-Flash-Next",
+          "spec": "auto",
+          "kv": "k8v8",
+          "dense": "fp8",
+          "max_context": 131072,
+          "prefill_chunk": 4096,
+          "cpu_workers": 0,
+          "use_cuda_graph": true,
+          "adaptive_experts": true,
+          "prefill_stream": true,
+          "prefill_borrow": true,
+          "gpu_experts": 11783,
+          "total_experts": 24576,
+          "predicted_gpu_hit_rate": 0.822517624,
+          "repetitions": 3,
+          "warmup": 1,
+          "corpus": "/home/obelisk/Projects/cinference (README.md + docs/**/*.md)",
+          "corpus_tokens": 136002
+        },
+        "tests": [
+          {
+            "label": "pp64+tg256",
+            "n_prompt": 64,
+            "n_gen": 256,
+            "prefill_tok_s_mean": 193.0826523,
+            "prefill_tok_s_stddev": 3.904677499,
+            "decode_tok_s_mean": 165.6148225,
+            "decode_tok_s_stddev": 25.27796066,
+            "gpu_hit_rate_by_routing_mass": 0.9642285455,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9642285455,
+            "expert_swaps": 1353,
+            "gpu_routed_pairs": 604625,
+            "routed_pairs": 633600,
+            "cpu_wait_us_per_layer": 69.28727774,
+            "accepted_tokens_per_round_mtp": 1.28358209,
+            "mtp_rounds": 335,
+            "accepted_tokens_per_round_lookup": 0,
+            "lookup_rounds": 1,
+            "ngram_cache_hit_rate": 0.5238095238,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.334785797,
+                "decode_seconds": 1.831764522,
+                "total_seconds": 2.177902317,
+                "prompt_tokens": 64,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 122,
+                "spec_accepted": 134,
+                "gpu_hit_rate_by_routing_mass": 0.9531518292,
+                "expert_swaps": 489
+              },
+              {
+                "prefill_seconds": 0.335947859,
+                "decode_seconds": 1.534590665,
+                "total_seconds": 1.880611159,
+                "prompt_tokens": 64,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 106,
+                "spec_accepted": 150,
+                "gpu_hit_rate_by_routing_mass": 0.9658904344,
+                "expert_swaps": 423
+              },
+              {
+                "prefill_seconds": 0.323927306,
+                "decode_seconds": 1.345465064,
+                "total_seconds": 1.67911275,
+                "prompt_tokens": 64,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 110,
+                "spec_accepted": 146,
+                "gpu_hit_rate_by_routing_mass": 0.97424138,
+                "expert_swaps": 441
+              }
+            ]
+          },
+          {
+            "label": "pp512+tg256",
+            "n_prompt": 512,
+            "n_gen": 256,
+            "prefill_tok_s_mean": 630.3073272,
+            "prefill_tok_s_stddev": 2.735422983,
+            "decode_tok_s_mean": 109.185148,
+            "decode_tok_s_stddev": 5.030710958,
+            "gpu_hit_rate_by_routing_mass": 0.9572714549,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9572714549,
+            "expert_swaps": 1392,
+            "gpu_routed_pairs": 431881,
+            "routed_pairs": 456960,
+            "cpu_wait_us_per_layer": 31.44740358,
+            "accepted_tokens_per_round_mtp": 0.5769230769,
+            "mtp_rounds": 26,
+            "accepted_tokens_per_round_lookup": 0.9833333333,
+            "lookup_rounds": 60,
+            "ngram_cache_hit_rate": 0.8297829582,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.815643359,
+                "decode_seconds": 2.362178527,
+                "total_seconds": 3.187852332,
+                "prompt_tokens": 512,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 189,
+                "spec_accepted": 67,
+                "gpu_hit_rate_by_routing_mass": 0.9475373467,
+                "expert_swaps": 757
+              },
+              {
+                "prefill_seconds": 0.812669103,
+                "decode_seconds": 2.447208985,
+                "total_seconds": 3.269125113,
+                "prompt_tokens": 512,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 251,
+                "spec_accepted": 5,
+                "gpu_hit_rate_by_routing_mass": 0.954796301,
+                "expert_swaps": 541
+              },
+              {
+                "prefill_seconds": 0.80862458,
+                "decode_seconds": 2.234403924,
+                "total_seconds": 3.054032128,
+                "prompt_tokens": 512,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 254,
+                "spec_accepted": 2,
+                "gpu_hit_rate_by_routing_mass": 0.9750996345,
+                "expert_swaps": 94
+              }
+            ]
+          },
+          {
+            "label": "pp4096+tg256",
+            "n_prompt": 4096,
+            "n_gen": 256,
+            "prefill_tok_s_mean": 2781.315229,
+            "prefill_tok_s_stddev": 71.00137313,
+            "decode_tok_s_mean": 163.0956368,
+            "decode_tok_s_stddev": 11.34194627,
+            "gpu_hit_rate_by_routing_mass": 0.9464399025,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9464399025,
+            "expert_swaps": 699,
+            "gpu_routed_pairs": 506693,
+            "routed_pairs": 544800,
+            "cpu_wait_us_per_layer": 112.5101039,
+            "accepted_tokens_per_round_mtp": 1.62704918,
+            "mtp_rounds": 244,
+            "accepted_tokens_per_round_lookup": 3.24137931,
+            "lookup_rounds": 29,
+            "ngram_cache_hit_rate": 0.9725517768,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 1.493651551,
+                "decode_seconds": 1.695740165,
+                "total_seconds": 3.199825297,
+                "prompt_tokens": 4096,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 98,
+                "spec_accepted": 158,
+                "gpu_hit_rate_by_routing_mass": 0.9398927867,
+                "expert_swaps": 320
+              },
+              {
+                "prefill_seconds": 1.430532173,
+                "decode_seconds": 1.552625841,
+                "total_seconds": 2.994222289,
+                "prompt_tokens": 4096,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 90,
+                "spec_accepted": 166,
+                "gpu_hit_rate_by_routing_mass": 0.9489692451,
+                "expert_swaps": 192
+              },
+              {
+                "prefill_seconds": 1.49576242,
+                "decode_seconds": 1.476028205,
+                "total_seconds": 2.983275374,
+                "prompt_tokens": 4096,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 89,
+                "spec_accepted": 167,
+                "gpu_hit_rate_by_routing_mass": 0.9508173525,
+                "expert_swaps": 187
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "corpus-2-ctx262144",
+      "capacity": 262144,
+      "suite": "corpus",
+      "report": {
+        "type": "fngine_bench_report",
+        "schema_version": 1,
+        "command": "/home/obelisk/Projects/fngine/build-main/apps/fngine-bench --pack /mnt/data/fngine/pack --ctx 262144 -p 64,512,4096 -n 256 -r 3 --warmup 1 -o json -f /tmp/fngine-timeout-context/corpus-2-ctx262144.json",
+        "environment": {
+          "gpu": "NVIDIA GeForce RTX 5090",
+          "pack": "/mnt/data/fngine/pack",
+          "model": "Qwen3.8-Flash-Next",
+          "spec": "auto",
+          "kv": "k8v8",
+          "dense": "fp8",
+          "max_context": 262144,
+          "prefill_chunk": 4096,
+          "cpu_workers": 0,
+          "use_cuda_graph": true,
+          "adaptive_experts": true,
+          "prefill_stream": true,
+          "prefill_borrow": true,
+          "gpu_experts": 11774,
+          "total_experts": 24576,
+          "predicted_gpu_hit_rate": 0.8222019218,
+          "repetitions": 3,
+          "warmup": 1,
+          "corpus": "/home/obelisk/Projects/cinference (README.md + docs/**/*.md)",
+          "corpus_tokens": 136002
+        },
+        "tests": [
+          {
+            "label": "pp64+tg256",
+            "n_prompt": 64,
+            "n_gen": 256,
+            "prefill_tok_s_mean": 185.131463,
+            "prefill_tok_s_stddev": 5.502289291,
+            "decode_tok_s_mean": 155.6510512,
+            "decode_tok_s_stddev": 18.40101264,
+            "gpu_hit_rate_by_routing_mass": 0.9633703806,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9633703806,
+            "expert_swaps": 1533,
+            "gpu_routed_pairs": 526778,
+            "routed_pairs": 552480,
+            "cpu_wait_us_per_layer": 54.2647079,
+            "accepted_tokens_per_round_mtp": 1.002624672,
+            "mtp_rounds": 381,
+            "accepted_tokens_per_round_lookup": 2,
+            "lookup_rounds": 1,
+            "ngram_cache_hit_rate": 0.5119136262,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.349117046,
+                "decode_seconds": 1.873747046,
+                "total_seconds": 2.232799653,
+                "prompt_tokens": 64,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 129,
+                "spec_accepted": 127,
+                "gpu_hit_rate_by_routing_mass": 0.9414192223,
+                "expert_swaps": 513
+              },
+              {
+                "prefill_seconds": 0.334533471,
+                "decode_seconds": 1.476735583,
+                "total_seconds": 1.822304931,
+                "prompt_tokens": 64,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 126,
+                "spec_accepted": 130,
+                "gpu_hit_rate_by_routing_mass": 0.9685937943,
+                "expert_swaps": 505
+              },
+              {
+                "prefill_seconds": 0.35405362,
+                "decode_seconds": 1.630851829,
+                "total_seconds": 1.994473334,
+                "prompt_tokens": 64,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 129,
+                "spec_accepted": 127,
+                "gpu_hit_rate_by_routing_mass": 0.9805758941,
+                "expert_swaps": 515
+              }
+            ]
+          },
+          {
+            "label": "pp512+tg256",
+            "n_prompt": 512,
+            "n_gen": 256,
+            "prefill_tok_s_mean": 629.8059181,
+            "prefill_tok_s_stddev": 27.89407804,
+            "decode_tok_s_mean": 126.3805914,
+            "decode_tok_s_stddev": 18.12672368,
+            "gpu_hit_rate_by_routing_mass": 0.9669902641,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9669902641,
+            "expert_swaps": 1281,
+            "gpu_routed_pairs": 521471,
+            "routed_pairs": 545760,
+            "cpu_wait_us_per_layer": 37.19839561,
+            "accepted_tokens_per_round_mtp": 0.975308642,
+            "mtp_rounds": 162,
+            "accepted_tokens_per_round_lookup": 1.741935484,
+            "lookup_rounds": 31,
+            "ngram_cache_hit_rate": 0.8075196409,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.834666798,
+                "decode_seconds": 1.739826335,
+                "total_seconds": 2.585490322,
+                "prompt_tokens": 512,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 116,
+                "spec_accepted": 140,
+                "gpu_hit_rate_by_routing_mass": 0.9593008117,
+                "expert_swaps": 464
+              },
+              {
+                "prefill_seconds": 0.83389556,
+                "decode_seconds": 2.251697579,
+                "total_seconds": 3.096861944,
+                "prompt_tokens": 512,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 197,
+                "spec_accepted": 59,
+                "gpu_hit_rate_by_routing_mass": 0.9713799519,
+                "expert_swaps": 695
+              },
+              {
+                "prefill_seconds": 0.773398056,
+                "decode_seconds": 2.1638316,
+                "total_seconds": 2.949020066,
+                "prompt_tokens": 512,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 243,
+                "spec_accepted": 13,
+                "gpu_hit_rate_by_routing_mass": 0.9735160535,
+                "expert_swaps": 122
+              }
+            ]
+          },
+          {
+            "label": "pp4096+tg256",
+            "n_prompt": 4096,
+            "n_gen": 256,
+            "prefill_tok_s_mean": 2845.620619,
+            "prefill_tok_s_stddev": 208.7240004,
+            "decode_tok_s_mean": 135.4666152,
+            "decode_tok_s_stddev": 15.99459788,
+            "gpu_hit_rate_by_routing_mass": 0.9472458362,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9472458362,
+            "expert_swaps": 659,
+            "gpu_routed_pairs": 418969,
+            "routed_pairs": 449760,
+            "cpu_wait_us_per_layer": 58.98312314,
+            "accepted_tokens_per_round_mtp": 0.7393364929,
+            "mtp_rounds": 211,
+            "accepted_tokens_per_round_lookup": 1.339130435,
+            "lookup_rounds": 115,
+            "ngram_cache_hit_rate": 0.9853308129,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 1.502855666,
+                "decode_seconds": 2.152223861,
+                "total_seconds": 3.664659254,
+                "prompt_tokens": 4096,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 174,
+                "spec_accepted": 82,
+                "gpu_hit_rate_by_routing_mass": 0.9398923265,
+                "expert_swaps": 281
+              },
+              {
+                "prefill_seconds": 1.503257221,
+                "decode_seconds": 1.874430434,
+                "total_seconds": 3.388050073,
+                "prompt_tokens": 4096,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 145,
+                "spec_accepted": 111,
+                "gpu_hit_rate_by_routing_mass": 0.9440812089,
+                "expert_swaps": 241
+              },
+              {
+                "prefill_seconds": 1.327011898,
+                "decode_seconds": 1.696731841,
+                "total_seconds": 3.03381945,
+                "prompt_tokens": 4096,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 139,
+                "spec_accepted": 117,
+                "gpu_hit_rate_by_routing_mass": 0.9586985402,
+                "expert_swaps": 137
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "corpus-3-ctx262144",
+      "capacity": 262144,
+      "suite": "corpus",
+      "report": {
+        "type": "fngine_bench_report",
+        "schema_version": 1,
+        "command": "/home/obelisk/Projects/fngine/build-main/apps/fngine-bench --pack /mnt/data/fngine/pack --ctx 262144 -p 64,512,4096 -n 256 -r 3 --warmup 1 -o json -f /tmp/fngine-timeout-context/corpus-3-ctx262144.json",
+        "environment": {
+          "gpu": "NVIDIA GeForce RTX 5090",
+          "pack": "/mnt/data/fngine/pack",
+          "model": "Qwen3.8-Flash-Next",
+          "spec": "auto",
+          "kv": "k8v8",
+          "dense": "fp8",
+          "max_context": 262144,
+          "prefill_chunk": 4096,
+          "cpu_workers": 0,
+          "use_cuda_graph": true,
+          "adaptive_experts": true,
+          "prefill_stream": true,
+          "prefill_borrow": true,
+          "gpu_experts": 11774,
+          "total_experts": 24576,
+          "predicted_gpu_hit_rate": 0.8222019218,
+          "repetitions": 3,
+          "warmup": 1,
+          "corpus": "/home/obelisk/Projects/cinference (README.md + docs/**/*.md)",
+          "corpus_tokens": 136002
+        },
+        "tests": [
+          {
+            "label": "pp64+tg256",
+            "n_prompt": 64,
+            "n_gen": 256,
+            "prefill_tok_s_mean": 188.2117756,
+            "prefill_tok_s_stddev": 1.800561842,
+            "decode_tok_s_mean": 146.2268051,
+            "decode_tok_s_stddev": 11.85489264,
+            "gpu_hit_rate_by_routing_mass": 0.9559573057,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9559573057,
+            "expert_swaps": 1668,
+            "gpu_routed_pairs": 508972,
+            "routed_pairs": 538560,
+            "cpu_wait_us_per_layer": 56.67735661,
+            "accepted_tokens_per_round_mtp": 0.8835443038,
+            "mtp_rounds": 395,
+            "accepted_tokens_per_round_lookup": 2,
+            "lookup_rounds": 1,
+            "ngram_cache_hit_rate": 0.4082952816,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.336403964,
+                "decode_seconds": 1.786718294,
+                "total_seconds": 2.133838703,
+                "prompt_tokens": 64,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 148,
+                "spec_accepted": 108,
+                "gpu_hit_rate_by_routing_mass": 0.9376815379,
+                "expert_swaps": 592
+              },
+              {
+                "prefill_seconds": 0.341224125,
+                "decode_seconds": 1.880643149,
+                "total_seconds": 2.232374442,
+                "prompt_tokens": 64,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 145,
+                "spec_accepted": 111,
+                "gpu_hit_rate_by_routing_mass": 0.9594520644,
+                "expert_swaps": 580
+              },
+              {
+                "prefill_seconds": 0.342561335,
+                "decode_seconds": 1.607259504,
+                "total_seconds": 1.961483944,
+                "prompt_tokens": 64,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 124,
+                "spec_accepted": 132,
+                "gpu_hit_rate_by_routing_mass": 0.9723734288,
+                "expert_swaps": 496
+              }
+            ]
+          },
+          {
+            "label": "pp512+tg256",
+            "n_prompt": 512,
+            "n_gen": 256,
+            "prefill_tok_s_mean": 631.3599648,
+            "prefill_tok_s_stddev": 4.197876149,
+            "decode_tok_s_mean": 164.6042049,
+            "decode_tok_s_stddev": 22.34911857,
+            "gpu_hit_rate_by_routing_mass": 0.9596867749,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9596867749,
+            "expert_swaps": 1087,
+            "gpu_routed_pairs": 464005,
+            "routed_pairs": 489600,
+            "cpu_wait_us_per_layer": 50.74869429,
+            "accepted_tokens_per_round_mtp": 0.9102564103,
+            "mtp_rounds": 390,
+            "accepted_tokens_per_round_lookup": 1,
+            "lookup_rounds": 11,
+            "ngram_cache_hit_rate": 0.777068662,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.81479366,
+                "decode_seconds": 1.545353858,
+                "total_seconds": 2.372537435,
+                "prompt_tokens": 512,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 117,
+                "spec_accepted": 139,
+                "gpu_hit_rate_by_routing_mass": 0.9701500583,
+                "expert_swaps": 469
+              },
+              {
+                "prefill_seconds": 0.813293394,
+                "decode_seconds": 1.806035988,
+                "total_seconds": 2.628821253,
+                "prompt_tokens": 512,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 136,
+                "spec_accepted": 120,
+                "gpu_hit_rate_by_routing_mass": 0.9552462592,
+                "expert_swaps": 399
+              },
+              {
+                "prefill_seconds": 0.80482792,
+                "decode_seconds": 1.373332614,
+                "total_seconds": 2.1890248,
+                "prompt_tokens": 512,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 149,
+                "spec_accepted": 107,
+                "gpu_hit_rate_by_routing_mass": 0.9529714125,
+                "expert_swaps": 219
+              }
+            ]
+          },
+          {
+            "label": "pp4096+tg256",
+            "n_prompt": 4096,
+            "n_gen": 256,
+            "prefill_tok_s_mean": 2757.742918,
+            "prefill_tok_s_stddev": 0.7893609316,
+            "decode_tok_s_mean": 161.4689907,
+            "decode_tok_s_stddev": 12.49366106,
+            "gpu_hit_rate_by_routing_mass": 0.9350350014,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9350350014,
+            "expert_swaps": 686,
+            "gpu_routed_pairs": 456190,
+            "routed_pairs": 497760,
+            "cpu_wait_us_per_layer": 124.5053335,
+            "accepted_tokens_per_round_mtp": 1.775100402,
+            "mtp_rounds": 249,
+            "accepted_tokens_per_round_lookup": 2.409090909,
+            "lookup_rounds": 22,
+            "ngram_cache_hit_rate": 0.9819934334,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 1.485402015,
+                "decode_seconds": 1.736513358,
+                "total_seconds": 3.23184039,
+                "prompt_tokens": 4096,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 91,
+                "spec_accepted": 165,
+                "gpu_hit_rate_by_routing_mass": 0.908996118,
+                "expert_swaps": 312
+              },
+              {
+                "prefill_seconds": 1.484797953,
+                "decode_seconds": 1.545459299,
+                "total_seconds": 3.039558986,
+                "prompt_tokens": 4096,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 90,
+                "spec_accepted": 166,
+                "gpu_hit_rate_by_routing_mass": 0.9410173204,
+                "expert_swaps": 195
+              },
+              {
+                "prefill_seconds": 1.485618082,
+                "decode_seconds": 1.494117674,
+                "total_seconds": 2.992310064,
+                "prompt_tokens": 4096,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 92,
+                "spec_accepted": 164,
+                "gpu_hit_rate_by_routing_mass": 0.9516266481,
+                "expert_swaps": 179
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "corpus-4-ctx131072",
+      "capacity": 131072,
+      "suite": "corpus",
+      "report": {
+        "type": "fngine_bench_report",
+        "schema_version": 1,
+        "command": "/home/obelisk/Projects/fngine/build-main/apps/fngine-bench --pack /mnt/data/fngine/pack --ctx 131072 -p 64,512,4096 -n 256 -r 3 --warmup 1 -o json -f /tmp/fngine-timeout-context/corpus-4-ctx131072.json",
+        "environment": {
+          "gpu": "NVIDIA GeForce RTX 5090",
+          "pack": "/mnt/data/fngine/pack",
+          "model": "Qwen3.8-Flash-Next",
+          "spec": "auto",
+          "kv": "k8v8",
+          "dense": "fp8",
+          "max_context": 131072,
+          "prefill_chunk": 4096,
+          "cpu_workers": 0,
+          "use_cuda_graph": true,
+          "adaptive_experts": true,
+          "prefill_stream": true,
+          "prefill_borrow": true,
+          "gpu_experts": 11783,
+          "total_experts": 24576,
+          "predicted_gpu_hit_rate": 0.822517624,
+          "repetitions": 3,
+          "warmup": 1,
+          "corpus": "/home/obelisk/Projects/cinference (README.md + docs/**/*.md)",
+          "corpus_tokens": 136002
+        },
+        "tests": [
+          {
+            "label": "pp64+tg256",
+            "n_prompt": 64,
+            "n_gen": 256,
+            "prefill_tok_s_mean": 186.2224338,
+            "prefill_tok_s_stddev": 0.7949520004,
+            "decode_tok_s_mean": 151.8471907,
+            "decode_tok_s_stddev": 31.46179958,
+            "gpu_hit_rate_by_routing_mass": 0.9549516373,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9549516373,
+            "expert_swaps": 1532,
+            "gpu_routed_pairs": 554418,
+            "routed_pairs": 587520,
+            "cpu_wait_us_per_layer": 68.23193859,
+            "accepted_tokens_per_round_mtp": 1.104046243,
+            "mtp_rounds": 346,
+            "accepted_tokens_per_round_lookup": 1,
+            "lookup_rounds": 3,
+            "ngram_cache_hit_rate": 0.4311440678,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.342071381,
+                "decode_seconds": 2.026877576,
+                "total_seconds": 2.379955723,
+                "prompt_tokens": 64,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 151,
+                "spec_accepted": 105,
+                "gpu_hit_rate_by_routing_mass": 0.9463786406,
+                "expert_swaps": 602
+              },
+              {
+                "prefill_seconds": 0.344027686,
+                "decode_seconds": 1.79966522,
+                "total_seconds": 2.155405145,
+                "prompt_tokens": 64,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 119,
+                "spec_accepted": 137,
+                "gpu_hit_rate_by_routing_mass": 0.9405607611,
+                "expert_swaps": 479
+              },
+              {
+                "prefill_seconds": 0.344938522,
+                "decode_seconds": 1.369055356,
+                "total_seconds": 1.72283358,
+                "prompt_tokens": 64,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 113,
+                "spec_accepted": 143,
+                "gpu_hit_rate_by_routing_mass": 0.9747766032,
+                "expert_swaps": 451
+              }
+            ]
+          },
+          {
+            "label": "pp512+tg256",
+            "n_prompt": 512,
+            "n_gen": 256,
+            "prefill_tok_s_mean": 630.0565589,
+            "prefill_tok_s_stddev": 13.2774495,
+            "decode_tok_s_mean": 179.9545989,
+            "decode_tok_s_stddev": 23.09121968,
+            "gpu_hit_rate_by_routing_mass": 0.9660897487,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9660897487,
+            "expert_swaps": 1060,
+            "gpu_routed_pairs": 585291,
+            "routed_pairs": 612480,
+            "cpu_wait_us_per_layer": 66.2948994,
+            "accepted_tokens_per_round_mtp": 1.389240506,
+            "mtp_rounds": 316,
+            "accepted_tokens_per_round_lookup": 2.666666667,
+            "lookup_rounds": 3,
+            "ngram_cache_hit_rate": 0.7694256757,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 0.827356747,
+                "decode_seconds": 1.282003802,
+                "total_seconds": 2.117665157,
+                "prompt_tokens": 512,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 109,
+                "spec_accepted": 147,
+                "gpu_hit_rate_by_routing_mass": 0.9577347648,
+                "expert_swaps": 439
+              },
+              {
+                "prefill_seconds": 0.794148453,
+                "decode_seconds": 1.656329181,
+                "total_seconds": 2.459854868,
+                "prompt_tokens": 512,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 115,
+                "spec_accepted": 141,
+                "gpu_hit_rate_by_routing_mass": 0.9706476122,
+                "expert_swaps": 456
+              },
+              {
+                "prefill_seconds": 0.817087733,
+                "decode_seconds": 1.379178426,
+                "total_seconds": 2.205518986,
+                "prompt_tokens": 512,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 97,
+                "spec_accepted": 159,
+                "gpu_hit_rate_by_routing_mass": 0.9700978511,
+                "expert_swaps": 165
+              }
+            ]
+          },
+          {
+            "label": "pp4096+tg256",
+            "n_prompt": 4096,
+            "n_gen": 256,
+            "prefill_tok_s_mean": 2849.58812,
+            "prefill_tok_s_stddev": 204.4104998,
+            "decode_tok_s_mean": 142.4720446,
+            "decode_tok_s_stddev": 5.543206014,
+            "gpu_hit_rate_by_routing_mass": 0.9405028459,
+            "interval_gpu_hit_rate_by_routing_mass": 0.9405028459,
+            "expert_swaps": 537,
+            "gpu_routed_pairs": 431840,
+            "routed_pairs": 467520,
+            "cpu_wait_us_per_layer": 76.9830617,
+            "accepted_tokens_per_round_mtp": 0.9134615385,
+            "mtp_rounds": 312,
+            "accepted_tokens_per_round_lookup": 1.914893617,
+            "lookup_rounds": 47,
+            "ngram_cache_hit_rate": 0.9854659931,
+            "reused_prompt_tokens": 0,
+            "reps": [
+              {
+                "prefill_seconds": 1.499047416,
+                "decode_seconds": 1.744662277,
+                "total_seconds": 3.253744892,
+                "prompt_tokens": 4096,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 103,
+                "spec_accepted": 153,
+                "gpu_hit_rate_by_routing_mass": 0.9332579825,
+                "expert_swaps": 223
+              },
+              {
+                "prefill_seconds": 1.327448359,
+                "decode_seconds": 1.879517396,
+                "total_seconds": 3.216880225,
+                "prompt_tokens": 4096,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 150,
+                "spec_accepted": 106,
+                "gpu_hit_rate_by_routing_mass": 0.9403491875,
+                "expert_swaps": 173
+              },
+              {
+                "prefill_seconds": 1.499957865,
+                "decode_seconds": 1.771899905,
+                "total_seconds": 3.282016097,
+                "prompt_tokens": 4096,
+                "reused_prompt_tokens": 0,
+                "generated_tokens": 257,
+                "spec_rounds": 140,
+                "spec_accepted": 116,
+                "gpu_hit_rate_by_routing_mass": 0.9497593459,
+                "expert_swaps": 141
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "http_smokes": [
+    {
+      "fixture": {
+        "target_raw_tokens": 180000,
+        "raw_tokens": 180000,
+        "marker_position": 155000,
+        "expected": "COBALT-68157",
+        "utf8_bytes": 605170
+      },
+      "prompt_sha256": "a58d5e38f75036ca4fa46720542d214f06a851c77fb7a02315a3aec82cad032d",
+      "status": 200,
+      "seconds": 108.3034609589995,
+      "first_data_seconds": 0.045560476999526145,
+      "first_content_seconds": 108.14657187199919,
+      "heartbeats": 21,
+      "done": true,
+      "text": "COBALT-68157",
+      "reasoning": "",
+      "usage": {
+        "completion_tokens": 10,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "prompt_tokens": 180032,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 180042
+      },
+      "timings": {
+        "cache_n": 0,
+        "draft_n": 7,
+        "draft_n_accepted": 7,
+        "predicted_ms": 146.902048,
+        "predicted_n": 10,
+        "predicted_per_second": 61.265313333140185,
+        "predicted_per_token_ms": 16.322449777777777,
+        "prompt_ms": 108101.12136399999,
+        "prompt_n": 180032,
+        "prompt_per_second": 1665.4036306782896,
+        "prompt_per_token_ms": 0.6004550377932811
+      },
+      "passed": true
+    },
+    {
+      "fixture": {
+        "target_raw_tokens": 200000,
+        "raw_tokens": 200000,
+        "marker_position": 175000,
+        "expected": "COBALT-68157",
+        "utf8_bytes": 671612
+      },
+      "prompt_sha256": "099e13983adae7e66617fe6de7a9733d47dfa023677057ca9d33a5887389750a",
+      "status": 200,
+      "seconds": 124.60932240900001,
+      "first_data_seconds": 0.05702952499996172,
+      "first_content_seconds": 124.49367668800005,
+      "heartbeats": 24,
+      "done": true,
+      "text": "COBALT-68157",
+      "reasoning": "",
+      "usage": {
+        "completion_tokens": 10,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "prompt_tokens": 200032,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 200042
+      },
+      "timings": {
+        "cache_n": 0,
+        "draft_n": 6,
+        "draft_n_accepted": 6,
+        "predicted_ms": 105.671988,
+        "predicted_n": 10,
+        "predicted_per_second": 85.16921248798688,
+        "predicted_per_token_ms": 11.741332,
+        "prompt_ms": 124436.830831,
+        "prompt_n": 200032,
+        "prompt_per_second": 1607.4983480708154,
+        "prompt_per_token_ms": 0.6220846206157015
+      },
+      "passed": true
+    },
+    {
+      "fixture": {
+        "target_raw_tokens": 261800,
+        "raw_tokens": 261800,
+        "marker_position": 241000,
+        "expected": "COBALT-68157",
+        "utf8_bytes": 879673
+      },
+      "prompt_sha256": "572393de81937b5b57f1a107b12d0bc114e1669f7022f2aa1c59bf2c84410ba9",
+      "status": 200,
+      "seconds": 167.09181944900047,
+      "first_data_seconds": 0.07235162899996794,
+      "first_content_seconds": 166.9743941279994,
+      "heartbeats": 33,
+      "done": true,
+      "text": "COBALT-68157",
+      "reasoning": "",
+      "usage": {
+        "completion_tokens": 10,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "prompt_tokens": 261832,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 261842
+      },
+      "timings": {
+        "cache_n": 0,
+        "draft_n": 6,
+        "draft_n_accepted": 6,
+        "predicted_ms": 107.220624,
+        "predicted_n": 10,
+        "predicted_per_second": 83.93907500482369,
+        "predicted_per_token_ms": 11.913402666666666,
+        "prompt_ms": 166902.367807,
+        "prompt_n": 261832,
+        "prompt_per_second": 1568.7734298819132,
+        "prompt_per_token_ms": 0.6374406787825782
+      },
+      "passed": true
+    },
+    {
+      "status": 200,
+      "seconds": 0.31252428900006635,
+      "response": {
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "391",
+              "refusal": null,
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1791506922,
+        "id": "chatcmpl-518adf9bf5e19719",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion",
+        "timings": {
+          "cache_n": 0,
+          "draft_n": 2,
+          "draft_n_accepted": 2,
+          "predicted_ms": 48.47472,
+          "predicted_n": 4,
+          "predicted_per_second": 61.887928388240304,
+          "predicted_per_token_ms": 16.15824,
+          "prompt_ms": 253.79452400000002,
+          "prompt_n": 27,
+          "prompt_per_second": 106.38527409677286,
+          "prompt_per_token_ms": 9.399797185185186
+        },
+        "usage": {
+          "completion_tokens": 4,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "prompt_tokens": 27,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 31
+        }
+      },
+      "label": "short_after_native_context",
+      "passed": true
+    },
+    {
+      "status": 400,
+      "seconds": 0.07538392700007535,
+      "response": {
+        "error": {
+          "code": "context_length_exceeded",
+          "message": "prompt of 262145 tokens exceeds max_context 262144",
+          "param": "messages",
+          "type": "invalid_request_error"
+        }
+      },
+      "label": "over_capacity_rejected",
+      "passed": true
+    }
+  ],
+  "http_smoke_method": {
+    "fresh_prefill": true,
+    "temperature": 0,
+    "enable_thinking": false,
+    "max_tokens": 128,
+    "filler": "Repeated pre-change repository README, tokenized with the actual pack tokenizer.",
+    "marker": "RETRIEVAL CHECKPOINT: The access code for project SOLSTICE is COBALT-68157.",
+    "question": "What is the access code recorded for project SOLSTICE? Return only that code, without explanation.",
+    "scope": "Retrieval and boundary smoke checks, not broad long-context quality or steady-state long-context decode throughput."
+  },
+  "timeout": {
+    "cause": "Unlimited concurrent omp LLM calls to one inference worker exceed its 30-second pending deadline or eight-request queue.",
+    "observed_error": "inference request expired while waiting in the queue",
+    "observed_http_status": 503,
+    "example": {
+      "active_request_seconds": 30.626,
+      "concurrent_request_expired": true
+    },
+    "recommended_setting": {
+      "providers": {
+        "maxInFlightRequests": {
+          "fngine": 1
+        }
+      }
+    },
+    "persisted": false,
+    "blocker": "The configuration approval prompt was not answered; no provider-concurrency setting was changed.",
+    "verification": {
+      "method": "Two real omp CLI processes, same config root, temporary maxInFlightRequests.fngine=1, retries disabled, normal stream watchdog defaults.",
+      "permanent_provider_settings_changed": false,
+      "results": [
+        {
+          "label": "long",
+          "seconds": 129.4123377369997,
+          "exit_code": 0,
+          "messages": [
+            {
+              "stopReason": "stop",
+              "error": null,
+              "provider": "fngine",
+              "usage": {
+                "input": 200217,
+                "output": 10,
+                "cacheRead": 0,
+                "cacheWrite": 0,
+                "totalTokens": 200227,
+                "cost": {
+                  "input": 0,
+                  "output": 0,
+                  "cacheRead": 0,
+                  "cacheWrite": 0,
+                  "total": 0
+                }
+              },
+              "text": null,
+              "text_bytes": 12
+            }
+          ],
+          "events": {
+            "session": 1,
+            "agent_start": 1,
+            "turn_start": 1,
+            "message_start": 2,
+            "message_end": 2,
+            "message_update": 6,
+            "turn_end": 1,
+            "agent_end": 1
+          },
+          "stderr": "",
+          "output_bytes": 2032989
+        },
+        {
+          "label": "short",
+          "seconds": 128.13041888600128,
+          "exit_code": 0,
+          "messages": [
+            {
+              "stopReason": "stop",
+              "error": null,
+              "provider": "fngine",
+              "usage": {
+                "input": 206,
+                "output": 6,
+                "cacheRead": 0,
+                "cacheWrite": 0,
+                "totalTokens": 212,
+                "cost": {
+                  "input": 0,
+                  "output": 0,
+                  "cacheRead": 0,
+                  "cacheWrite": 0,
+                  "total": 0
+                }
+              },
+              "text": "OMP_FNGINE_OK",
+              "text_bytes": 13
+            }
+          ],
+          "events": {
+            "session": 1,
+            "agent_start": 1,
+            "turn_start": 1,
+            "message_start": 2,
+            "message_end": 2,
+            "message_update": 5,
+            "turn_end": 1,
+            "agent_end": 1
+          },
+          "stderr": "",
+          "output_bytes": 3125
+        }
+      ],
+      "passed": true,
+      "note": "The second process waited over 30 seconds outside the server request queue, then returned OMP_FNGINE_OK without a timeout."
+    },
+    "exploratory_watchdog_probe": {
+      "temporary_first_event_timeout_seconds": 5,
+      "result": "Cold long-prompt prefill hit the deliberately short first-event watchdog. This test-only override was removed; production watchdogs were never changed."
+    }
+  },
+  "deployment": {
+    "endpoint": "http://127.0.0.1:8002/v1",
+    "managed_service": "fngine-serve",
+    "project_scope": "/home/obelisk/Projects/fngine",
+    "persistent": true,
+    "command": "build-main/apps/fngine-serve --pack /mnt/data/fngine/pack --ctx 262144 --host 127.0.0.1 --port 8002 --model-id qwen3.8-flash-next",
+    "advertised_max_model_len": 262144,
+    "omp_model_name": "Qwen 3.8 Flash Next 256K (fngine)",
+    "omp_contextWindow": 262144,
+    "omp_maxTokens": 32768,
+    "registry_verification": "omp models fngine --json --no-extensions reported contextWindow 262144, maxTokens 32768; actual omp accepted a 200217-token prompt."
+  },
+  "interpretation": "No chat-generation slowdown observed in this paired sample. Short chat prefill increased 15\u201319 ms; corpus results were mixed and variable. Native capacity is not universally cost-free: longer prompts add prefill work and retire elastic expert slots. Precision and original numerical acceptance thresholds are unchanged."
+}

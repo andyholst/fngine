@@ -1,0 +1,38 @@
+{
+  "description": "GPU time-slicing between the CUDA context and the Hyprland compositor on the display GPU (RTX 5090 drives a 3840x2160 60 Hz monitor). Round-3 measurements; all diagnostic code has been removed.",
+  "environment": {
+    "compositor": "Hyprland 0.56.2 (blur 3 passes, color management on, hyprsunset running)",
+    "other_gpu_clients": ["Xwayland", "nautilus (compute+graphics)", "cinmux", "quickshell"],
+    "gpu_pstate_under_cuda_load": "P1, memory 13801 MHz of 14001 MHz max, SM 2400 MHz, no throttle reasons",
+    "nvidia_irq_cpus": {"106": 10, "107": 11, "108": 12},
+    "fngine_worker_cpus": "0-11 (one per physical core); engine thread CPU 12, n-gram I/O CPU 18"
+  },
+  "standalone_stall_detector": {
+    "method": "one CUDA thread spinning on %globaltimer for 1-3 s; a gap > 3 us means the context was not executing",
+    "desktop_normal": {"gaps_per_s": [272, 299], "stalled_fraction": [0.247, 0.272], "gap_us_p50": 1203, "gap_us_max": 1252, "gap_interarrival_us_p50": 3293},
+    "monitor_off_dpms": {"gaps_per_s": 214, "stalled_fraction": 0.194},
+    "nautilus_paused": {"stalled_fraction": 0.273},
+    "quickshell_paused": {"stalled_fraction": 0.273},
+    "xwayland_paused": {"stalled_fraction": 0.273},
+    "cinmux_paused": {"stalled_fraction": 0.273},
+    "hyprland_paused": {"gaps_per_s": 0, "stalled_fraction": 0.0}
+  },
+  "in_context_watchdog_during_decode": {
+    "method": "one-thread kernel on a side stream of the fngine process, gaps > 10 us",
+    "g1_width1": {"switched_out_fraction": [0.287, 0.289], "gap_us_avg": [863, 870]},
+    "g1_width4": {"switched_out_fraction": [0.199, 0.283], "gap_us_avg": [812, 837]}
+  },
+  "decode_with_hyprland_paused": {
+    "command": "FNGINE_NO_ROUTING_STATS=1 build-main/apps/fngine-validate --pack /mnt/data/fngine/pack --ref /mnt/data/fngine/ref --golden g1 --expert-vram-mib 22000 --no-adaptive --decode-width W --timing --limit 256 (Hyprland SIGSTOPped only while the timed steps ran; arms interleaved)",
+    "width1_ms_per_step_rep1": {"running": [11.704, 12.088], "paused": [8.477, 8.492]},
+    "width4_ms_per_step_rep1": {"running": [24.417, 24.172], "paused": [17.379, 17.375]},
+    "width1_cpu_tier_us_per_computed_layer": {"running": [141.2, 142.7], "paused": [117.9, 118.5]},
+    "width4_cpu_tier_us_per_computed_layer": {"running": [333.9, 331.4], "paused": [274.8, 274.8]}
+  },
+  "handoff_microbenchmark": {
+    "method": "GPU writes a host-mapped flag, a pinned CPU thread answers, GPU polls with ld.acquire.sys; extra CTAs poll the same host line",
+    "rtt_us_p50_by_pollers": {"1": 1.54, "2": 1.79, "5": 3.87, "10": 8.19, "20": 16.8},
+    "rtt_us_p50_by_pollers_with_11_cores_streaming_dram": {"1": 2.21, "5": 5.98, "20": 26.75},
+    "consequence": "the decode and prefill combines now poll done[l] from one thread per launch and relay it through device memory"
+  }
+}

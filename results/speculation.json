@@ -1,0 +1,26 @@
+{
+  "command": "FNGINE_TEST_PACK=/mnt/data/fngine/pack build-main/tests/test_speculative_real",
+  "passed": true,
+  "dense": "fp8",
+  "adaptive_experts": false,
+  "greedy_auto_vs_none": {
+    "prompts": 3,
+    "tokens_per_prompt": 256,
+    "first_divergence": [-1, -1, -1],
+    "auto_rounds": [123, 131, 143]
+  },
+  "mtp_first_draft_acceptance_reported": 0.842,
+  "mtp_first_draft_acceptance_minimum": 0.55,
+  "rollback": {
+    "kv": "bf16",
+    "rounds": 50,
+    "rounds_with_rejection": 37,
+    "fully_accepted_rounds": 13,
+    "committed_generated_tokens": 129,
+    "maximum_state_relative_rms_error": 0.0,
+    "maximum_allowed_relative_rms_error": 0.001,
+    "compared": ["GDN recurrent", "GDN convolution", "PLE convolution", "live indexer rings", "committed KV", "committed block keys"]
+  },
+  "linear_oracle_cases_passed": 265,
+  "linear_oracle_cases_total": 265
+}

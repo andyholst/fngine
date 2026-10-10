@@ -1,0 +1,184 @@
+Test project /home/obelisk/Projects/fngine/build-main
+      Start  1: test_exchange_layout
+ 1/44 Test  #1: test_exchange_layout .............   Passed    0.21 sec
+      Start  2: test_host_memory
+ 2/44 Test  #2: test_host_memory .................   Passed    0.39 sec
+      Start  3: test_cpu_topology
+ 3/44 Test  #3: test_cpu_topology ................   Passed    0.00 sec
+      Start  4: cpu_q8_quant
+ 4/44 Test  #4: cpu_q8_quant .....................   Passed    0.02 sec
+      Start  5: cpu_iq_kernels
+ 5/44 Test  #5: cpu_iq_kernels ...................   Passed    1.89 sec
+      Start  6: cpu_expert_pool
+ 6/44 Test  #6: cpu_expert_pool ..................   Passed    1.71 sec
+      Start  7: cpu_doorbell
+ 7/44 Test  #7: cpu_doorbell .....................   Passed    1.41 sec
+      Start  8: test_engine_session
+ 8/44 Test  #8: test_engine_session ..............   Passed    0.03 sec
+      Start  9: test_engine_real
+ 9/44 Test  #9: test_engine_real .................   Passed   24.38 sec
+      Start 10: test_adaptive_experts
+10/44 Test #10: test_adaptive_experts ............   Passed   42.51 sec
+      Start 11: test_speculation
+11/44 Test #11: test_speculation .................   Passed    0.00 sec
+      Start 12: test_ngram
+12/44 Test #12: test_ngram .......................   Passed    0.98 sec
+      Start 13: kernels_gdn_recurrent
+13/44 Test #13: kernels_gdn_recurrent ............   Passed    1.51 sec
+      Start 14: kernels_gdn_fold
+14/44 Test #14: kernels_gdn_fold .................   Passed    0.37 sec
+      Start 15: kernels_gdn_ops
+15/44 Test #15: kernels_gdn_ops ..................   Passed    0.25 sec
+      Start 16: kernels_head
+16/44 Test #16: kernels_head .....................   Passed    1.54 sec
+      Start 17: kernels_linear
+17/44 Test #17: kernels_linear ...................   Passed   25.85 sec
+      Start 18: kernels_gr
+18/44 Test #18: kernels_gr .......................   Passed    3.42 sec
+      Start 19: kernels_moe_experts
+19/44 Test #19: kernels_moe_experts ..............   Passed    2.78 sec
+      Start 20: kernels_moe_exchange
+20/44 Test #20: kernels_moe_exchange .............   Passed    0.34 sec
+      Start 21: kernels_mtp
+21/44 Test #21: kernels_mtp ......................   Passed    0.25 sec
+      Start 22: kernels_ple
+22/44 Test #22: kernels_ple ......................   Passed    0.48 sec
+      Start 23: kernels_qsa_norm_rope
+23/44 Test #23: kernels_qsa_norm_rope ............   Passed    0.36 sec
+      Start 24: kernels_qsa_kv_append
+24/44 Test #24: kernels_qsa_kv_append ............   Passed    0.72 sec
+      Start 25: kernels_qsa_indexer
+25/44 Test #25: kernels_qsa_indexer ..............   Passed    0.87 sec
+      Start 26: kernels_qsa_attention
+26/44 Test #26: kernels_qsa_attention ............   Passed    2.92 sec
+      Start 27: kernels_qsa_determinism
+27/44 Test #27: kernels_qsa_determinism ..........   Passed    4.73 sec
+      Start 28: test_pack_load
+28/44 Test #28: test_pack_load ...................   Passed    3.56 sec
+      Start 29: test_expert_swap
+29/44 Test #29: test_expert_swap .................   Passed    0.89 sec
+      Start 30: test_routing_stats
+30/44 Test #30: test_routing_stats ...............   Passed    0.28 sec
+      Start 31: test_prefill_stream
+31/44 Test #31: test_prefill_stream ..............   Passed    2.70 sec
+      Start 32: test_prefill_stream_pageable
+32/44 Test #32: test_prefill_stream_pageable .....   Passed    2.76 sec
+      Start 33: test_elastic_experts
+33/44 Test #33: test_elastic_experts .............   Passed    0.98 sec
+      Start 34: test_speculative_real
+34/44 Test #34: test_speculative_real ............   Passed   60.19 sec
+      Start 35: test_openai_schema
+35/44 Test #35: test_openai_schema ...............   Passed    0.00 sec
+      Start 36: test_serve_options
+36/44 Test #36: test_serve_options ...............   Passed    0.00 sec
+      Start 37: test_http_transport
+37/44 Test #37: test_http_transport ..............   Passed    0.00 sec
+      Start 38: test_cli_options
+38/44 Test #38: test_cli_options .................   Passed    0.00 sec
+      Start 39: test_bench_support
+39/44 Test #39: test_bench_support ...............   Passed    0.00 sec
+      Start 40: test_tokenizer
+40/44 Test #40: test_tokenizer ...................   Passed    0.42 sec
+      Start 41: test_chat_template
+41/44 Test #41: test_chat_template ...............   Passed    0.82 sec
+      Start 42: text_output_session
+42/44 Test #42: text_output_session ..............   Passed    0.42 sec
+      Start 43: text_tool_call_parser
+43/44 Test #43: text_tool_call_parser ............   Passed    0.00 sec
+      Start 44: text_prompt_lookup
+44/44 Test #44: text_prompt_lookup ...............   Passed    0.00 sec
+
+100% tests passed out of 44
+
+Total Test time (real) = 192.98 sec
+.......................                                                  [100%]
+23 passed in 2.46s
+========= COMPUTE-SANITIZER
+PASS gr_norm T=1   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=5.844e-08
+PASS gr_norm T=1   inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00
+PASS gr_norm T=3   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=1.906e-07
+PASS gr_norm T=3   inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00
+PASS gr_norm T=9   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=1.132e-07
+PASS gr_norm T=9   inject=0  Xn ratio=0.000e+00 match=0.99998  inj ratio=0.000e+00
+PASS gr_norm T=16  inject=1  Xn ratio=0.000e+00 match=0.99999  inj ratio=1.301e-07
+PASS gr_norm T=16  inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00
+PASS gr_norm T=64  inject=1  Xn ratio=0.000e+00 match=0.99999  inj ratio=1.331e-07
+PASS gr_norm T=64  inject=0  Xn ratio=0.000e+00 match=0.99999  inj ratio=0.000e+00
+PASS gr_norm T=300 inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=1.545e-07
+PASS gr_norm T=300 inject=0  Xn ratio=0.000e+00 match=0.99999  inj ratio=0.000e+00
+PASS gr_norm_down T=1   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=1.075e-07  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=1   inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=2   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=6.876e-08  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=2   inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=3   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=7.420e-08  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=3   inject=0  Xn ratio=0.000e+00 match=0.99997  inj ratio=0.000e+00  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=4   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=8.223e-08  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=4   inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=7   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=1.365e-07  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=7   inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=16  inject=1  Xn ratio=0.000e+00 match=0.99999  inj ratio=1.180e-07  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=16  inject=0  Xn ratio=0.000e+00 match=0.99999  inj ratio=0.000e+00  r ratio=0.000e+00  token-0 invariant=1
+PASS: 24/24 cases passed
+========= ERROR SUMMARY: 0 errors
+========= COMPUTE-SANITIZER
+PASS attention bf16-cache decode first token (T=1, pos 0..0, splits 33): max_abs=7.693e-03 rms(ref)=5.542e-01 max_abs/rms=1.388e-02; beyond bf16 rounding budget=4.939e-09 (tol 2.0e-03) worst=5032
+PASS attention k8v4 vs dequantized-cache oracle decode first token: max_abs=7.132e-03 rms(ref)=5.485e-01 max_abs/rms=1.300e-02; beyond bf16 rounding budget=0.000e+00 (tol 2.0e-03) worst=0
+PASS attention k8v4 vs unquantized K/V decode first token: rms_err/rms=9.815e-02 (tol 0.15), max_abs/rms=5.150e-01 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle decode first token: max_abs=7.805e-03 rms(ref)=5.530e-01 max_abs/rms=1.411e-02; beyond bf16 rounding budget=0.000e+00 (tol 2.0e-03) worst=0
+PASS attention k8v8 vs unquantized K/V decode first token: rms_err/rms=2.645e-02 (tol 0.1), max_abs/rms=1.441e-01 (tol 1.5); E4M3 K alone accounts for rms 0.000e+00
+PASS attention bf16-cache verify crossing 32-key chunk (T=4, pos 30..33, splits 33): max_abs=7.686e-03 rms(ref)=3.233e-01 max_abs/rms=2.377e-02; beyond bf16 rounding budget=2.053e-06 (tol 2.0e-03) worst=9413
+PASS attention k8v4 vs dequantized-cache oracle verify crossing 32-key chunk: max_abs=7.811e-03 rms(ref)=3.228e-01 max_abs/rms=2.420e-02; beyond bf16 rounding budget=1.906e-06 (tol 2.0e-03) worst=2102
+PASS attention k8v4 vs unquantized K/V verify crossing 32-key chunk: rms_err/rms=1.006e-01 (tol 0.15), max_abs/rms=7.272e-01 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle verify crossing 32-key chunk: max_abs=7.719e-03 rms(ref)=3.228e-01 max_abs/rms=2.392e-02; beyond bf16 rounding budget=1.450e-06 (tol 2.0e-03) worst=3950
+PASS attention k8v8 vs unquantized K/V verify crossing 32-key chunk: rms_err/rms=4.453e-02 (tol 0.1), max_abs/rms=3.855e-01 (tol 1.5); E4M3 K alone accounts for rms 3.657e-02
+PASS attention bf16-cache decode dense (T=1, pos 100..100, splits 33): max_abs=3.878e-03 rms(ref)=2.621e-01 max_abs/rms=1.480e-02; beyond bf16 rounding budget=2.916e-06 (tol 2.0e-03) worst=2914
+PASS attention k8v4 vs dequantized-cache oracle decode dense: max_abs=3.814e-03 rms(ref)=2.599e-01 max_abs/rms=1.467e-02; beyond bf16 rounding budget=7.381e-07 (tol 2.0e-03) worst=3949
+PASS attention k8v4 vs unquantized K/V decode dense: rms_err/rms=1.018e-01 (tol 0.15), max_abs/rms=7.388e-01 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle decode dense: max_abs=3.796e-03 rms(ref)=2.602e-01 max_abs/rms=1.459e-02; beyond bf16 rounding budget=1.358e-06 (tol 2.0e-03) worst=1268
+PASS attention k8v8 vs unquantized K/V decode dense: rms_err/rms=4.591e-02 (tol 0.1), max_abs/rms=4.023e-01 (tol 1.5); E4M3 K alone accounts for rms 3.796e-02
+PASS attention bf16-cache decode dense max keys (T=1, pos 2050..2050, splits 33): max_abs=3.101e-03 rms(ref)=1.195e-01 max_abs/rms=2.596e-02; beyond bf16 rounding budget=1.248e-06 (tol 2.0e-03) worst=5259
+PASS attention k8v4 vs dequantized-cache oracle decode dense max keys: max_abs=3.908e-03 rms(ref)=1.186e-01 max_abs/rms=3.295e-02; beyond bf16 rounding budget=1.256e-05 (tol 2.0e-03) worst=5144
+PASS attention k8v4 vs unquantized K/V decode dense max keys: rms_err/rms=1.092e-01 (tol 0.15), max_abs/rms=7.342e-01 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle decode dense max keys: max_abs=3.815e-03 rms(ref)=1.184e-01 max_abs/rms=3.221e-02; beyond bf16 rounding budget=1.471e-06 (tol 2.0e-03) worst=4252
+PASS attention k8v8 vs unquantized K/V decode dense max keys: rms_err/rms=6.293e-02 (tol 0.1), max_abs/rms=4.554e-01 (tol 1.5); E4M3 K alone accounts for rms 5.758e-02
+PASS attention bf16-cache verify crossing dense->sparse (T=9, pos 2045..2053, splits 19): max_abs=3.824e-03 rms(ref)=1.207e-01 max_abs/rms=3.168e-02; beyond bf16 rounding budget=2.422e-06 (tol 2.0e-03) worst=7370
+PASS attention k8v4 vs dequantized-cache oracle verify crossing dense->sparse: max_abs=2.849e-03 rms(ref)=1.210e-01 max_abs/rms=2.354e-02; beyond bf16 rounding budget=5.818e-06 (tol 2.0e-03) worst=18906
+PASS attention k8v4 vs unquantized K/V verify crossing dense->sparse: rms_err/rms=1.120e-01 (tol 0.15), max_abs/rms=1.396e+00 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle verify crossing dense->sparse: max_abs=3.527e-03 rms(ref)=1.211e-01 max_abs/rms=2.913e-02; beyond bf16 rounding budget=6.322e-06 (tol 2.0e-03) worst=24582
+PASS attention k8v8 vs unquantized K/V verify crossing dense->sparse: rms_err/rms=6.724e-02 (tol 0.1), max_abs/rms=8.790e-01 (tol 1.5); E4M3 K alone accounts for rms 6.188e-02
+PASS attention bf16-cache decode sparse (T=1, pos 5999..5999, splits 33): max_abs=3.468e-03 rms(ref)=1.308e-01 max_abs/rms=2.652e-02; beyond bf16 rounding budget=1.036e-06 (tol 2.0e-03) worst=5621
+PASS attention k8v4 vs dequantized-cache oracle decode sparse: max_abs=2.412e-03 rms(ref)=1.305e-01 max_abs/rms=1.849e-02; beyond bf16 rounding budget=2.540e-06 (tol 2.0e-03) worst=3399
+PASS attention k8v4 vs unquantized K/V decode sparse: rms_err/rms=1.091e-01 (tol 0.15), max_abs/rms=8.631e-01 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle decode sparse: max_abs=3.691e-03 rms(ref)=1.301e-01 max_abs/rms=2.837e-02; beyond bf16 rounding budget=4.866e-06 (tol 2.0e-03) worst=1195
+PASS attention k8v8 vs unquantized K/V decode sparse: rms_err/rms=5.848e-02 (tol 0.1), max_abs/rms=4.291e-01 (tol 1.5); E4M3 K alone accounts for rms 5.311e-02
+PASS attention bf16-cache verify sparse T=3 (T=3, pos 4000..4002, splits 33): max_abs=3.277e-03 rms(ref)=1.147e-01 max_abs/rms=2.857e-02; beyond bf16 rounding budget=2.469e-06 (tol 2.0e-03) worst=13389
+PASS attention k8v4 vs dequantized-cache oracle verify sparse T=3: max_abs=3.633e-03 rms(ref)=1.150e-01 max_abs/rms=3.159e-02; beyond bf16 rounding budget=2.817e-06 (tol 2.0e-03) worst=14099
+PASS attention k8v4 vs unquantized K/V verify sparse T=3: rms_err/rms=1.102e-01 (tol 0.15), max_abs/rms=1.212e+00 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle verify sparse T=3: max_abs=2.539e-03 rms(ref)=1.145e-01 max_abs/rms=2.217e-02; beyond bf16 rounding budget=1.127e-05 (tol 2.0e-03) worst=1263
+PASS attention k8v8 vs unquantized K/V verify sparse T=3: rms_err/rms=5.976e-02 (tol 0.1), max_abs/rms=5.262e-01 (tol 1.5); E4M3 K alone accounts for rms 5.367e-02
+PASS attention bf16-cache verify sparse T=9 (T=9, pos 5990..5998, splits 19): max_abs=3.770e-03 rms(ref)=1.336e-01 max_abs/rms=2.823e-02; beyond bf16 rounding budget=1.684e-06 (tol 2.0e-03) worst=48922
+PASS attention k8v4 vs dequantized-cache oracle verify sparse T=9: max_abs=3.840e-03 rms(ref)=1.339e-01 max_abs/rms=2.867e-02; beyond bf16 rounding budget=3.781e-06 (tol 2.0e-03) worst=17141
+PASS attention k8v4 vs unquantized K/V verify sparse T=9: rms_err/rms=1.095e-01 (tol 0.15), max_abs/rms=1.205e+00 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle verify sparse T=9: max_abs=3.775e-03 rms(ref)=1.336e-01 max_abs/rms=2.825e-02; beyond bf16 rounding budget=3.097e-06 (tol 2.0e-03) worst=25585
+PASS attention k8v8 vs unquantized K/V verify sparse T=9: rms_err/rms=6.152e-02 (tol 0.1), max_abs/rms=6.320e-01 (tol 1.5); E4M3 K alone accounts for rms 5.556e-02
+PASS attention bf16-cache verify sparse T=16 (T=16, pos 3000..3015, splits 11): max_abs=3.674e-03 rms(ref)=1.183e-01 max_abs/rms=3.104e-02; beyond bf16 rounding budget=4.315e-06 (tol 2.0e-03) worst=49897
+PASS attention k8v4 vs dequantized-cache oracle verify sparse T=16: max_abs=3.827e-03 rms(ref)=1.181e-01 max_abs/rms=3.241e-02; beyond bf16 rounding budget=6.377e-06 (tol 2.0e-03) worst=12998
+PASS attention k8v4 vs unquantized K/V verify sparse T=16: rms_err/rms=1.094e-01 (tol 0.15), max_abs/rms=1.291e+00 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle verify sparse T=16: max_abs=3.650e-03 rms(ref)=1.180e-01 max_abs/rms=3.094e-02; beyond bf16 rounding budget=5.292e-06 (tol 2.0e-03) worst=25879
+PASS attention k8v8 vs unquantized K/V verify sparse T=16: rms_err/rms=5.999e-02 (tol 0.1), max_abs/rms=8.538e-01 (tol 1.5); E4M3 K alone accounts for rms 5.414e-02
+PASS attention bf16-cache prefill dense (T=256, pos 0..255, splits 1): max_abs=7.811e-03 rms(ref)=2.696e-01 max_abs/rms=2.898e-02; beyond bf16 rounding budget=9.413e-06 (tol 2.0e-03) worst=50072
+PASS attention k8v4 vs dequantized-cache oracle prefill dense: max_abs=7.781e-03 rms(ref)=2.698e-01 max_abs/rms=2.884e-02; beyond bf16 rounding budget=5.723e-06 (tol 2.0e-03) worst=1553669
+PASS attention k8v4 vs unquantized K/V prefill dense: rms_err/rms=1.033e-01 (tol 0.15), max_abs/rms=1.251e+00 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle prefill dense: max_abs=7.806e-03 rms(ref)=2.693e-01 max_abs/rms=2.898e-02; beyond bf16 rounding budget=4.999e-06 (tol 2.0e-03) worst=968426
+PASS attention k8v8 vs unquantized K/V prefill dense: rms_err/rms=4.880e-02 (tol 0.1), max_abs/rms=8.379e-01 (tol 1.5); E4M3 K alone accounts for rms 4.106e-02
+PASS attention bf16-cache prefill sparse (T=256, pos 5800..6055, splits 1): max_abs=7.631e-03 rms(ref)=1.246e-01 max_abs/rms=6.124e-02; beyond bf16 rounding budget=5.957e-05 (tol 2.0e-03) worst=82138
+PASS attention k8v4 vs dequantized-cache oracle prefill sparse: max_abs=7.225e-03 rms(ref)=1.245e-01 max_abs/rms=5.804e-02; beyond bf16 rounding budget=3.766e-05 (tol 2.0e-03) worst=1084679
+PASS attention k8v4 vs unquantized K/V prefill sparse: rms_err/rms=1.097e-01 (tol 0.15), max_abs/rms=2.065e+00 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle prefill sparse: max_abs=7.662e-03 rms(ref)=1.245e-01 max_abs/rms=6.155e-02; beyond bf16 rounding budget=4.393e-05 (tol 2.0e-03) worst=473291
+PASS attention k8v8 vs unquantized K/V prefill sparse: rms_err/rms=6.105e-02 (tol 0.1), max_abs/rms=1.226e+00 (tol 1.5); E4M3 K alone accounts for rms 5.515e-02
+k8v4 vs unquantized K/V over all cases: worst rms_err/rms 1.120e-01, worst max_abs/rms 2.065e+00
+k8v8 vs unquantized K/V over all cases: worst rms_err/rms 6.724e-02, worst max_abs/rms 1.226e+00
+========= ERROR SUMMARY: 0 errors
+
+
+Wall time: 202.76 seconds

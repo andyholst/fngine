@@ -1,0 +1,417 @@
+{
+  "round": 5,
+  "date": "2026-10-04",
+  "model": "Qwen3.8-Flash-Next",
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "conclusion": "Small exact-width CUDA improvement retained; no credible across-the-board whole-model speedup established. Faster isolated kernels and peak token rates were not sufficient to retain broader rewrites.",
+  "baseline": {
+    "description": "Frozen round-four build",
+    "binaries": "/mnt/data/fngine/baseline-round4/bin",
+    "bench_sha256": "2f7fa97e8b59cc71aa0d91e9b33c0785e00cecf32c69818d5f3f9e326cf8b5b1"
+  },
+  "selected": {
+    "bench_sha256": "8977f839996bb2955d58f46e86e7d1bf8477238addab297bdeee98de49c9044d",
+    "runtime_changes": [
+      {
+        "path": "src/kernels/gr/gr.cu",
+        "symbol": "gr_norm_down_kernel",
+        "description": "Expose the exact count for existing one/two-token specializations and compact their shared scratch. Preserve launch geometry, arithmetic order, register-held weight reuse, and all wider-token batching.",
+        "source_sha256": "db1276b83f192287c13cbda041124de1bbfac9a234fc585b933eadc939745c5b"
+      }
+    ],
+    "test_changes": [
+      {
+        "path": "tests/model/test_elastic_experts.cpp",
+        "description": "Order assertion readback on the nonblocking producer stream, then wait on that stream; no production synchronization added."
+      },
+      {
+        "path": "tests/kernels/qsa/test_qsa_attention.cu",
+        "description": "Poison scratch, reject non-finite output, and exercise first-token and 32-key chunk boundaries."
+      }
+    ]
+  },
+  "unchanged": {
+    "weights": true,
+    "precision": true,
+    "numerical_thresholds": true,
+    "mtp_drafts": 3,
+    "draft_vocabulary": 32768,
+    "language": "C++20/CUDA",
+    "desktop_and_hardware_configuration": true
+  },
+  "method": {
+    "order": [
+      [
+        "base",
+        "current"
+      ],
+      [
+        "current",
+        "base"
+      ]
+    ],
+    "warmup_per_process": 1,
+    "measured_repetitions_per_process": 3,
+    "measured_repetitions_per_variant_per_case": 6,
+    "routing_stats_persistence_disabled": true,
+    "desktop_running": true,
+    "note": "Benchmarks include adaptive expert placement and controller decisions. Report descriptive sample standard deviations, not confidence intervals or an asserted causal whole-model speedup."
+  },
+  "throughput": [
+    {
+      "suite": "coding",
+      "case": "coding-turn1",
+      "base": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 183.97244221568616,
+        "decode_tok_s_sample_sd": 12.871365153878846,
+        "process_decode_means": [
+          174.6972909,
+          193.2475935
+        ],
+        "prefill_tok_s_mean": 194.9666785
+      },
+      "current": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 204.85829512753367,
+        "decode_tok_s_sample_sd": 12.662797040921,
+        "process_decode_means": [
+          204.0561859,
+          205.6604043
+        ],
+        "prefill_tok_s_mean": 184.7829663
+      },
+      "decode_change_percent": 11.352707318719668
+    },
+    {
+      "suite": "coding",
+      "case": "coding-turn2",
+      "base": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 181.25658351622303,
+        "decode_tok_s_sample_sd": 5.420112150147674,
+        "process_decode_means": [
+          183.8185374,
+          178.6946296
+        ],
+        "prefill_tok_s_mean": 729.29551975
+      },
+      "current": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 204.0057563603433,
+        "decode_tok_s_sample_sd": 22.053233491741462,
+        "process_decode_means": [
+          190.2002367,
+          217.811276
+        ],
+        "prefill_tok_s_mean": 680.6697242
+      },
+      "decode_change_percent": 12.550811894832027
+    },
+    {
+      "suite": "coding-131k",
+      "case": "coding-turn1",
+      "base": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 187.93764654685822,
+        "decode_tok_s_sample_sd": 13.230319375359318,
+        "process_decode_means": [
+          185.1961525,
+          190.6791406
+        ],
+        "prefill_tok_s_mean": 190.73149625000002
+      },
+      "current": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 185.3710515209676,
+        "decode_tok_s_sample_sd": 12.136331145903032,
+        "process_decode_means": [
+          180.0041755,
+          190.7379276
+        ],
+        "prefill_tok_s_mean": 186.21704540000002
+      },
+      "decode_change_percent": -1.365663065941769
+    },
+    {
+      "suite": "coding-131k",
+      "case": "coding-turn2",
+      "base": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 195.11324939263858,
+        "decode_tok_s_sample_sd": 13.317468505211194,
+        "process_decode_means": [
+          185.8943936,
+          204.3321052
+        ],
+        "prefill_tok_s_mean": 703.0810124
+      },
+      "current": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 185.82261994904556,
+        "decode_tok_s_sample_sd": 9.403427191873147,
+        "process_decode_means": [
+          179.3219576,
+          192.3232823
+        ],
+        "prefill_tok_s_mean": 705.65161715
+      },
+      "decode_change_percent": -4.761659944936336
+    },
+    {
+      "suite": "corpus",
+      "case": "pp1024+tg256",
+      "base": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 151.6584089996946,
+        "decode_tok_s_sample_sd": 29.05282257171101,
+        "process_decode_means": [
+          170.8732455,
+          132.4435725
+        ],
+        "prefill_tok_s_mean": 1030.1039115
+      },
+      "current": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 138.1618285192598,
+        "decode_tok_s_sample_sd": 23.70483562099711,
+        "process_decode_means": [
+          132.0938624,
+          144.2297947
+        ],
+        "prefill_tok_s_mean": 999.2453972999999
+      },
+      "decode_change_percent": -8.899328807057415
+    },
+    {
+      "suite": "corpus",
+      "case": "pp4096+tg256",
+      "base": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 142.0630942999923,
+        "decode_tok_s_sample_sd": 17.95453051851191,
+        "process_decode_means": [
+          136.4578466,
+          147.668342
+        ],
+        "prefill_tok_s_mean": 2845.9624814999997
+      },
+      "current": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 145.90185757383927,
+        "decode_tok_s_sample_sd": 10.458066074147014,
+        "process_decode_means": [
+          152.4777538,
+          139.3259613
+        ],
+        "prefill_tok_s_mean": 2732.1684809999997
+      },
+      "decode_change_percent": 2.7021537808691765
+    },
+    {
+      "suite": "corpus",
+      "case": "pp32768+tg256",
+      "base": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 95.81435092342808,
+        "decode_tok_s_sample_sd": 12.618010196636442,
+        "process_decode_means": [
+          97.29090385,
+          94.337798
+        ],
+        "prefill_tok_s_mean": 3246.24956
+      },
+      "current": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 115.8439043069701,
+        "decode_tok_s_sample_sd": 12.150814200131562,
+        "process_decode_means": [
+          119.9175036,
+          111.770305
+        ],
+        "prefill_tok_s_mean": 3199.3024305
+      },
+      "decode_change_percent": 20.904544246768463
+    },
+    {
+      "suite": "plain",
+      "case": "pp1024+tg256",
+      "base": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 117.30269445435582,
+        "decode_tok_s_sample_sd": 13.375195375899688,
+        "process_decode_means": [
+          106.3805297,
+          128.2248592
+        ],
+        "prefill_tok_s_mean": 1181.3657215
+      },
+      "current": {
+        "repetitions": 6,
+        "decode_tok_s_mean": 116.77992114176625,
+        "decode_tok_s_sample_sd": 17.509407038160063,
+        "process_decode_means": [
+          121.0116258,
+          112.5482165
+        ],
+        "prefill_tok_s_mean": 1077.4315889999998
+      },
+      "decode_change_percent": -0.4456618111129407
+    }
+  ],
+  "kernel_results": {
+    "report": "round5/gr-microbench.json",
+    "one_token_64_weight_sets_us": [
+      3.206,
+      2.884
+    ],
+    "two_tokens_64_weight_sets_us": [
+      4.51,
+      3.934
+    ],
+    "four_tokens_64_weight_sets_us": [
+      5.528,
+      5.502
+    ],
+    "complete_output_byte_matches": 6
+  },
+  "rejected_experiments": [
+    {
+      "experiment": "Token-parallel GR tiling and compact per-tile scratch",
+      "result": "Faster isolated timings, but corpus regressions in repeated end-to-end runs. Reverted token parallelism and preserved the original wider-token weight reuse."
+    },
+    {
+      "experiment": "Skipping empty QSA split-workspace traffic",
+      "result": "63/63 output comparisons were byte-identical and short-context verify microbenchmarks improved. Combined GR+QSA runs regressed small-context coding; no sufficiently consistent whole-model benefit. Reverted."
+    },
+    {
+      "experiment": "Integer tensor-core MoE down, including wider CTA tiles and shared layouts",
+      "result": "20/20 complete output comparisons were byte-identical; slower than the existing SIMT path. Reverted."
+    },
+    {
+      "experiment": "Quantize MoE intermediate once in a separate pass",
+      "result": "No decode-width benefit; added launch/workspace cost. Reverted."
+    },
+    {
+      "experiment": "Alternative IQ sign-mask arithmetic",
+      "result": "No measured win. Reverted."
+    },
+    {
+      "experiment": "Fourth MTP draft",
+      "result": "No repeatable throughput improvement. Reverted."
+    },
+    {
+      "experiment": "65536-entry and full-vocabulary draft heads",
+      "result": "No repeatable throughput improvement. Used temporary symlink pack overlays; original weight and draft-vocabulary files were not rewritten. Reverted."
+    },
+    {
+      "experiment": "Conditional-acceptance priors [0.7,0.75,0.75]",
+      "result": "Profiled later conditional acceptance near 0.74-0.75, but paired model throughput did not improve. Reverted."
+    },
+    {
+      "experiment": "Only compact shared scratch without exposing exact token count",
+      "result": "Small isolated difference; final version additionally exposes compile-time token counts."
+    }
+  ],
+  "verification": {
+    "build_passed": true,
+    "cpp_cuda": {
+      "passed": 44,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 192.98
+    },
+    "python": {
+      "passed": 23,
+      "failed": 0,
+      "seconds": 2.46
+    },
+    "cuda_memcheck": {
+      "kernels_gr_errors": 0,
+      "kernels_qsa_attention_errors": 0
+    },
+    "fidelity": {
+      "report": "round5/fidelity.json",
+      "golden": "g2",
+      "positions_per_width": 1023,
+      "widths": [
+        1,
+        2,
+        4
+      ],
+      "saved_full_logit_rows_per_width": 127,
+      "baseline_top1_agreement": 1.0,
+      "baseline_mean_kld": 0.0,
+      "baseline_max_kld": 0.0,
+      "hf_reference_status": "fail, unchanged; validators still exit 1"
+    },
+    "lossless_speculation": {
+      "greedy_prompts": 3,
+      "tokens_per_prompt": 256,
+      "first_divergence": [
+        -1,
+        -1,
+        -1
+      ],
+      "first_draft_acceptance": 0.727,
+      "mixed_verify_rounds": 50,
+      "rounds_with_rejection": 37,
+      "fully_accepted_rounds": 13,
+      "committed_tokens": 129,
+      "worst_checked_state_relative_error": 0.0,
+      "session_snapshot_state_and_continuation_identical": true
+    },
+    "http": {
+      "health": 200,
+      "arithmetic": "391",
+      "sse_done": true,
+      "generated_code_checks": [
+        "empty list",
+        "singleton node identity",
+        "three-node identity and reversed links"
+      ],
+      "server_stopped": true
+    }
+  },
+  "failure_history": [
+    {
+      "event": "Earlier speculative test aborted in cudaGraphInstantiate with cudaErrorMemoryAllocation",
+      "observed": "43 other C++/CUDA tests passed. No kernel OOM/NVRM event found. An instrumented rerun and subsequent uninstrumented full suites passed.",
+      "resolution": "Root cause not proven; no exception suppression or production reserve change. Temporary allocation logging removed. Later model subprocesses disabled core generation only for those children."
+    },
+    {
+      "event": "Earlier elastic-expert test read its slot map before asynchronous writes completed",
+      "resolution": "Fixed test readback stream ordering; ten consecutive targeted runs and both later full suites passed."
+    }
+  ],
+  "limits": [
+    "The shared desktop and adaptive runtime produce substantial process-to-process and repetition variance; final corpus and coding results have mixed signs.",
+    "Earlier profiling on this same workstation measured desktop GPU time slicing at 20-29% of decode time. Desktop settings were not changed in this pass.",
+    "Previously measured PCIe 5.0 x4 link is about 11.8 GB/s; host DRAM reads about 49-57 GB/s. No physical, firmware, clock, power or desktop changes were made.",
+    "Dense FP8 measurements earlier in this pass were about 28.8-29 us for 16384x2560 and 376-381 us for the full 248320x2560 head: about 1.45 and 1.69 TB/s effective weight throughput, not hardware-counter measurements.",
+    "Nsight Compute performance counters were permission-denied; CUDA event timings and paired actual-program runs were used.",
+    "Existing HF-reference numerical gates are not all met. This optimization did not change thresholds or add lower precision."
+  ],
+  "artifacts": {
+    "benchmarks": "round5/benchmarks.json",
+    "trial_benchmarks": "round5/trials.json",
+    "kernel_measurements": "round5/gr-microbench.json",
+    "fidelity": "round5/fidelity.json",
+    "http_smoke": "round5/api-smoke.json",
+    "final_verification_output": "round5/verification.log",
+    "model_test_details": "round5/model-tests.log",
+    "earlier_test_race_and_reruns": "round5/earlier-checks.log"
+  },
+  "cleanup": {
+    "temporary_harnesses_removed": true,
+    "baseline_preserved_at": "/mnt/data/fngine/baseline-round4",
+    "core_dump": {
+      "path": "/var/lib/systemd/coredump/core.test_speculativ.1000.13a735c506df4186bfe1f63e97f52ab7.158905.1791098587000000.zst",
+      "bytes": 28418681659,
+      "owner": "root:root",
+      "removed": false,
+      "reason": "No passwordless sudo and the root-owned coredump directory is not writable by this user.",
+      "privileged_cleanup_command": "sudo rm -- /var/lib/systemd/coredump/core.test_speculativ.1000.13a735c506df4186bfe1f63e97f52ab7.158905.1791098587000000.zst"
+    }
+  }
+}

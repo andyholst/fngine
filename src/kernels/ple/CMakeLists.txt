@@ -1,0 +1,4 @@
+add_library(fngine_kernels_ple STATIC ple.cu)
+fngine_cuda_target(fngine_kernels_ple)
+fngine_internal_includes(fngine_kernels_ple)
+target_link_libraries(fngine_kernels_ple PUBLIC fngine_core)

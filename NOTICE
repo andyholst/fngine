@@ -1,0 +1,56 @@
+fngine
+A C++/CUDA inference engine for Qwen3.8-Flash-Next on one RTX 5090.
+
+fngine is derived in part from Cinference (commit 383e5db), which is derived
+from NInfer. Files copied or adapted from those projects carry a header of the
+form "Modified for fngine from <project>:<path> @ <commit>. See NOTICE."
+The Apache License, Version 2.0 text is retained unchanged in LICENSE.
+
+Cinference
+https://github.com/satellitedown/cinference
+
+Cinference is derived from NInfer by Neroued and its contributors:
+https://github.com/Neroued/ninfer
+NInfer is distributed under the Apache License, Version 2.0. The original
+LICENSE is retained unchanged in this distribution.
+
+Upstream base commit:
+9e163eee4b8acec21ab0ac765107b6a3f287b217
+Modified source snapshot:
+44e9603cac541afb5bb5e637da4c0e45653e62e3
+
+Modifications by fngine: the copied runtime, kernel, frontend and serving code
+is restricted to the Qwen3.8-Flash-Next (qwen4_exp) text model, re-instantiated
+for hidden size 2560, four residual streams with gated-residual mixing, 36 Gated
+DeltaNet and 12 sparse-attention layers, CPU/GPU split mixture-of-experts with
+native GGUF i-quant experts, and an n-gram (PLE) embedding read from storage.
+Vision, DFlash2, verify trees, NVFP4 and multi-request batching are removed.
+
+ggml / llama.cpp
+https://github.com/ggml-org/llama.cpp
+Copyright (c) 2023-2026 The ggml authors; MIT License.
+third_party/ggml-iq contains block definitions, lookup tables and reference
+(de)quantization and dot-product routines extracted from ggml commit
+3cf03257f219afbe7334045ff7c6a06ac68c627d (as vendored in Strata), with its
+LICENSE in third_party/ggml-iq/LICENSE. GPU and x86 i-quant kernels under
+src/kernels/moe and src/cpu are ported from ggml-cuda (vecdotq.cuh,
+dequantize.cuh) and ggml-cpu (arch/x86/quants.c) at the same commit.
+
+Vendored dependencies retain their original copyright and license notices:
+- cpp-httplib: third_party/cpp-httplib/LICENSE
+  Copyright (c) 2017 yhirose; MIT License.
+- llama-jinja: third_party/llama-jinja/LICENSE
+  Copyright (c) 2023-2026 The ggml authors; MIT License.
+- nlohmann/json: third_party/nlohmann/LICENSE.MIT
+  Copyright (c) 2013-2025 Niels Lohmann; MIT License.
+- spdlog: third_party/spdlog/LICENSE
+  Copyright (c) 2016 - present, Gabi Melman and spdlog contributors; MIT License.
+  Its bundled fmt code also retains its own copyright and MIT license notices.
+- utf8proc: third_party/utf8proc/LICENSE.md
+  Includes the original Public Software Group and subsequent contributor
+  notices, along with the Unicode data notices reproduced in that file.
+
+No model weights are included in this source distribution. The Qwen3.8-Flash-Next
+weights (Qwen Community License 1.0, Qwen) and the ISTA-DASLab GSQ-RCO GGUF
+quantization (Apache-2.0, inheriting the base model's license) carry their own
+licenses and notices.

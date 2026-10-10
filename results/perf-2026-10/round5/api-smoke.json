@@ -1,0 +1,391 @@
+{
+  "health": {
+    "http_status": 200,
+    "body": {
+      "status": "ok"
+    }
+  },
+  "benchmark_build_sha256": "8977f839996bb2955d58f46e86e7d1bf8477238addab297bdeee98de49c9044d",
+  "arithmetic": {
+    "request": {
+      "model": "qwen3.8-flash-next",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is 17 times 23? Reply with only the integer."
+        }
+      ],
+      "max_tokens": 32,
+      "temperature": 0
+    },
+    "http_status": 200,
+    "response": {
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "logprobs": null,
+          "message": {
+            "content": "391",
+            "refusal": null,
+            "role": "assistant"
+          }
+        }
+      ],
+      "created": 1791104734,
+      "id": "chatcmpl-4f9185734368121f",
+      "model": "qwen3.8-flash-next",
+      "object": "chat.completion",
+      "timings": {
+        "cache_n": 0,
+        "draft_n": 2,
+        "draft_n_accepted": 2,
+        "predicted_ms": 33.498875,
+        "predicted_n": 4,
+        "predicted_per_second": 89.55524625826988,
+        "predicted_per_token_ms": 11.166291666666666,
+        "prompt_ms": 297.131069,
+        "prompt_n": 28,
+        "prompt_per_second": 94.23450766772558,
+        "prompt_per_token_ms": 10.611823892857144
+      },
+      "usage": {
+        "completion_tokens": 4,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "prompt_tokens": 28,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 32
+      }
+    },
+    "seconds": 0.3396737509756349
+  },
+  "streamed_code": {
+    "request": {
+      "model": "qwen3.8-flash-next",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Write only Python code for an iterative reverse_linked_list(head) function. Nodes have a next attribute. Reverse the links in place and return the new head. No imports, no node class, no helper functions."
+        }
+      ],
+      "max_tokens": 192,
+      "temperature": 0,
+      "stream": true
+    },
+    "http_status": 200,
+    "done": true,
+    "events": [
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": "",
+              "role": "assistant"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": "```"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": "python\ndef"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": " reverse_linked_list"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": "(head):\n"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": "    prev = None"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": "\n    current"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": " = head\n   "
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": " while current:\n"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": "        next_node"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": " = current.next\n"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": "        current.next ="
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": " prev\n        prev"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": " = current\n       "
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": " current = next_node"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": "\n    return prev"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {
+              "content": "\n```"
+            },
+            "finish_reason": null,
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk"
+      },
+      {
+        "choices": [
+          {
+            "delta": {},
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null
+          }
+        ],
+        "created": 1791104734,
+        "id": "chatcmpl-d2dfcd64d423835c",
+        "model": "qwen3.8-flash-next",
+        "object": "chat.completion.chunk",
+        "timings": {
+          "cache_n": 0,
+          "draft_n": 42,
+          "draft_n_accepted": 40,
+          "predicted_ms": 338.595217,
+          "predicted_n": 55,
+          "predicted_per_second": 159.48246545963465,
+          "predicted_per_token_ms": 6.270281796296296,
+          "prompt_ms": 213.32148800000002,
+          "prompt_n": 54,
+          "prompt_per_second": 253.13905554605918,
+          "prompt_per_token_ms": 3.9503979259259263
+        }
+      }
+    ],
+    "text": "```python\ndef reverse_linked_list(head):\n    prev = None\n    current = head\n    while current:\n        next_node = current.next\n        current.next = prev\n        prev = current\n        current = next_node\n    return prev\n```",
+    "seconds": 0.5634321579709649
+  },
+  "generated_code_checks": {
+    "empty": true,
+    "singleton_identity": true,
+    "three_node_identity_and_reversal": true
+  }
+}

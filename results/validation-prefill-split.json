@@ -1,0 +1,26 @@
+{
+ "g2": {
+  "comparison": {
+   "baseline": "/tmp/fngine-g2-aligned-cpu.bin",
+   "kld_rows": 256,
+   "max_kld": 0.08570860234146176,
+   "mean_kld": 0.009466359706526987,
+   "pass": false,
+   "top1": 0.9515380859375
+  },
+  "kld_rows": 256,
+  "max_kld": 0.27439878317490923,
+  "mean_kld": 0.028708053909576658,
+  "positions": 8192,
+  "seconds": 7.670689353,
+  "top1": 0.91064453125
+ },
+ "mode": {
+  "dense": "fp8",
+  "kv": "k8v8",
+  "prefill_borrow": false,
+  "prefill_stream": true,
+  "ref_dtype": "fp32"
+ },
+ "status": "fail"
+}

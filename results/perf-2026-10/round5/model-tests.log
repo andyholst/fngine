@@ -1,0 +1,1813 @@
+Start testing: Oct 04 03:59 CDT
+----------------------------------------------------------
+1/44 Testing: test_exchange_layout
+1/44 Test: test_exchange_layout
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_exchange_layout"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_exchange_layout" start time: Oct 04 03:59 CDT
+Output:
+----------------------------------------------------------
+PASS exchange round trips
+<end of output>
+Test time =   0.21 sec
+----------------------------------------------------------
+Test Passed.
+"test_exchange_layout" end time: Oct 04 03:59 CDT
+"test_exchange_layout" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/44 Testing: test_host_memory
+2/44 Test: test_host_memory
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_host_memory"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_host_memory" start time: Oct 04 03:59 CDT
+Output:
+----------------------------------------------------------
+direct io: O_DIRECT
+host fill: 54549870 payload bytes, 54559954 read
+upload: 54549870 payload bytes, 54555858 read, 3.85 GB/s
+PASS host memory
+<end of output>
+Test time =   0.39 sec
+----------------------------------------------------------
+Test Passed.
+"test_host_memory" end time: Oct 04 03:59 CDT
+"test_host_memory" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/44 Testing: test_cpu_topology
+3/44 Test: test_cpu_topology
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_cpu_topology"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_cpu_topology" start time: Oct 04 03:59 CDT
+Output:
+----------------------------------------------------------
+x3d: ccd0: L3 96 MiB, 6 cores, 12 cpus; ccd1: L3 32 MiB, 6 cores, 12 cpus; engine cpu 12, io cpu 18, workers [0,1,2,3,4,5,6,7,8,9,10,11]
+one ccd: ccd0: L3 16 MiB, 4 cores, 4 cpus; engine cpu 0, io cpu 1, workers [3,4]
+smt: ccd0: L3 8 MiB, 1 cores, 2 cpus; ccd1: L3 8 MiB, 1 cores, 1 cpus; engine cpu 2, io cpu 3, workers [0]
+host: ccd0: L3 96 MiB, 6 cores, 12 cpus; ccd1: L3 32 MiB, 6 cores, 12 cpus; engine cpu 12, io cpu 18, workers [0,1,2,3,4,5,6,7,8,9,10,11]
+PASS cpu topology
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_cpu_topology" end time: Oct 04 03:59 CDT
+"test_cpu_topology" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/44 Testing: cpu_q8_quant
+4/44 Test: cpu_q8_quant
+Command: "/home/obelisk/Projects/fngine/build-main/tests/cpu_q8_quant"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"cpu_q8_quant" start time: Oct 04 03:59 CDT
+Output:
+----------------------------------------------------------
+PASS q8 quantizers: 8000 Q8_K blocks, 64000 Q8_0 blocks, 0 mismatches
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"cpu_q8_quant" end time: Oct 04 03:59 CDT
+"cpu_q8_quant" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/44 Testing: cpu_iq_kernels
+5/44 Test: cpu_iq_kernels
+Command: "/home/obelisk/Projects/fngine/build-main/tests/cpu_iq_kernels"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"cpu_iq_kernels" start time: Oct 04 03:59 CDT
+Output:
+----------------------------------------------------------
+PASS BF16 IQ2_S K=2560 T=1 vs FP64: max_abs=8.529e-06 rms(ref)=4.282e+01 ratio=1.992e-07 (tol 1.0e-04) worst=2
+PASS BF16 IQ2_S K=2560 T=3 vs FP64: max_abs=8.529e-06 rms(ref)=4.130e+01 ratio=2.065e-07 (tol 1.0e-04) worst=6
+PASS BF16 IQ2_S K=2560 T=9 vs FP64: max_abs=8.648e-06 rms(ref)=4.388e+01 ratio=1.971e-07 (tol 1.0e-04) worst=13
+PASS BF16 IQ2_S K=2560 T=64 vs FP64: max_abs=1.311e-05 rms(ref)=3.483e+01 ratio=3.765e-07 (tol 1.0e-04) worst=182
+PASS BF16 IQ2_S K=2560: exact dequantization and batch-invariant arithmetic
+PASS synthetic IQ2_S K=2560: 8-row x 64-token GEMM bit-identical to single-row T=1
+PASS synthetic IQ2_S K=2560 rows=8 T=1 vs FP64: max_abs=6.055e-06 rms(ref)=4.044e+01 ratio=1.497e-07 (tol 1.0e-04) worst=5
+PASS synthetic IQ2_S K=2560 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ2_S K=2560 rows=8 T=3 vs FP64: max_abs=1.233e-05 rms(ref)=4.495e+01 ratio=2.743e-07 (tol 1.0e-04) worst=8
+PASS synthetic IQ2_S K=2560 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ2_S K=2560 rows=8 T=9 vs FP64: max_abs=1.233e-05 rms(ref)=4.391e+01 ratio=2.807e-07 (tol 1.0e-04) worst=20
+PASS synthetic IQ2_S K=2560 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ2_S K=2560 rows=8 T=64 vs FP64: max_abs=2.539e-05 rms(ref)=6.752e+01 ratio=3.761e-07 (tol 1.0e-04) worst=120
+PASS synthetic IQ2_S K=2560 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 IQ3_XXS K=2560 T=1 vs FP64: max_abs=1.651e-05 rms(ref)=6.687e+01 ratio=2.469e-07 (tol 1.0e-04) worst=4
+PASS BF16 IQ3_XXS K=2560 T=3 vs FP64: max_abs=2.180e-05 rms(ref)=8.504e+01 ratio=2.564e-07 (tol 1.0e-04) worst=13
+PASS BF16 IQ3_XXS K=2560 T=9 vs FP64: max_abs=2.180e-05 rms(ref)=7.779e+01 ratio=2.803e-07 (tol 1.0e-04) worst=37
+PASS BF16 IQ3_XXS K=2560 T=64 vs FP64: max_abs=4.117e-05 rms(ref)=8.667e+01 ratio=4.751e-07 (tol 1.0e-04) worst=155
+PASS BF16 IQ3_XXS K=2560: exact dequantization and batch-invariant arithmetic
+PASS synthetic IQ3_XXS K=2560: 8-row x 64-token GEMM bit-identical to single-row T=1
+PASS synthetic IQ3_XXS K=2560 rows=8 T=1 vs FP64: max_abs=4.892e-06 rms(ref)=3.997e+01 ratio=1.224e-07 (tol 1.0e-04) worst=4
+PASS synthetic IQ3_XXS K=2560 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ3_XXS K=2560 rows=8 T=3 vs FP64: max_abs=3.130e-05 rms(ref)=1.264e+02 ratio=2.475e-07 (tol 1.0e-04) worst=4
+PASS synthetic IQ3_XXS K=2560 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ3_XXS K=2560 rows=8 T=9 vs FP64: max_abs=3.299e-05 rms(ref)=1.356e+02 ratio=2.433e-07 (tol 1.0e-04) worst=30
+PASS synthetic IQ3_XXS K=2560 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ3_XXS K=2560 rows=8 T=64 vs FP64: max_abs=8.046e-05 rms(ref)=1.469e+02 ratio=5.479e-07 (tol 1.0e-04) worst=300
+PASS synthetic IQ3_XXS K=2560 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 IQ3_S K=2560 T=1 vs FP64: max_abs=1.183e-05 rms(ref)=9.137e+01 ratio=1.295e-07 (tol 1.0e-04) worst=1
+PASS BF16 IQ3_S K=2560 T=3 vs FP64: max_abs=3.629e-05 rms(ref)=1.264e+02 ratio=2.872e-07 (tol 1.0e-04) worst=10
+PASS BF16 IQ3_S K=2560 T=9 vs FP64: max_abs=3.629e-05 rms(ref)=1.049e+02 ratio=3.459e-07 (tol 1.0e-04) worst=28
+PASS BF16 IQ3_S K=2560 T=64 vs FP64: max_abs=3.629e-05 rms(ref)=8.970e+01 ratio=4.046e-07 (tol 1.0e-04) worst=193
+PASS BF16 IQ3_S K=2560: exact dequantization and batch-invariant arithmetic
+PASS synthetic IQ3_S K=2560: 8-row x 64-token GEMM bit-identical to single-row T=1
+PASS synthetic IQ3_S K=2560 rows=8 T=1 vs FP64: max_abs=7.819e-06 rms(ref)=8.033e+01 ratio=9.735e-08 (tol 1.0e-04) worst=5
+PASS synthetic IQ3_S K=2560 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ3_S K=2560 rows=8 T=3 vs FP64: max_abs=4.113e-05 rms(ref)=1.420e+02 ratio=2.896e-07 (tol 1.0e-04) worst=20
+PASS synthetic IQ3_S K=2560 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ3_S K=2560 rows=8 T=9 vs FP64: max_abs=4.113e-05 rms(ref)=1.805e+02 ratio=2.278e-07 (tol 1.0e-04) worst=56
+PASS synthetic IQ3_S K=2560 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ3_S K=2560 rows=8 T=64 vs FP64: max_abs=5.845e-05 rms(ref)=1.843e+02 ratio=3.172e-07 (tol 1.0e-04) worst=250
+PASS synthetic IQ3_S K=2560 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 IQ4_XS K=2560 T=1 vs FP64: max_abs=1.585e-04 rms(ref)=7.052e+02 ratio=2.248e-07 (tol 1.0e-04) worst=1
+PASS BF16 IQ4_XS K=2560 T=3 vs FP64: max_abs=3.170e-04 rms(ref)=5.649e+02 ratio=5.612e-07 (tol 1.0e-04) worst=11
+PASS BF16 IQ4_XS K=2560 T=9 vs FP64: max_abs=3.170e-04 rms(ref)=6.602e+02 ratio=4.803e-07 (tol 1.0e-04) worst=29
+PASS BF16 IQ4_XS K=2560 T=64 vs FP64: max_abs=3.238e-04 rms(ref)=7.217e+02 ratio=4.486e-07 (tol 1.0e-04) worst=225
+PASS BF16 IQ4_XS K=2560: exact dequantization and batch-invariant arithmetic
+PASS synthetic IQ4_XS K=2560: 8-row x 64-token GEMM bit-identical to single-row T=1
+PASS synthetic IQ4_XS K=2560 rows=8 T=1 vs FP64: max_abs=1.736e-04 rms(ref)=1.138e+03 ratio=1.526e-07 (tol 1.0e-04) worst=1
+PASS synthetic IQ4_XS K=2560 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ4_XS K=2560 rows=8 T=3 vs FP64: max_abs=3.302e-04 rms(ref)=1.096e+03 ratio=3.014e-07 (tol 1.0e-04) worst=14
+PASS synthetic IQ4_XS K=2560 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ4_XS K=2560 rows=8 T=9 vs FP64: max_abs=4.188e-04 rms(ref)=1.292e+03 ratio=3.240e-07 (tol 1.0e-04) worst=51
+PASS synthetic IQ4_XS K=2560 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ4_XS K=2560 rows=8 T=64 vs FP64: max_abs=4.940e-04 rms(ref)=1.422e+03 ratio=3.475e-07 (tol 1.0e-04) worst=106
+PASS synthetic IQ4_XS K=2560 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 IQ4_NL K=2560 T=1 vs FP64: max_abs=5.841e-06 rms(ref)=4.150e+01 ratio=1.408e-07 (tol 1.0e-04) worst=0
+PASS BF16 IQ4_NL K=2560 T=3 vs FP64: max_abs=5.841e-06 rms(ref)=3.369e+01 ratio=1.734e-07 (tol 1.0e-04) worst=0
+PASS BF16 IQ4_NL K=2560 T=9 vs FP64: max_abs=1.159e-05 rms(ref)=3.628e+01 ratio=3.195e-07 (tol 1.0e-04) worst=52
+PASS BF16 IQ4_NL K=2560 T=64 vs FP64: max_abs=1.371e-05 rms(ref)=4.086e+01 ratio=3.356e-07 (tol 1.0e-04) worst=95
+PASS BF16 IQ4_NL K=2560: exact dequantization and batch-invariant arithmetic
+PASS synthetic IQ4_NL K=2560: 8-row x 64-token GEMM bit-identical to single-row T=1
+PASS synthetic IQ4_NL K=2560 rows=8 T=1 vs FP64: max_abs=7.001e-06 rms(ref)=3.269e+01 ratio=2.142e-07 (tol 1.0e-04) worst=6
+PASS synthetic IQ4_NL K=2560 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ4_NL K=2560 rows=8 T=3 vs FP64: max_abs=3.153e-05 rms(ref)=8.511e+01 ratio=3.704e-07 (tol 1.0e-04) worst=19
+PASS synthetic IQ4_NL K=2560 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ4_NL K=2560 rows=8 T=9 vs FP64: max_abs=3.153e-05 rms(ref)=7.146e+01 ratio=4.412e-07 (tol 1.0e-04) worst=55
+PASS synthetic IQ4_NL K=2560 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ4_NL K=2560 rows=8 T=64 vs FP64: max_abs=4.915e-05 rms(ref)=7.674e+01 ratio=6.405e-07 (tol 1.0e-04) worst=40
+PASS synthetic IQ4_NL K=2560 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 IQ4_NL K=640 T=1 vs FP64: max_abs=4.426e-06 rms(ref)=2.438e+01 ratio=1.816e-07 (tol 1.0e-04) worst=3
+PASS BF16 IQ4_NL K=640 T=3 vs FP64: max_abs=4.426e-06 rms(ref)=2.320e+01 ratio=1.907e-07 (tol 1.0e-04) worst=9
+PASS BF16 IQ4_NL K=640 T=9 vs FP64: max_abs=4.426e-06 rms(ref)=2.090e+01 ratio=2.118e-07 (tol 1.0e-04) worst=27
+PASS BF16 IQ4_NL K=640 T=64 vs FP64: max_abs=5.851e-06 rms(ref)=2.112e+01 ratio=2.770e-07 (tol 1.0e-04) worst=249
+PASS BF16 IQ4_NL K=640: exact dequantization and batch-invariant arithmetic
+PASS synthetic IQ4_NL K=640: 8-row x 64-token GEMM bit-identical to single-row T=1
+PASS synthetic IQ4_NL K=640 rows=8 T=1 vs FP64: max_abs=4.554e-06 rms(ref)=4.507e+01 ratio=1.010e-07 (tol 1.0e-04) worst=7
+PASS synthetic IQ4_NL K=640 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ4_NL K=640 rows=8 T=3 vs FP64: max_abs=4.554e-06 rms(ref)=3.678e+01 ratio=1.238e-07 (tol 1.0e-04) worst=21
+PASS synthetic IQ4_NL K=640 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ4_NL K=640 rows=8 T=9 vs FP64: max_abs=8.328e-06 rms(ref)=2.820e+01 ratio=2.953e-07 (tol 1.0e-04) worst=3
+PASS synthetic IQ4_NL K=640 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ4_NL K=640 rows=8 T=64 vs FP64: max_abs=2.263e-05 rms(ref)=3.994e+01 ratio=5.666e-07 (tol 1.0e-04) worst=252
+PASS synthetic IQ4_NL K=640 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 IQ4_NL K=160 T=1 vs FP64: max_abs=9.015e-07 rms(ref)=1.142e+01 ratio=7.891e-08 (tol 1.0e-04) worst=2
+PASS BF16 IQ4_NL K=160 T=3 vs FP64: max_abs=1.624e-06 rms(ref)=9.596e+00 ratio=1.693e-07 (tol 1.0e-04) worst=8
+PASS BF16 IQ4_NL K=160 T=9 vs FP64: max_abs=2.181e-06 rms(ref)=9.022e+00 ratio=2.418e-07 (tol 1.0e-04) worst=17
+PASS BF16 IQ4_NL K=160 T=64 vs FP64: max_abs=2.503e-06 rms(ref)=1.020e+01 ratio=2.455e-07 (tol 1.0e-04) worst=126
+PASS BF16 IQ4_NL K=160: exact dequantization and batch-invariant arithmetic
+PASS synthetic IQ4_NL K=160: 8-row x 64-token GEMM bit-identical to single-row T=1
+PASS synthetic IQ4_NL K=160 rows=8 T=1 vs FP64: max_abs=4.007e-06 rms(ref)=8.104e+00 ratio=4.945e-07 (tol 1.0e-04) worst=0
+PASS synthetic IQ4_NL K=160 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ4_NL K=160 rows=8 T=3 vs FP64: max_abs=4.007e-06 rms(ref)=9.362e+00 ratio=4.281e-07 (tol 1.0e-04) worst=0
+PASS synthetic IQ4_NL K=160 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ4_NL K=160 rows=8 T=9 vs FP64: max_abs=4.063e-06 rms(ref)=1.632e+01 ratio=2.490e-07 (tol 1.0e-04) worst=50
+PASS synthetic IQ4_NL K=160 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic IQ4_NL K=160 rows=8 T=64 vs FP64: max_abs=7.059e-06 rms(ref)=1.914e+01 ratio=3.689e-07 (tol 1.0e-04) worst=177
+PASS synthetic IQ4_NL K=160 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 Q2_0 K=640 T=1 vs FP64: max_abs=3.487e-08 rms(ref)=4.230e-01 ratio=8.243e-08 (tol 1.0e-04) worst=4
+PASS BF16 Q2_0 K=640 T=3 vs FP64: max_abs=4.284e-08 rms(ref)=4.198e-01 ratio=1.020e-07 (tol 1.0e-04) worst=7
+PASS BF16 Q2_0 K=640 T=9 vs FP64: max_abs=5.402e-08 rms(ref)=3.629e-01 ratio=1.489e-07 (tol 1.0e-04) worst=44
+PASS BF16 Q2_0 K=640 T=64 vs FP64: max_abs=7.590e-08 rms(ref)=3.852e-01 ratio=1.971e-07 (tol 1.0e-04) worst=226
+PASS BF16 Q2_0 K=640: exact dequantization and batch-invariant arithmetic
+PASS synthetic Q2_0 K=640: 8-row x 64-token GEMM bit-identical to single-row T=1
+PASS synthetic Q2_0 K=640 rows=8 T=1 vs FP64: max_abs=6.409e-08 rms(ref)=9.437e-01 ratio=6.791e-08 (tol 1.0e-04) worst=0
+PASS synthetic Q2_0 K=640 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic Q2_0 K=640 rows=8 T=3 vs FP64: max_abs=8.813e-08 rms(ref)=5.968e-01 ratio=1.477e-07 (tol 1.0e-04) worst=16
+PASS synthetic Q2_0 K=640 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic Q2_0 K=640 rows=8 T=9 vs FP64: max_abs=1.529e-07 rms(ref)=7.579e-01 ratio=2.017e-07 (tol 1.0e-04) worst=39
+PASS synthetic Q2_0 K=640 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic Q2_0 K=640 rows=8 T=64 vs FP64: max_abs=2.414e-07 rms(ref)=7.413e-01 ratio=3.257e-07 (tol 1.0e-04) worst=233
+PASS synthetic Q2_0 K=640 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 Q2_0 K=2560 T=1 vs FP64: max_abs=1.571e-07 rms(ref)=1.248e+00 ratio=1.259e-07 (tol 1.0e-04) worst=2
+PASS BF16 Q2_0 K=2560 T=3 vs FP64: max_abs=1.571e-07 rms(ref)=9.806e-01 ratio=1.602e-07 (tol 1.0e-04) worst=6
+PASS BF16 Q2_0 K=2560 T=9 vs FP64: max_abs=1.571e-07 rms(ref)=8.178e-01 ratio=1.921e-07 (tol 1.0e-04) worst=18
+PASS BF16 Q2_0 K=2560 T=64 vs FP64: max_abs=1.939e-07 rms(ref)=7.557e-01 ratio=2.567e-07 (tol 1.0e-04) worst=408
+PASS BF16 Q2_0 K=2560: exact dequantization and batch-invariant arithmetic
+PASS synthetic Q2_0 K=2560: 8-row x 64-token GEMM bit-identical to single-row T=1
+PASS synthetic Q2_0 K=2560 rows=8 T=1 vs FP64: max_abs=1.522e-07 rms(ref)=5.069e-01 ratio=3.002e-07 (tol 1.0e-04) worst=0
+PASS synthetic Q2_0 K=2560 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic Q2_0 K=2560 rows=8 T=3 vs FP64: max_abs=5.725e-07 rms(ref)=1.907e+00 ratio=3.003e-07 (tol 1.0e-04) worst=14
+PASS synthetic Q2_0 K=2560 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic Q2_0 K=2560 rows=8 T=9 vs FP64: max_abs=5.725e-07 rms(ref)=1.617e+00 ratio=3.540e-07 (tol 1.0e-04) worst=38
+PASS synthetic Q2_0 K=2560 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS synthetic Q2_0 K=2560 rows=8 T=64 vs FP64: max_abs=9.259e-07 rms(ref)=1.522e+00 ratio=6.084e-07 (tol 1.0e-04) worst=406
+PASS synthetic Q2_0 K=2560 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 IQ3_XXS K=2560 T=1 vs FP64: max_abs=1.582e-07 rms(ref)=6.562e-01 ratio=2.411e-07 (tol 1.0e-04) worst=1
+PASS BF16 IQ3_XXS K=2560 T=3 vs FP64: max_abs=1.592e-07 rms(ref)=6.893e-01 ratio=2.309e-07 (tol 1.0e-04) worst=23
+PASS BF16 IQ3_XXS K=2560 T=9 vs FP64: max_abs=2.384e-07 rms(ref)=6.973e-01 ratio=3.419e-07 (tol 1.0e-04) worst=84
+PASS BF16 IQ3_XXS K=2560 T=64 vs FP64: max_abs=2.838e-07 rms(ref)=6.693e-01 ratio=4.240e-07 (tol 1.0e-04) worst=1099
+PASS BF16 IQ3_XXS K=2560: exact dequantization and batch-invariant arithmetic
+PASS real L0.gate IQ3_XXS K=2560: 24-row x 64-token GEMM bit-identical to single-row T=1
+PASS real L0.gate IQ3_XXS K=2560 rows=24 T=1 vs FP64: max_abs=3.108e-08 rms(ref)=2.016e-01 ratio=1.541e-07 (tol 1.0e-04) worst=0
+PASS real L0.gate IQ3_XXS K=2560 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L0.gate IQ3_XXS K=2560 rows=24 T=3 vs FP64: max_abs=4.290e-07 rms(ref)=1.193e+00 ratio=3.597e-07 (tol 1.0e-04) worst=29
+PASS real L0.gate IQ3_XXS K=2560 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L0.gate IQ3_XXS K=2560 rows=24 T=9 vs FP64: max_abs=4.290e-07 rms(ref)=1.347e+00 ratio=3.186e-07 (tol 1.0e-04) worst=83
+PASS real L0.gate IQ3_XXS K=2560 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L0.gate IQ3_XXS K=2560 rows=24 T=64 vs FP64: max_abs=5.932e-07 rms(ref)=1.297e+00 ratio=4.573e-07 (tol 1.0e-04) worst=252
+PASS real L0.gate IQ3_XXS K=2560 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 IQ2_S K=2560 T=1 vs FP64: max_abs=1.092e-07 rms(ref)=6.053e-01 ratio=1.804e-07 (tol 1.0e-04) worst=10
+PASS BF16 IQ2_S K=2560 T=3 vs FP64: max_abs=1.520e-07 rms(ref)=6.443e-01 ratio=2.359e-07 (tol 1.0e-04) worst=58
+PASS BF16 IQ2_S K=2560 T=9 vs FP64: max_abs=1.520e-07 rms(ref)=6.028e-01 ratio=2.522e-07 (tol 1.0e-04) worst=172
+PASS BF16 IQ2_S K=2560 T=64 vs FP64: max_abs=2.210e-07 rms(ref)=6.732e-01 ratio=3.282e-07 (tol 1.0e-04) worst=1339
+PASS BF16 IQ2_S K=2560: exact dequantization and batch-invariant arithmetic
+PASS real L2.gate IQ2_S K=2560: 24-row x 64-token GEMM bit-identical to single-row T=1
+PASS real L2.gate IQ2_S K=2560 rows=24 T=1 vs FP64: max_abs=6.339e-08 rms(ref)=5.181e-01 ratio=1.224e-07 (tol 1.0e-04) worst=10
+PASS real L2.gate IQ2_S K=2560 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L2.gate IQ2_S K=2560 rows=24 T=3 vs FP64: max_abs=4.682e-07 rms(ref)=1.777e+00 ratio=2.635e-07 (tol 1.0e-04) worst=19
+PASS real L2.gate IQ2_S K=2560 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L2.gate IQ2_S K=2560 rows=24 T=9 vs FP64: max_abs=4.682e-07 rms(ref)=1.453e+00 ratio=3.223e-07 (tol 1.0e-04) worst=55
+PASS real L2.gate IQ2_S K=2560 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L2.gate IQ2_S K=2560 rows=24 T=64 vs FP64: max_abs=5.722e-07 rms(ref)=1.223e+00 ratio=4.680e-07 (tol 1.0e-04) worst=473
+PASS real L2.gate IQ2_S K=2560 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 IQ3_S K=2560 T=1 vs FP64: max_abs=1.118e-07 rms(ref)=7.477e-01 ratio=1.495e-07 (tol 1.0e-04) worst=3
+PASS BF16 IQ3_S K=2560 T=3 vs FP64: max_abs=1.476e-07 rms(ref)=6.689e-01 ratio=2.207e-07 (tol 1.0e-04) worst=44
+PASS BF16 IQ3_S K=2560 T=9 vs FP64: max_abs=2.179e-07 rms(ref)=6.102e-01 ratio=3.571e-07 (tol 1.0e-04) worst=40
+PASS BF16 IQ3_S K=2560 T=64 vs FP64: max_abs=2.806e-07 rms(ref)=6.397e-01 ratio=4.386e-07 (tol 1.0e-04) worst=541
+PASS BF16 IQ3_S K=2560: exact dequantization and batch-invariant arithmetic
+PASS real L17.gate IQ3_S K=2560: 24-row x 64-token GEMM bit-identical to single-row T=1
+PASS real L17.gate IQ3_S K=2560 rows=24 T=1 vs FP64: max_abs=2.963e-07 rms(ref)=1.969e+00 ratio=1.505e-07 (tol 1.0e-04) worst=4
+PASS real L17.gate IQ3_S K=2560 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L17.gate IQ3_S K=2560 rows=24 T=3 vs FP64: max_abs=2.963e-07 rms(ref)=1.295e+00 ratio=2.288e-07 (tol 1.0e-04) worst=12
+PASS real L17.gate IQ3_S K=2560 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L17.gate IQ3_S K=2560 rows=24 T=9 vs FP64: max_abs=3.067e-07 rms(ref)=1.171e+00 ratio=2.619e-07 (tol 1.0e-04) worst=192
+PASS real L17.gate IQ3_S K=2560 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L17.gate IQ3_S K=2560 rows=24 T=64 vs FP64: max_abs=5.081e-07 rms(ref)=1.200e+00 ratio=4.233e-07 (tol 1.0e-04) worst=616
+PASS real L17.gate IQ3_S K=2560 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 IQ4_XS K=2560 T=1 vs FP64: max_abs=1.303e-07 rms(ref)=5.505e-01 ratio=2.368e-07 (tol 1.0e-04) worst=22
+PASS BF16 IQ4_XS K=2560 T=3 vs FP64: max_abs=2.124e-07 rms(ref)=5.570e-01 ratio=3.813e-07 (tol 1.0e-04) worst=59
+PASS BF16 IQ4_XS K=2560 T=9 vs FP64: max_abs=2.171e-07 rms(ref)=6.629e-01 ratio=3.275e-07 (tol 1.0e-04) worst=158
+PASS BF16 IQ4_XS K=2560 T=64 vs FP64: max_abs=3.482e-07 rms(ref)=6.344e-01 ratio=5.488e-07 (tol 1.0e-04) worst=1307
+PASS BF16 IQ4_XS K=2560: exact dequantization and batch-invariant arithmetic
+PASS real L47.gate IQ4_XS K=2560: 24-row x 64-token GEMM bit-identical to single-row T=1
+PASS real L47.gate IQ4_XS K=2560 rows=24 T=1 vs FP64: max_abs=2.611e-07 rms(ref)=1.458e+00 ratio=1.792e-07 (tol 1.0e-04) worst=7
+PASS real L47.gate IQ4_XS K=2560 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L47.gate IQ4_XS K=2560 rows=24 T=3 vs FP64: max_abs=2.611e-07 rms(ref)=1.254e+00 ratio=2.082e-07 (tol 1.0e-04) worst=21
+PASS real L47.gate IQ4_XS K=2560 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L47.gate IQ4_XS K=2560 rows=24 T=9 vs FP64: max_abs=4.119e-07 rms(ref)=1.211e+00 ratio=3.402e-07 (tol 1.0e-04) worst=116
+PASS real L47.gate IQ4_XS K=2560 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L47.gate IQ4_XS K=2560 rows=24 T=64 vs FP64: max_abs=8.394e-07 rms(ref)=1.210e+00 ratio=6.938e-07 (tol 1.0e-04) worst=938
+PASS real L47.gate IQ4_XS K=2560 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 IQ4_XS K=2560 T=1 vs FP64: max_abs=2.486e-07 rms(ref)=9.098e-01 ratio=2.732e-07 (tol 1.0e-04) worst=9
+PASS BF16 IQ4_XS K=2560 T=3 vs FP64: max_abs=2.547e-07 rms(ref)=7.410e-01 ratio=3.437e-07 (tol 1.0e-04) worst=52
+PASS BF16 IQ4_XS K=2560 T=9 vs FP64: max_abs=2.547e-07 rms(ref)=7.389e-01 ratio=3.446e-07 (tol 1.0e-04) worst=154
+PASS BF16 IQ4_XS K=2560 T=64 vs FP64: max_abs=3.831e-07 rms(ref)=7.583e-01 ratio=5.051e-07 (tol 1.0e-04) worst=955
+PASS BF16 IQ4_XS K=2560: exact dequantization and batch-invariant arithmetic
+PASS real L47.up IQ4_XS K=2560: 24-row x 64-token GEMM bit-identical to single-row T=1
+PASS real L47.up IQ4_XS K=2560 rows=24 T=1 vs FP64: max_abs=4.602e-07 rms(ref)=2.026e+00 ratio=2.272e-07 (tol 1.0e-04) worst=9
+PASS real L47.up IQ4_XS K=2560 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L47.up IQ4_XS K=2560 rows=24 T=3 vs FP64: max_abs=4.602e-07 rms(ref)=1.530e+00 ratio=3.007e-07 (tol 1.0e-04) worst=27
+PASS real L47.up IQ4_XS K=2560 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L47.up IQ4_XS K=2560 rows=24 T=9 vs FP64: max_abs=6.253e-07 rms(ref)=1.685e+00 ratio=3.712e-07 (tol 1.0e-04) worst=78
+PASS real L47.up IQ4_XS K=2560 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L47.up IQ4_XS K=2560 rows=24 T=64 vs FP64: max_abs=7.346e-07 rms(ref)=1.518e+00 ratio=4.839e-07 (tol 1.0e-04) worst=1119
+PASS real L47.up IQ4_XS K=2560 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 IQ4_NL K=2560 T=1 vs FP64: max_abs=2.318e-07 rms(ref)=9.867e-01 ratio=2.350e-07 (tol 1.0e-04) worst=15
+PASS BF16 IQ4_NL K=2560 T=3 vs FP64: max_abs=3.049e-07 rms(ref)=9.694e-01 ratio=3.146e-07 (tol 1.0e-04) worst=35
+PASS BF16 IQ4_NL K=2560 T=9 vs FP64: max_abs=3.079e-07 rms(ref)=9.255e-01 ratio=3.327e-07 (tol 1.0e-04) worst=176
+PASS BF16 IQ4_NL K=2560 T=64 vs FP64: max_abs=3.986e-07 rms(ref)=9.435e-01 ratio=4.225e-07 (tol 1.0e-04) worst=121
+PASS BF16 IQ4_NL K=2560: exact dequantization and batch-invariant arithmetic
+PASS real L-1.gate IQ4_NL K=2560: 24-row x 64-token GEMM bit-identical to single-row T=1
+PASS real L-1.gate IQ4_NL K=2560 rows=24 T=1 vs FP64: max_abs=4.955e-07 rms(ref)=2.779e+00 ratio=1.783e-07 (tol 1.0e-04) worst=11
+PASS real L-1.gate IQ4_NL K=2560 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L-1.gate IQ4_NL K=2560 rows=24 T=3 vs FP64: max_abs=8.355e-07 rms(ref)=2.188e+00 ratio=3.818e-07 (tol 1.0e-04) worst=26
+PASS real L-1.gate IQ4_NL K=2560 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L-1.gate IQ4_NL K=2560 rows=24 T=9 vs FP64: max_abs=8.355e-07 rms(ref)=1.823e+00 ratio=4.583e-07 (tol 1.0e-04) worst=74
+PASS real L-1.gate IQ4_NL K=2560 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L-1.gate IQ4_NL K=2560 rows=24 T=64 vs FP64: max_abs=1.200e-06 rms(ref)=1.758e+00 ratio=6.829e-07 (tol 1.0e-04) worst=925
+PASS real L-1.gate IQ4_NL K=2560 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 IQ4_NL K=640 T=1 vs FP64: max_abs=5.425e-08 rms(ref)=2.725e-01 ratio=1.991e-07 (tol 1.0e-04) worst=2
+PASS BF16 IQ4_NL K=640 T=3 vs FP64: max_abs=1.132e-07 rms(ref)=3.168e-01 ratio=3.572e-07 (tol 1.0e-04) worst=64
+PASS BF16 IQ4_NL K=640 T=9 vs FP64: max_abs=1.132e-07 rms(ref)=3.046e-01 ratio=3.715e-07 (tol 1.0e-04) worst=190
+PASS BF16 IQ4_NL K=640 T=64 vs FP64: max_abs=1.132e-07 rms(ref)=3.212e-01 ratio=3.522e-07 (tol 1.0e-04) worst=1345
+PASS BF16 IQ4_NL K=640: exact dequantization and batch-invariant arithmetic
+PASS real L0.down IQ4_NL K=640: 24-row x 64-token GEMM bit-identical to single-row T=1
+PASS real L0.down IQ4_NL K=640 rows=24 T=1 vs FP64: max_abs=1.554e-07 rms(ref)=6.002e-01 ratio=2.589e-07 (tol 1.0e-04) worst=1
+PASS real L0.down IQ4_NL K=640 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L0.down IQ4_NL K=640 rows=24 T=3 vs FP64: max_abs=2.030e-07 rms(ref)=7.004e-01 ratio=2.899e-07 (tol 1.0e-04) worst=7
+PASS real L0.down IQ4_NL K=640 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L0.down IQ4_NL K=640 rows=24 T=9 vs FP64: max_abs=2.140e-07 rms(ref)=6.258e-01 ratio=3.419e-07 (tol 1.0e-04) worst=214
+PASS real L0.down IQ4_NL K=640 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L0.down IQ4_NL K=640 rows=24 T=64 vs FP64: max_abs=2.140e-07 rms(ref)=6.175e-01 ratio=3.465e-07 (tol 1.0e-04) worst=1479
+PASS real L0.down IQ4_NL K=640 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS BF16 Q2_0 K=640 T=1 vs FP64: max_abs=4.843e-08 rms(ref)=3.186e-01 ratio=1.520e-07 (tol 1.0e-04) worst=15
+PASS BF16 Q2_0 K=640 T=3 vs FP64: max_abs=4.843e-08 rms(ref)=3.376e-01 ratio=1.434e-07 (tol 1.0e-04) worst=45
+PASS BF16 Q2_0 K=640 T=9 vs FP64: max_abs=4.843e-08 rms(ref)=3.388e-01 ratio=1.430e-07 (tol 1.0e-04) worst=135
+PASS BF16 Q2_0 K=640 T=64 vs FP64: max_abs=7.421e-08 rms(ref)=3.141e-01 ratio=2.363e-07 (tol 1.0e-04) worst=569
+PASS BF16 Q2_0 K=640: exact dequantization and batch-invariant arithmetic
+PASS real L1.down Q2_0 K=640: 24-row x 64-token GEMM bit-identical to single-row T=1
+PASS real L1.down Q2_0 K=640 rows=24 T=1 vs FP64: max_abs=6.240e-08 rms(ref)=2.889e-01 ratio=2.160e-07 (tol 1.0e-04) worst=4
+PASS real L1.down Q2_0 K=640 T=1 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L1.down Q2_0 K=640 rows=24 T=3 vs FP64: max_abs=1.134e-07 rms(ref)=3.901e-01 ratio=2.907e-07 (tol 1.0e-04) worst=22
+PASS real L1.down Q2_0 K=640 T=3 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L1.down Q2_0 K=640 rows=24 T=9 vs FP64: max_abs=1.567e-07 rms(ref)=5.044e-01 ratio=3.107e-07 (tol 1.0e-04) worst=174
+PASS real L1.down Q2_0 K=640 T=9 vs T=1: max rel 0.000e+00 (bit-exact required)
+PASS real L1.down Q2_0 K=640 rows=24 T=64 vs FP64: max_abs=3.465e-07 rms(ref)=6.246e-01 ratio=5.547e-07 (tol 1.0e-04) worst=190
+PASS real L1.down Q2_0 K=640 T=64 vs T=1: max rel 0.000e+00 (bit-exact required)
+
+microbenchmark: us per expert (gate+up+down); T=1 decode with 10 and 12 workers, T=32/T=128 prefill (10 workers, every row on the same 10 experts),
+skewed = 512-row prefill, Zipf routing over 160 experts (us per token-expert pair)
+BENCH L2  IQ2_S  /IQ4_NL T=1:   49.3 us (12w   43.2)  T=32:   134.5 us  T=128:    373.1 us  skewed512:  4.14 us/pair (32.0 tok/expert, 21222 us/step)
+BENCH L0  IQ3_XXS/IQ4_NL T=1:   50.9 us (12w   47.3)  T=32:   139.8 us  T=128:    361.0 us  skewed512:  4.36 us/pair (32.0 tok/expert, 22335 us/step)
+BENCH L17 IQ3_S  /IQ4_NL T=1:   56.3 us (12w   48.2)  T=32:   146.7 us  T=128:    368.3 us  skewed512:  4.35 us/pair (32.0 tok/expert, 22290 us/step)
+BENCH L47 IQ4_XS /IQ4_NL T=1:   64.5 us (12w   52.7)  T=32:   133.2 us  T=128:    348.4 us  skewed512:  3.75 us/pair (32.1 tok/expert, 19197 us/step)
+BENCH L1  IQ2_S  /Q2_0   T=1:   32.8 us (12w   29.4)  T=32:   124.8 us  T=128:    360.0 us  skewed512:  3.96 us/pair (32.0 tok/expert, 20285 us/step)
+PASS cpu_iq_kernels
+<end of output>
+Test time =   1.89 sec
+----------------------------------------------------------
+Test Passed.
+"cpu_iq_kernels" end time: Oct 04 03:59 CDT
+"cpu_iq_kernels" time elapsed: 00:00:01
+----------------------------------------------------------
+
+6/44 Testing: cpu_expert_pool
+6/44 Test: cpu_expert_pool
+Command: "/home/obelisk/Projects/fngine/build-main/tests/cpu_expert_pool"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"cpu_expert_pool" start time: Oct 04 03:59 CDT
+Output:
+----------------------------------------------------------
+decode L0: 63 cold pairs, 13 experts, compute 1481.9 us/step
+decode L1: 55 cold pairs, 12 experts, compute 531.9 us/step
+PASS decode T=9 L0 IQ3_XXS/IQ4_NL vs FP64: max row L2 rel err 9.849e-05 (row 1, tol 1e-3); max_abs/rms(ref) 1.795e-03
+PASS decode T=9 L1 IQ2_S/Q2_0 vs FP64: max row L2 rel err 9.802e-08 (row 2, tol 1e-3); max_abs/rms(ref) 8.243e-07
+PASS decode L0: 3 workers bit-identical to 10 workers
+PASS decode L1: 3 workers bit-identical to 10 workers
+PASS prefill rows=40 L0 vs FP64: max row L2 rel err 6.795e-06 (row 30, tol 1e-3); max_abs/rms(ref) 5.599e-05
+PASS prefill rows=40 L1 vs FP64: max row L2 rel err 5.402e-05 (row 38, tol 1e-3); max_abs/rms(ref) 8.219e-05
+PASS cpu_expert_pool
+<end of output>
+Test time =   1.71 sec
+----------------------------------------------------------
+Test Passed.
+"cpu_expert_pool" end time: Oct 04 03:59 CDT
+"cpu_expert_pool" time elapsed: 00:00:01
+----------------------------------------------------------
+
+7/44 Testing: cpu_doorbell
+7/44 Test: cpu_doorbell
+Command: "/home/obelisk/Projects/fngine/build-main/tests/cpu_doorbell"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"cpu_doorbell" start time: Oct 04 03:59 CDT
+Output:
+----------------------------------------------------------
+PASS y vs direct kernels: max rel 0.000e+00; GPU checksum max rel 9.633e-08
+doorbell: 0 cycles > 1 ms (0 of them on the first layer of a replay)
+doorbell: 10032 cycles, round trip (GPU publish -> done seen) median 23.4 us, p10 22.5 us, p90 27.4 us, p99 34.8 us
+doorbell: CPU side (ready seen -> done stored) mean 22.5 us over 10032 layer steps
+PASS cpu_doorbell
+<end of output>
+Test time =   1.41 sec
+----------------------------------------------------------
+Test Passed.
+"cpu_doorbell" end time: Oct 04 03:59 CDT
+"cpu_doorbell" time elapsed: 00:00:01
+----------------------------------------------------------
+
+8/44 Testing: test_engine_session
+8/44 Test: test_engine_session
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_engine_session"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_engine_session" start time: Oct 04 03:59 CDT
+Output:
+----------------------------------------------------------
+session selection tests passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"test_engine_session" end time: Oct 04 03:59 CDT
+"test_engine_session" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/44 Testing: test_engine_real
+9/44 Test: test_engine_real
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_engine_real"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_engine_real" start time: Oct 04 03:59 CDT
+Output:
+----------------------------------------------------------
+[2026-10-04 03:59:26.244] [info] dense weights: 4.26 GiB VRAM (dense 6.24 GB/s), embedding 1.19 GiB host (6.51 GB/s, register 0.01 s)
+[2026-10-04 03:59:26.244] [info] expert scores: 19144320 decode-profile pairs + 0 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 03:59:34.811] [info] expert placement: 48 layers; GPU 12603 experts + 1 spare slot per layer (24.03 GiB of 24.09 GiB budget, 25.23 GiB free) + 36 elastic in the context tail (0.07 GiB), RAM 11973 experts (25.61 GiB, registered); predicted hit rate 88.0% (of decode routing); GPU upload 6.32 GB/s, RAM fill 6.53 GB/s in 4.21 s, register 0.22 s
+[2026-10-04 03:59:34.811] [info] prefill borrowing 2.65 GiB of expert slots for workspace/ring (decode scratch 0.03 GiB)
+[2026-10-04 03:59:34.933] [info] prefill cost model: B_pcie 11.8 GB/s, B_cpu 23.4 GB/s (32 experts, 12 threads, T=1 2.8 ms), F_cpu 5.24 TFLOP/s (T=128 10.4 ms)
+[2026-10-04 03:59:34.949] [info] adaptive experts: one spare GPU slot per layer, up to 4 swaps planned every 1 decode steps
+[2026-10-04 03:59:34.950] [info] runtime ready in 9.7 s: dense 4.26474 GiB, experts GPU 12603 (24.0314 GiB) / CPU 11973 (25.6055 GiB), predicted hit rate 0.879797, state+workspace 0.640183 GiB, ctx 8192, chunk 4096, kv k8v8, dense fp8, cpu workers 12, prefill streaming ring 2x192 (0.952148 GiB), B_pcie 11.8403 GB/s, B_cpu 23.3807 GB/s, F_cpu 5.23986 TFLOP/s, prefill storage borrowed
+[2026-10-04 03:59:34.951] [info] prefill stream plan T=58: 1311 experts (2.50 GiB) per chunk, per layer [24,29,29,35,30,24,29,25,28,29,27,28,24,23,26,28,24,23,24,25,32,33,31,38,29,28,29,25,26,25,25,26,23,21,27,24,24,28,29,28,29,30,30,32,27,26,24,28]; predicted CPU expert time per chunk 0.31 s CPU-only vs 0.23 s split
+spec none (32): 1596 1144 310 5707 310 1156 25 328 7734 264 6185 36974 883 68022 3158 14235 1534 4087 1132 6185 36974 4222 13 28320 220 20 12 22 12 20 30 6558
+  reasoning: We need to respond to user: "Write a haiku about GPUs". Need final answer only haiku likely. Ensure 5-7-5? Let
+  decode 0.368506 s
+[2026-10-04 03:59:37.745] [info] dense weights: 5.58 GiB VRAM (dense 6.30 GB/s, mtp experts 6.24 GB/s), embedding 1.19 GiB host (6.61 GB/s, register 0.01 s)
+[2026-10-04 03:59:37.746] [info] MTP draft head: 32768 draft-vocabulary rows (80.0 MiB)
+[2026-10-04 03:59:37.746] [info] expert scores: 19144320 decode-profile pairs + 0 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 03:59:46.290] [info] expert placement: 48 layers; GPU 11855 experts + 1 spare slot per layer (22.62 GiB of 22.68 GiB budget, 23.82 GiB free) + 32 elastic in the context tail (0.06 GiB), RAM 12721 experts (27.01 GiB, registered); predicted hit rate 86.1% (of decode routing); GPU upload 6.34 GB/s, RAM fill 6.56 GB/s in 4.42 s, register 0.23 s
+[2026-10-04 03:59:46.290] [info] prefill borrowing 2.65 GiB of expert slots for workspace/ring (decode scratch 0.03 GiB)
+[2026-10-04 03:59:46.406] [info] prefill cost model: B_pcie 11.8 GB/s, B_cpu 22.1 GB/s (32 experts, 12 threads, T=1 3.0 ms), F_cpu 5.05 TFLOP/s (T=128 10.9 ms)
+[2026-10-04 03:59:46.421] [info] adaptive experts: one spare GPU slot per layer, up to 4 swaps planned every 1 decode steps
+[2026-10-04 03:59:46.423] [info] runtime ready in 10.0 s: dense 5.66141 GiB, experts GPU 11855 (22.621 GiB) / CPU 12721 (27.0137 GiB), predicted hit rate 0.860986, state+workspace 0.640183 GiB, ctx 8192, chunk 4096, kv k8v8, dense fp8, cpu workers 12, prefill streaming ring 2x192 (0.952148 GiB), B_pcie 11.758 GB/s, B_cpu 22.0939 GB/s, F_cpu 5.04743 TFLOP/s, prefill storage borrowed
+[2026-10-04 03:59:46.425] [info] prefill stream plan T=58: 1500 experts (2.85 GiB) per chunk, per layer [30,34,36,40,35,30,36,30,32,32,32,31,28,27,30,30,27,26,28,31,36,38,36,44,33,32,32,27,30,27,29,28,25,24,31,27,27,31,33,33,32,33,33,37,30,28,27,32]; predicted CPU expert time per chunk 0.36 s CPU-only vs 0.26 s split
+spec auto (32): 1596 1144 310 5707 310 1156 25 328 7734 264 6185 36974 883 68022 3158 14235 7936 1534 4087 1132 6185 36974 4222 220 20 12 22 12 20 13 28320 6185
+  rounds 16 (mtp 14, lookup 0), accepted 15/27; agrees with spec none on 16/32 tokens
+[2026-10-04 03:59:47.102] [info] prefill stream plan T=45: 1278 experts (2.43 GiB) per chunk, per layer [26,29,31,34,30,26,31,25,28,27,27,27,24,23,26,25,23,22,24,26,30,32,30,38,28,27,27,24,26,23,25,24,21,20,26,23,23,26,28,28,27,28,29,31,26,24,23,27]; predicted CPU expert time per chunk 0.30 s CPU-only vs 0.22 s split
+[2026-10-04 03:59:47.704] [info] reused 76 tokens
+[2026-10-04 03:59:47.710] [info] prefill stream plan T=9: 358 experts (0.68 GiB) per chunk, per layer [7,8,9,10,8,7,9,7,8,8,8,8,7,7,7,7,6,6,6,7,9,9,8,11,8,8,8,7,7,7,7,7,6,6,7,6,6,7,8,8,7,8,8,9,7,6,6,7]; predicted CPU expert time per chunk 0.08 s CPU-only vs 0.07 s split
+[2026-10-04 03:59:48.105] [info] prefill stream plan T=85: 1909 experts (3.63 GiB) per chunk, per layer [37,43,44,50,44,38,44,37,41,40,40,40,36,35,39,38,35,34,36,39,45,48,46,55,41,40,41,36,39,35,38,36,34,31,39,35,35,39,42,42,40,43,42,47,38,36,35,41]; predicted CPU expert time per chunk 0.48 s CPU-only vs 0.33 s split
+session: prompt1 45 tokens, prompt2 85 tokens, reused 76 (cold 0), prefill warm 0.118221 s vs cold 0.392835 s
+warm (24): 561 13901 14103 21966 14835 2074 11 44776 10993 11 321 4779 32288 430 279 1822 42903 84810 13 271 40 1144 310 2962
+cold (24): 68022 1542 8765 314 14145 303 14835 4417 3980 1630 11 694 4779 32288 369 279 1865 84810 364 42903 13 271 9764 728
+  warm agrees with cold on 0 tokens
+stats: requests 4, decode steps 59, gpu hit (routing mass) 0.821868, gpu pairs 55861/69120, cpu wait/layer 174.681 us, ngram hit 0.304985, mtp a/r 1.13953, lookup a/r 0
+engine tests passed
+<end of output>
+Test time =  24.38 sec
+----------------------------------------------------------
+Test Passed.
+"test_engine_real" end time: Oct 04 03:59 CDT
+"test_engine_real" time elapsed: 00:00:24
+----------------------------------------------------------
+
+10/44 Testing: test_adaptive_experts
+10/44 Test: test_adaptive_experts
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_adaptive_experts"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_adaptive_experts" start time: Oct 04 03:59 CDT
+Output:
+----------------------------------------------------------
+[2026-10-04 03:59:50.593] [info] dense weights: 4.26 GiB VRAM (dense 6.32 GB/s), embedding 1.19 GiB host (6.54 GB/s, register 0.01 s)
+[2026-10-04 03:59:50.593] [info] expert scores: 19144320 decode-profile pairs + 0 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 03:59:59.145] [info] expert placement: 48 layers; GPU 12653 experts + no spare slots (24.03 GiB of 24.09 GiB budget, 25.23 GiB free) + 0 elastic in the context tail (0.00 GiB), RAM 11923 experts (25.51 GiB, registered); predicted hit rate 88.0% (of decode routing); GPU upload 6.31 GB/s, RAM fill 6.55 GB/s in 4.18 s, register 0.22 s
+[2026-10-04 03:59:59.145] [info] prefill borrowing 2.66 GiB of expert slots for workspace/ring (decode scratch 0.03 GiB)
+[2026-10-04 03:59:59.264] [info] prefill cost model: B_pcie 12.1 GB/s, B_cpu 23.2 GB/s (32 experts, 12 threads, T=1 2.8 ms), F_cpu 5.40 TFLOP/s (T=128 10.2 ms)
+[2026-10-04 03:59:59.278] [info] runtime ready in 9.7 s: dense 4.26474 GiB, experts GPU 12653 (24.035 GiB) / CPU 11923 (25.5117 GiB), predicted hit rate 0.880131, state+workspace 0.640183 GiB, ctx 8192, chunk 4096, kv k8v8, dense fp8, cpu workers 12, prefill streaming ring 2x192 (0.952148 GiB), B_pcie 12.1373 GB/s, B_cpu 23.2387 GB/s, F_cpu 5.40457 TFLOP/s, prefill storage borrowed
+[2026-10-04 03:59:59.280] [info] prefill stream plan T=64: 1427 experts (2.72 GiB) per chunk, per layer [26,32,32,38,33,26,32,27,31,32,29,30,26,25,29,30,26,26,27,27,35,36,34,41,31,30,31,27,28,26,27,28,25,23,30,26,26,30,31,31,32,33,33,35,29,28,26,31]; predicted CPU expert time per chunk 0.33 s CPU-only vs 0.24 s split
+[2026-10-04 04:00:05.196] [info] prefill stream plan T=589: 3844 experts (7.33 GiB) per chunk, per layer [59,75,74,96,87,71,77,71,81,86,76,81,73,70,77,90,80,74,73,76,91,88,84,100,81,81,79,73,76,70,75,87,79,67,78,74,75,76,84,87,91,93,85,95,80,82,82,84]; predicted CPU expert time per chunk 0.98 s CPU-only vs 0.65 s split
+ADAPTIVE_BENCH enabled=0 turn1_tok_s=93.3615 turn2_tok_s=110.1166 turn2_gpu_hit=0.916828
+no swaps: turn-2 GPU hit 91.7%
+[2026-10-04 04:00:12.312] [info] dense weights: 4.26 GiB VRAM (dense 6.36 GB/s), embedding 1.19 GiB host (6.61 GB/s, register 0.01 s)
+[2026-10-04 04:00:12.312] [info] expert scores: 19144320 decode-profile pairs + 0 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 04:00:20.822] [info] expert placement: 48 layers; GPU 12599 experts + 1 spare slot per layer (24.02 GiB of 24.08 GiB budget, 25.22 GiB free) + 36 elastic in the context tail (0.07 GiB), RAM 11977 experts (25.61 GiB, registered); predicted hit rate 88.0% (of decode routing); GPU upload 6.35 GB/s, RAM fill 6.59 GB/s in 4.17 s, register 0.22 s
+[2026-10-04 04:00:20.822] [info] prefill borrowing 2.65 GiB of expert slots for workspace/ring (decode scratch 0.03 GiB)
+[2026-10-04 04:00:20.937] [info] prefill cost model: B_pcie 11.8 GB/s, B_cpu 23.3 GB/s (32 experts, 12 threads, T=1 2.8 ms), F_cpu 4.94 TFLOP/s (T=128 10.9 ms)
+[2026-10-04 04:00:20.951] [info] adaptive experts: one spare GPU slot per layer, up to 4 swaps planned every 1 decode steps
+[2026-10-04 04:00:20.951] [info] runtime ready in 9.6 s: dense 4.26474 GiB, experts GPU 12599 (24.0232 GiB) / CPU 11977 (25.6113 GiB), predicted hit rate 0.879702, state+workspace 0.640183 GiB, ctx 8192, chunk 4096, kv k8v8, dense fp8, cpu workers 12, prefill streaming ring 2x192 (0.952148 GiB), B_pcie 11.7965 GB/s, B_cpu 23.3264 GB/s, F_cpu 4.93866 TFLOP/s, prefill storage borrowed
+[2026-10-04 04:00:20.952] [info] prefill stream plan T=64: 1395 experts (2.65 GiB) per chunk, per layer [26,31,31,37,32,26,31,27,30,31,29,30,25,24,28,29,25,25,26,26,34,35,33,40,31,29,30,26,27,27,27,28,25,22,29,25,26,30,31,30,31,32,32,34,28,28,26,30]; predicted CPU expert time per chunk 0.33 s CPU-only vs 0.24 s split
+[2026-10-04 04:00:26.234] [info] prefill stream plan T=488: 3682 experts (7.02 GiB) per chunk, per layer [56,72,71,92,83,68,76,71,79,83,74,78,71,71,74,86,76,70,71,75,86,85,81,95,79,78,76,71,72,72,72,82,73,64,74,71,72,73,80,81,84,87,79,89,76,77,76,80]; predicted CPU expert time per chunk 1.00 s CPU-only vs 0.64 s split
+swaps: 2021 during turn 1, 1946 during turn 2; turn-1 GPU hit 92.1%, turn-2 GPU hit 95.0%
+ADAPTIVE_BENCH enabled=1 turn1_tok_s=103.5953 turn2_tok_s=122.1040 turn2_gpu_hit=0.950168
+--- swapped turn 1 output ---
+We need answer user: "Write a C function that reverses a singly linked list." Need provide code likely with struct Node, function reverse. Need maybe iterative and maybe recursive. Need final concise but thorough. Need ensure C function. Could include definition. Need maybe handle NULL. Let's craft final with struct and iterative function, maybe explanation. Need maybe mention if list head pointer passed by value returns new head. Could also provide recursive alternative. User asked singular function. Provide one. Need maybe include typedef. Let's produce.
+```c
+#include <stddef.h>
+
+typedef struct Node {
+    int data;
+    struct Node *next;
+} Node;
+
+Node *reverseLinkedList(Node *head) {
+    Node *prev = NULL;
+    Node *current = head;
+
+    while (current != NULL) {
+        Node *next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+
+    return prev;
+}
+```
+
+This function reverses a singly linked list iteratively and returns the new head.
+
+
+user
+
+assistant
+<think>
+We need answer user's empty message? The previous user said "Write a C function that reverses a singly linked list." We already answered. Now user sent just "". This likely indicates end of conversation? Need respond? We need final answer maybe no content? The user message is just the end token? In this interface, user sent "" maybe accidental. Need handle gracefully. Could say "Let me know if you'd like..." But maybe they expect final? We need produce final. Since user message is just end token, maybe no request. We can respond with brief: "Let me know if you need..." But maybe should not mention. Need satisfy. Final likely concise.
+</think>
+
+Let me know if you’d like a recursive version or a full example program.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+PASS adaptive experts
+<end of output>
+Test time =  42.51 sec
+----------------------------------------------------------
+Test Passed.
+"test_adaptive_experts" end time: Oct 04 04:00 CDT
+"test_adaptive_experts" time elapsed: 00:00:42
+----------------------------------------------------------
+
+11/44 Testing: test_speculation
+11/44 Test: test_speculation
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_speculation"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_speculation" start time: Oct 04 04:00 CDT
+Output:
+----------------------------------------------------------
+PASS speculation
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_speculation" end time: Oct 04 04:00 CDT
+"test_speculation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/44 Testing: test_ngram
+12/44 Test: test_ngram
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_ngram"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_ngram" start time: Oct 04 04:00 CDT
+Output:
+----------------------------------------------------------
+row ids: 6 fixture cases checked (fixture chunks, whole, 1-at-a-time, 2-at-a-time)
+gather: 21600 rows checked against pread; hit rate 0.330, rows read 12966, pages 11580, cache 10922/10922 rows, 231.1 us/gather
+prefetch: 8192 rows in 14.8 ms on the I/O thread; following gather 97.0 us, all hits
+G2 prefill (8192 tokens, chunk 4096, next chunk prefetched): gather hit rate 0.500, all-lookup hit rate 0.402, gather us per chunk [120483, 2312], prefetch 81.4 ms total, 97632 pages read, wall 204.5 ms
+G2 decode (8192 steps of T=1, cold cache): hit rate 0.252, gather 83.9 us/step
+PASS ngram
+<end of output>
+Test time =   0.98 sec
+----------------------------------------------------------
+Test Passed.
+"test_ngram" end time: Oct 04 04:00 CDT
+"test_ngram" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/44 Testing: kernels_gdn_recurrent
+13/44 Test: kernels_gdn_recurrent
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_gdn_recurrent"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_gdn_recurrent" start time: Oct 04 04:00 CDT
+Output:
+----------------------------------------------------------
+PASS decode x1 (layer 0) output: max_abs=0.000e+00 rms(ref)=5.019e-03 ratio=0.000e+00 (tol 2.0e-03) worst=0
+PASS decode x1 (layer 0) final state: max_abs=1.745e-08 rms(ref)=5.648e-02 ratio=3.090e-07 (tol 2.0e-03) worst=578919
+PASS decode x6 (layer 35) output: max_abs=4.401e-10 rms(ref)=4.678e-03 ratio=9.408e-08 (tol 2.0e-03) worst=11094
+PASS decode x6 (layer 35) final state: max_abs=5.489e-08 rms(ref)=5.130e-02 ratio=1.070e-06 (tol 2.0e-03) worst=329684
+PASS prefill T=1 (recurrent, in->out) output: max_abs=5.152e-10 rms(ref)=4.894e-03 ratio=1.053e-07 (tol 2.0e-03) worst=2342
+PASS prefill T=1 (recurrent, in->out) final state: max_abs=1.822e-08 rms(ref)=5.607e-02 ratio=3.250e-07 (tol 2.0e-03) worst=686487
+PASS prefill T=37 (recurrent, in->out) output: max_abs=1.481e-09 rms(ref)=4.198e-03 ratio=3.529e-07 (tol 2.0e-03) worst=121876
+PASS prefill T=37 (recurrent, in->out) final state: max_abs=7.522e-08 rms(ref)=4.379e-02 ratio=1.718e-06 (tol 2.0e-03) worst=517444
+PASS prefill T=64 (chunked, in->out) output: max_abs=4.641e-09 rms(ref)=4.172e-03 ratio=1.113e-06 (tol 2.0e-03) worst=285970
+PASS prefill T=64 (chunked, in->out) final state: max_abs=1.328e-07 rms(ref)=4.440e-02 ratio=2.991e-06 (tol 2.0e-03) worst=349955
+PASS prefill T=192 (chunked, in place) output: max_abs=5.904e-09 rms(ref)=3.957e-03 ratio=1.492e-06 (tol 2.0e-03) worst=804393
+PASS prefill T=192 (chunked, in place) final state: max_abs=1.277e-07 rms(ref)=4.438e-02 ratio=2.878e-06 (tol 2.0e-03) worst=755478
+PASS prefill T=293 (chunked+tail, in->out) output: max_abs=5.230e-09 rms(ref)=3.990e-03 ratio=1.311e-06 (tol 2.0e-03) worst=711887
+PASS prefill T=293 (chunked+tail, in->out) final state: max_abs=7.741e-08 rms(ref)=4.568e-02 ratio=1.695e-06 (tol 2.0e-03) worst=172876
+PASS prefill T=293 (chunked+tail, in place) output: max_abs=5.230e-09 rms(ref)=3.990e-03 ratio=1.311e-06 (tol 2.0e-03) worst=711887
+PASS prefill T=293 (chunked+tail, in place) final state: max_abs=7.741e-08 rms(ref)=4.568e-02 ratio=1.695e-06 (tol 2.0e-03) worst=172876
+PASS prefill T=1041 (chunked+tail, in->out) output: max_abs=8.336e-09 rms(ref)=3.950e-03 ratio=2.110e-06 (tol 2.0e-03) worst=4957721
+PASS prefill T=1041 (chunked+tail, in->out) final state: max_abs=8.452e-08 rms(ref)=4.449e-02 ratio=1.900e-06 (tol 2.0e-03) worst=299869
+timing: recurrent decode T=1, 36 layers (graph): 154.2 us total, 4.28 us/layer, 1469 GB/s state traffic
+timing: chunked prefill T=1024, one layer: gdn_prefill 0.530 ms (1930502 tok/s); conv+gating+prefill+out_norm 0.903 ms (1133466 tok/s); workspace 76.4 MiB
+timing: chunked prefill T=4096, one layer: gdn_prefill 3.600 ms (1137679 tok/s); conv+gating+prefill+out_norm 3.708 ms (1104519 tok/s); workspace 305.5 MiB
+ALL PASS
+<end of output>
+Test time =   1.51 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_gdn_recurrent" end time: Oct 04 04:00 CDT
+"kernels_gdn_recurrent" time elapsed: 00:00:01
+----------------------------------------------------------
+
+14/44 Testing: kernels_gdn_fold
+14/44 Test: kernels_gdn_fold
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_gdn_fold"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_gdn_fold" start time: Oct 04 04:00 CDT
+Output:
+----------------------------------------------------------
+PASS eager T=1: n=0..1 folds, outputs and in-place fold bit-exact
+PASS eager T=2: n=0..2 folds, outputs and in-place fold bit-exact
+PASS eager T=3: n=0..3 folds, outputs and in-place fold bit-exact
+PASS eager T=4: n=0..4 folds, outputs and in-place fold bit-exact
+PASS eager T=5: n=0..5 folds, outputs and in-place fold bit-exact
+PASS eager T=6: n=0..6 folds, outputs and in-place fold bit-exact
+PASS eager T=7: n=0..7 folds, outputs and in-place fold bit-exact
+PASS eager T=8: n=0..8 folds, outputs and in-place fold bit-exact
+PASS eager T=9: n=0..9 folds, outputs and in-place fold bit-exact
+PASS eager T=16: n=0..16 folds, outputs and in-place fold bit-exact
+PASS graph T=2: n=0..2 folds, outputs and in-place fold bit-exact
+PASS graph T=5: n=0..5 folds, outputs and in-place fold bit-exact
+PASS graph T=9: n=0..9 folds, outputs and in-place fold bit-exact
+PASS ping-pong graphs T1=5 c1=3 T2=4 c2=2: 0 differing words, swap ok
+ALL PASS
+<end of output>
+Test time =   0.37 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_gdn_fold" end time: Oct 04 04:00 CDT
+"kernels_gdn_fold" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/44 Testing: kernels_gdn_ops
+15/44 Test: kernels_gdn_ops
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_gdn_ops"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_gdn_ops" start time: Oct 04 04:00 CDT
+Output:
+----------------------------------------------------------
+PASS conv prefill T=1: max_abs=0.000e+00 rms(ref)=4.650e-01 ratio=0.000e+00 (tol 2.0e-03) worst=0
+PASS conv prefill T=1 history tail exact
+PASS conv prefill T=2 (in place): max_abs=0.000e+00 rms(ref)=4.558e-01 ratio=0.000e+00 (tol 2.0e-03) worst=0
+PASS conv prefill T=2 (in place) history tail exact
+PASS conv prefill T=37: max_abs=3.191e-08 rms(ref)=4.587e-01 ratio=6.957e-08 (tol 2.0e-03) worst=210306
+PASS conv prefill T=37 history tail exact
+PASS conv prefill T=300 (in place): max_abs=4.813e-08 rms(ref)=4.604e-01 ratio=1.045e-07 (tol 2.0e-03) worst=2953596
+PASS conv prefill T=300 (in place) history tail exact
+PASS conv decode T=1: max_abs=0.000e+00 rms(ref)=4.664e-01 ratio=0.000e+00 (tol 2.0e-03) worst=0
+PASS conv decode history shift exact
+PASS conv record T=9: max_abs=3.938e-08 rms(ref)=4.653e-01 ratio=8.463e-08 (tol 2.0e-03) worst=75583
+PASS conv record leaves history untouched; PASS conv record = raw inputs
+PASS gating g: max_abs=1.814e-05 rms(ref)=1.836e+01 ratio=9.878e-07 (tol 2.0e-03) worst=538
+PASS gating beta: max_abs=8.562e-08 rms(ref)=7.005e-01 ratio=1.222e-07 (tol 2.0e-03) worst=619
+PASS gating max elementwise relative error: g 9.94e-07 beta 1.37e-07 (tol 1e-5)
+PASS out_norm: max_abs=0.000e+00 rms(ref)=5.260e-01 ratio=0.000e+00 (tol 2.0e-03) worst=0
+ALL PASS
+<end of output>
+Test time =   0.25 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_gdn_ops" end time: Oct 04 04:00 CDT
+"kernels_gdn_ops" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/44 Testing: kernels_head
+16/44 Test: kernels_head
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_head"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_head" start time: Oct 04 04:00 CDT
+Output:
+----------------------------------------------------------
+PASS embed_gather host-mapped table -> 4 streams + bf16 copy (bit-exact)
+PASS argmax T=9 domain=248320 (ties -> lower id)
+PASS argmax T=9 domain=248077 (ties -> lower id)
+PASS argmax T=12 domain=248320 (ties -> lower id)
+PASS argmax T=12 domain=248077 (ties -> lower id)
+PASS sample greedy == argmax
+PASS sample greedy increments token_counts
+PASS sample greedy with penalties == penalized argmax
+PASS sampling chi-square T=1 top_k=20: support=20 chi2=19.66 df=19 crit=64.38 outside=0
+PASS sampling chi-square T=0.7 top_k=8 top_p=0.9: support=6 chi2=12.59 df=5 crit=37.47 outside=0
+PASS sampling chi-square T=1.3 top_p=0.95 min_p=0.05: support=18 chi2=22.12 df=17 crit=60.89 outside=0
+PASS sample deterministic per (seed, position)
+PASS sample draws == reference (seed, position, purpose) keyed draws
+PASS different seeds give different draws
+PASS sample with penalties == reference and counts updated
+PASS speculative_prepare_verify_inputs
+PASS greedy all accept: accepted 4/4 terminal 117994 (got accepted 4 terminal 117994)
+PASS greedy first reject: accepted 0/4 terminal 118447 (got accepted 0 terminal 118447)
+PASS greedy middle reject: accepted 2/4 terminal 227352 (got accepted 2 terminal 227352)
+PASS greedy extent 2 all accept: accepted 2/2 terminal 227352 (got accepted 2 terminal 227352)
+PASS greedy extent 0: accepted 0/0 terminal 118447 (got accepted 0 terminal 118447)
+PASS greedy penalties overlay: accepted 3/4 terminal 151565 (got accepted 3 terminal 151565)
+PASS greedy penalties overlay rejects repeat: accepted 1/4 terminal 888 (got accepted 1 terminal 888)
+PASS sampling all accept (+bonus): accepted 4/4 terminal 56276 (got accepted 4 terminal 56276)
+PASS sampling first reject (residual): accepted 0/4 terminal 30813 (got accepted 0 terminal 30813)
+PASS sampling middle reject (residual): accepted 2/4 terminal 237042 (got accepted 2 terminal 237042)
+PASS random round 0 (k=5 temp=0.00 top_k=4): accepted 0/0 terminal 22417 (got accepted 0 terminal 22417)
+PASS random round 1 (k=3 temp=1.31 top_k=17): accepted 0/3 terminal 100038 (got accepted 0 terminal 100038)
+PASS random round 2 (k=7 temp=0.60 top_k=2): accepted 0/0 terminal 110805 (got accepted 0 terminal 110805)
+PASS random round 3 (k=8 temp=1.27 top_k=5): accepted 0/0 terminal 80592 (got accepted 0 terminal 80592)
+PASS random round 4 (k=1 temp=0.89 top_k=12): accepted 1/1 terminal 118983 (got accepted 1 terminal 118983)
+PASS random round 5 (k=6 temp=0.00 top_k=3): accepted 0/0 terminal 118442 (got accepted 0 terminal 118442)
+PASS random round 6 (k=6 temp=0.50 top_k=7): accepted 0/6 terminal 157071 (got accepted 0 terminal 157071)
+PASS random round 7 (k=2 temp=0.81 top_k=5): accepted 0/2 terminal 141613 (got accepted 0 terminal 141613)
+PASS random round 8 (k=3 temp=1.12 top_k=1): accepted 0/0 terminal 233431 (got accepted 0 terminal 233431)
+PASS random round 9 (k=8 temp=1.43 top_k=13): accepted 4/4 terminal 167323 (got accepted 4 terminal 167323)
+PASS random round 10 (k=5 temp=0.00 top_k=9): accepted 3/3 terminal 7387 (got accepted 3 terminal 7387)
+PASS random round 11 (k=1 temp=0.56 top_k=16): accepted 0/1 terminal 70465 (got accepted 0 terminal 70465)
+PASS random round 12 (k=3 temp=1.23 top_k=9): accepted 1/1 terminal 100724 (got accepted 1 terminal 100724)
+PASS random round 13 (k=1 temp=0.61 top_k=11): accepted 1/1 terminal 246582 (got accepted 1 terminal 246582)
+PASS random round 14 (k=6 temp=1.04 top_k=7): accepted 2/2 terminal 131678 (got accepted 2 terminal 131678)
+PASS random round 15 (k=7 temp=0.00 top_k=19): accepted 0/0 terminal 1560 (got accepted 0 terminal 1560)
+PASS random round 16 (k=1 temp=1.29 top_k=17): accepted 1/1 terminal 245512 (got accepted 1 terminal 245512)
+PASS random round 17 (k=3 temp=0.89 top_k=9): accepted 2/2 terminal 103043 (got accepted 2 terminal 103043)
+PASS random round 18 (k=4 temp=1.48 top_k=4): accepted 1/1 terminal 5392 (got accepted 1 terminal 5392)
+PASS random round 19 (k=3 temp=1.03 top_k=2): accepted 3/3 terminal 211742 (got accepted 3 terminal 211742)
+PASS random round 20 (k=1 temp=0.00 top_k=7): accepted 0/0 terminal 116597 (got accepted 0 terminal 116597)
+PASS random round 21 (k=5 temp=1.29 top_k=3): accepted 3/3 terminal 184403 (got accepted 3 terminal 184403)
+PASS random round 22 (k=3 temp=1.12 top_k=18): accepted 1/1 terminal 967 (got accepted 1 terminal 967)
+PASS random round 23 (k=7 temp=1.09 top_k=9): accepted 1/3 terminal 129682 (got accepted 1 terminal 129682)
+PASS random speculative rounds compared
+PASS argmax + speculative_accept graph replay (length advances, RNG keyed by length)
+PASS mtp_prepare_next_round (alignment ids, next extent, AR steps)
+kernels_head: OK
+<end of output>
+Test time =   1.54 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_head" end time: Oct 04 04:00 CDT
+"kernels_head" time elapsed: 00:00:01
+----------------------------------------------------------
+
+17/44 Testing: kernels_linear
+17/44 Test: kernels_linear
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_linear"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_linear" start time: Oct 04 04:00 CDT
+Output:
+----------------------------------------------------------
+PASS registry rejects unregistered (N,K,epilogue)
+PASS fp8   N=16384  K=2560  StoreBf16   T=1   A16    ratio=0.000e+00 match=0.9999
+PASS fp8   N=16384  K=2560  StoreBf16   T=1   A8     ratio=0.000e+00 match=0.9999  (A8 vs unquantized oracle: max 1.793e-01 rms 2.699e-02)
+PASS fp8   N=16384  K=2560  StoreBf16   T=3   A16    ratio=0.000e+00 match=1.0000
+PASS fp8   N=16384  K=2560  StoreBf16   T=3   A8     ratio=0.000e+00 match=0.9998  (A8 vs unquantized oracle: max 1.904e-01 rms 2.660e-02)
+PASS fp8   N=16384  K=2560  StoreBf16   T=9   A16    ratio=2.510e-09 match=0.9999
+PASS fp8   N=16384  K=2560  StoreBf16   T=9   A8     ratio=2.972e-08 match=0.9999  (A8 vs unquantized oracle: max 2.088e-01 rms 2.657e-02)
+PASS fp8   N=16384  K=2560  StoreBf16   T=16  A16    ratio=0.000e+00 match=0.9999
+PASS fp8   N=16384  K=2560  StoreBf16   T=16  A8     ratio=1.154e-09 match=0.9999  (A8 vs unquantized oracle: max 1.908e-01 rms 2.635e-02)
+PASS fp8   N=16384  K=2560  StoreBf16   T=64  A16    ratio=8.480e-07 match=0.9996
+PASS fp8   N=16384  K=2560  StoreBf16   T=64  A8     ratio=2.536e-08 match=0.9999  (A8 vs unquantized oracle: max 1.801e-01 rms 2.644e-02)
+PASS fp8   N=16384  K=2560  StoreBf16   T=128 A16    ratio=1.488e-06 match=0.9995
+PASS fp8   N=16384  K=2560  StoreBf16   T=128 A8     ratio=4.575e-08 match=0.9999  (A8 vs unquantized oracle: max 2.121e-01 rms 2.659e-02)
+PASS fp8   N=16384  K=2560  StoreBf16   T=300 A16    ratio=5.059e-07 match=0.9996
+PASS fp8   N=16384  K=2560  StoreBf16   T=300 A8     ratio=4.834e-08 match=0.9999  (A8 vs unquantized oracle: max 2.213e-01 rms 2.640e-02)
+PASS bf16  N=16384  K=2560  StoreBf16   T=1   gemv   ratio=5.907e-08 match=0.9999
+PASS bf16  N=16384  K=2560  StoreBf16   T=3   gemv   ratio=2.735e-08 match=0.9999
+PASS bf16  N=16384  K=2560  StoreBf16   T=9   gemv   ratio=2.706e-08 match=0.9999
+PASS bf16  N=16384  K=2560  StoreBf16   T=16  gemv   ratio=7.325e-08 match=0.9999
+PASS bf16  N=16384  K=2560  StoreBf16   T=64  cublas ratio=2.796e-06 match=0.9985
+PASS bf16  N=16384  K=2560  StoreBf16   T=128 cublas ratio=2.229e-06 match=0.9986
+PASS bf16  N=16384  K=2560  StoreBf16   T=300 cublas ratio=5.389e-06 match=0.9985
+PASS fp8   N=13312  K=2560  StoreBf16   T=1   A16    ratio=0.000e+00 match=0.9999
+PASS fp8   N=13312  K=2560  StoreBf16   T=1   A8     ratio=0.000e+00 match=0.9999  (A8 vs unquantized oracle: max 1.652e-01 rms 2.743e-02)
+PASS fp8   N=13312  K=2560  StoreBf16   T=3   A16    ratio=0.000e+00 match=0.9999
+PASS fp8   N=13312  K=2560  StoreBf16   T=3   A8     ratio=0.000e+00 match=1.0000  (A8 vs unquantized oracle: max 1.654e-01 rms 2.666e-02)
+PASS fp8   N=13312  K=2560  StoreBf16   T=9   A16    ratio=1.235e-08 match=0.9999
+PASS fp8   N=13312  K=2560  StoreBf16   T=9   A8     ratio=1.403e-08 match=0.9999  (A8 vs unquantized oracle: max 1.998e-01 rms 2.640e-02)
+PASS fp8   N=13312  K=2560  StoreBf16   T=16  A16    ratio=5.170e-09 match=0.9999
+PASS fp8   N=13312  K=2560  StoreBf16   T=16  A8     ratio=1.585e-07 match=0.9999  (A8 vs unquantized oracle: max 2.048e-01 rms 2.668e-02)
+PASS fp8   N=13312  K=2560  StoreBf16   T=64  A16    ratio=8.346e-07 match=0.9996
+PASS fp8   N=13312  K=2560  StoreBf16   T=64  A8     ratio=5.516e-08 match=0.9999  (A8 vs unquantized oracle: max 2.067e-01 rms 2.637e-02)
+PASS fp8   N=13312  K=2560  StoreBf16   T=128 A16    ratio=7.586e-07 match=0.9995
+PASS fp8   N=13312  K=2560  StoreBf16   T=128 A8     ratio=3.859e-09 match=1.0000  (A8 vs unquantized oracle: max 1.903e-01 rms 2.637e-02)
+PASS fp8   N=13312  K=2560  StoreBf16   T=300 A16    ratio=6.680e-07 match=0.9996
+PASS fp8   N=13312  K=2560  StoreBf16   T=300 A8     ratio=1.383e-08 match=0.9999  (A8 vs unquantized oracle: max 2.048e-01 rms 2.661e-02)
+PASS bf16  N=13312  K=2560  StoreBf16   T=1   gemv   ratio=0.000e+00 match=0.9998
+PASS bf16  N=13312  K=2560  StoreBf16   T=3   gemv   ratio=1.199e-08 match=0.9999
+PASS bf16  N=13312  K=2560  StoreBf16   T=9   gemv   ratio=9.530e-08 match=0.9998
+PASS bf16  N=13312  K=2560  StoreBf16   T=16  gemv   ratio=1.893e-08 match=0.9999
+PASS bf16  N=13312  K=2560  StoreBf16   T=64  cublas ratio=2.756e-06 match=0.9984
+PASS bf16  N=13312  K=2560  StoreBf16   T=128 cublas ratio=4.696e-06 match=0.9985
+PASS bf16  N=13312  K=2560  StoreBf16   T=300 cublas ratio=2.235e-06 match=0.9985
+PASS fp8   N=2560   K=6144  GrWrite     T=1   A16    ratio=2.200e-06 match=1.0000
+PASS fp8   N=2560   K=6144  GrWrite     T=1   A8     ratio=3.384e-06 match=1.0000  (A8 vs unquantized oracle: max 2.491e-01 rms 2.757e-02)
+PASS fp8   N=2560   K=6144  GrWrite     T=3   A16    ratio=2.104e-06 match=1.0000
+PASS fp8   N=2560   K=6144  GrWrite     T=3   A8     ratio=4.373e-06 match=1.0000  (A8 vs unquantized oracle: max 2.136e-01 rms 2.698e-02)
+PASS fp8   N=2560   K=6144  GrWrite     T=9   A16    ratio=2.911e-06 match=1.0000
+PASS fp8   N=2560   K=6144  GrWrite     T=9   A8     ratio=7.895e-06 match=1.0000  (A8 vs unquantized oracle: max 2.679e-01 rms 2.631e-02)
+PASS fp8   N=2560   K=6144  GrWrite     T=16  A16    ratio=3.490e-06 match=1.0000
+PASS fp8   N=2560   K=6144  GrWrite     T=16  A8     ratio=6.196e-06 match=1.0000  (A8 vs unquantized oracle: max 3.305e-01 rms 2.652e-02)
+PASS fp8   N=2560   K=6144  GrWrite     T=64  A16    ratio=3.717e-05 match=1.0000
+PASS fp8   N=2560   K=6144  GrWrite     T=64  A8     ratio=7.796e-06 match=1.0000  (A8 vs unquantized oracle: max 3.132e-01 rms 2.664e-02)
+PASS fp8   N=2560   K=6144  GrWrite     T=128 A16    ratio=4.344e-05 match=1.0000
+PASS fp8   N=2560   K=6144  GrWrite     T=128 A8     ratio=6.551e-06 match=1.0000  (A8 vs unquantized oracle: max 2.781e-01 rms 2.649e-02)
+PASS fp8   N=2560   K=6144  GrWrite     T=300 A16    ratio=3.960e-05 match=1.0000
+PASS fp8   N=2560   K=6144  GrWrite     T=300 A8     ratio=7.263e-06 match=1.0000  (A8 vs unquantized oracle: max 2.698e-01 rms 2.651e-02)
+PASS bf16  N=2560   K=6144  GrWrite     T=1   gemv   ratio=8.600e-07 match=1.0000
+PASS bf16  N=2560   K=6144  GrWrite     T=3   gemv   ratio=9.255e-07 match=1.0000
+PASS bf16  N=2560   K=6144  GrWrite     T=9   gemv   ratio=9.076e-07 match=1.0000
+PASS bf16  N=2560   K=6144  GrWrite     T=16  gemv   ratio=1.255e-06 match=1.0000
+PASS bf16  N=2560   K=6144  GrWrite     T=64  cublas ratio=1.697e-05 match=1.0000
+PASS bf16  N=2560   K=6144  GrWrite     T=128 cublas ratio=9.020e-06 match=1.0000
+PASS bf16  N=2560   K=6144  GrWrite     T=300 cublas ratio=2.011e-05 match=1.0000
+PASS fp8   N=1280   K=2560  SwiGlu      T=1   A16    ratio=0.000e+00 match=1.0000
+PASS fp8   N=1280   K=2560  SwiGlu      T=1   A8     ratio=0.000e+00 match=1.0000  (A8 vs unquantized oracle: max 3.660e-01 rms 3.985e-02)
+PASS fp8   N=1280   K=2560  SwiGlu      T=3   A16    ratio=0.000e+00 match=1.0000
+PASS fp8   N=1280   K=2560  SwiGlu      T=3   A8     ratio=0.000e+00 match=0.9995  (A8 vs unquantized oracle: max 5.761e-01 rms 4.010e-02)
+PASS fp8   N=1280   K=2560  SwiGlu      T=9   A16    ratio=0.000e+00 match=1.0000
+PASS fp8   N=1280   K=2560  SwiGlu      T=9   A8     ratio=0.000e+00 match=0.9998  (A8 vs unquantized oracle: max 6.411e-01 rms 3.696e-02)
+PASS fp8   N=1280   K=2560  SwiGlu      T=16  A16    ratio=4.901e-09 match=0.9997
+PASS fp8   N=1280   K=2560  SwiGlu      T=16  A8     ratio=0.000e+00 match=0.9999  (A8 vs unquantized oracle: max 8.629e-01 rms 3.866e-02)
+PASS fp8   N=1280   K=2560  SwiGlu      T=64  A16    ratio=5.937e-07 match=0.9993
+PASS fp8   N=1280   K=2560  SwiGlu      T=64  A8     ratio=2.395e-08 match=0.9999  (A8 vs unquantized oracle: max 8.450e-01 rms 3.715e-02)
+PASS fp8   N=1280   K=2560  SwiGlu      T=128 A16    ratio=7.996e-08 match=0.9993
+PASS fp8   N=1280   K=2560  SwiGlu      T=128 A8     ratio=5.697e-08 match=0.9998  (A8 vs unquantized oracle: max 7.281e-01 rms 3.859e-02)
+PASS fp8   N=1280   K=2560  SwiGlu      T=300 A16    ratio=3.344e-07 match=0.9994
+PASS fp8   N=1280   K=2560  SwiGlu      T=300 A8     ratio=4.558e-08 match=0.9999  (A8 vs unquantized oracle: max 8.408e-01 rms 3.844e-02)
+PASS bf16  N=1280   K=2560  SwiGlu      T=1   gemv   ratio=2.194e-08 match=0.9984
+PASS bf16  N=1280   K=2560  SwiGlu      T=3   gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=1280   K=2560  SwiGlu      T=9   gemv   ratio=0.000e+00 match=0.9998
+PASS bf16  N=1280   K=2560  SwiGlu      T=16  gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=1280   K=2560  SwiGlu      T=64  cublas ratio=1.181e-08 match=0.9995
+PASS bf16  N=1280   K=2560  SwiGlu      T=128 cublas ratio=2.216e-07 match=0.9991
+PASS bf16  N=1280   K=2560  SwiGlu      T=300 cublas ratio=1.999e-07 match=0.9992
+PASS fp8   N=2560   K=640   SharedScale T=1   A16    ratio=8.023e-07 match=1.0000
+PASS fp8   N=2560   K=640   SharedScale T=1   A8     ratio=6.051e-07 match=1.0000  (A8 vs unquantized oracle: max 1.621e-01 rms 2.785e-02)
+PASS fp8   N=2560   K=640   SharedScale T=3   A16    ratio=6.640e-07 match=1.0000
+PASS fp8   N=2560   K=640   SharedScale T=3   A8     ratio=9.009e-07 match=1.0000  (A8 vs unquantized oracle: max 2.034e-01 rms 2.757e-02)
+PASS fp8   N=2560   K=640   SharedScale T=9   A16    ratio=1.194e-06 match=1.0000
+PASS fp8   N=2560   K=640   SharedScale T=9   A8     ratio=1.368e-06 match=1.0000  (A8 vs unquantized oracle: max 2.351e-01 rms 2.634e-02)
+PASS fp8   N=2560   K=640   SharedScale T=16  A16    ratio=1.508e-06 match=1.0000
+PASS fp8   N=2560   K=640   SharedScale T=16  A8     ratio=1.597e-06 match=1.0000  (A8 vs unquantized oracle: max 2.946e-01 rms 2.642e-02)
+PASS fp8   N=2560   K=640   SharedScale T=64  A16    ratio=2.962e-06 match=1.0000
+PASS fp8   N=2560   K=640   SharedScale T=64  A8     ratio=1.160e-06 match=1.0000  (A8 vs unquantized oracle: max 3.212e-01 rms 2.631e-02)
+PASS fp8   N=2560   K=640   SharedScale T=128 A16    ratio=4.603e-06 match=1.0000
+PASS fp8   N=2560   K=640   SharedScale T=128 A8     ratio=2.014e-06 match=1.0000  (A8 vs unquantized oracle: max 3.405e-01 rms 2.636e-02)
+PASS fp8   N=2560   K=640   SharedScale T=300 A16    ratio=5.239e-06 match=1.0000
+PASS fp8   N=2560   K=640   SharedScale T=300 A8     ratio=2.567e-06 match=1.0000  (A8 vs unquantized oracle: max 3.400e-01 rms 2.640e-02)
+PASS bf16  N=2560   K=640   SharedScale T=1   gemv   ratio=5.587e-07 match=1.0000
+PASS bf16  N=2560   K=640   SharedScale T=3   gemv   ratio=7.184e-07 match=1.0000
+PASS bf16  N=2560   K=640   SharedScale T=9   gemv   ratio=9.624e-07 match=1.0000
+PASS bf16  N=2560   K=640   SharedScale T=16  gemv   ratio=9.551e-07 match=1.0000
+PASS bf16  N=2560   K=640   SharedScale T=64  cublas ratio=2.727e-06 match=1.0000
+PASS bf16  N=2560   K=640   SharedScale T=128 cublas ratio=3.395e-06 match=1.0000
+PASS bf16  N=2560   K=640   SharedScale T=300 cublas ratio=1.038e-05 match=1.0000
+PASS fp8   N=320    K=10240 SiluQuarter T=1   A16    ratio=0.000e+00 match=1.0000
+PASS fp8   N=320    K=10240 SiluQuarter T=1   A8     ratio=0.000e+00 match=1.0000  (A8 vs unquantized oracle: max 1.965e-01 rms 2.745e-02)
+PASS fp8   N=320    K=10240 SiluQuarter T=3   A16    ratio=0.000e+00 match=1.0000
+PASS fp8   N=320    K=10240 SiluQuarter T=3   A8     ratio=1.275e-07 match=0.9990  (A8 vs unquantized oracle: max 2.708e-01 rms 2.770e-02)
+PASS fp8   N=320    K=10240 SiluQuarter T=9   A16    ratio=0.000e+00 match=0.9997
+PASS fp8   N=320    K=10240 SiluQuarter T=9   A8     ratio=0.000e+00 match=0.9993  (A8 vs unquantized oracle: max 2.130e-01 rms 2.757e-02)
+PASS fp8   N=320    K=10240 SiluQuarter T=16  A16    ratio=0.000e+00 match=0.9998
+PASS fp8   N=320    K=10240 SiluQuarter T=16  A8     ratio=0.000e+00 match=1.0000  (A8 vs unquantized oracle: max 1.910e-01 rms 2.683e-02)
+PASS fp8   N=320    K=10240 SiluQuarter T=64  A16    ratio=8.004e-06 match=0.9982
+PASS fp8   N=320    K=10240 SiluQuarter T=64  A8     ratio=2.052e-07 match=0.9997  (A8 vs unquantized oracle: max 2.181e-01 rms 2.642e-02)
+PASS fp8   N=320    K=10240 SiluQuarter T=128 A16    ratio=3.980e-06 match=0.9984
+PASS fp8   N=320    K=10240 SiluQuarter T=128 A8     ratio=3.209e-07 match=0.9997  (A8 vs unquantized oracle: max 2.409e-01 rms 2.688e-02)
+PASS fp8   N=320    K=10240 SiluQuarter T=300 A16    ratio=1.721e-06 match=0.9981
+PASS fp8   N=320    K=10240 SiluQuarter T=300 A8     ratio=1.880e-07 match=0.9997  (A8 vs unquantized oracle: max 2.599e-01 rms 2.689e-02)
+PASS bf16  N=320    K=10240 SiluQuarter T=1   gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=320    K=10240 SiluQuarter T=3   gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=320    K=10240 SiluQuarter T=9   gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=320    K=10240 SiluQuarter T=16  gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=320    K=10240 SiluQuarter T=64  cublas ratio=0.000e+00 match=0.9998
+PASS bf16  N=320    K=10240 SiluQuarter T=128 cublas ratio=1.201e-07 match=0.9996
+PASS bf16  N=320    K=10240 SiluQuarter T=300 cublas ratio=1.155e-07 match=0.9996
+PASS fp8   N=10240  K=384   GrMix       T=1   A16    ratio=0.000e+00 match=1.0000
+PASS fp8   N=10240  K=384   GrMix       T=1   A8     ratio=0.000e+00 match=1.0000  (A8 vs unquantized oracle: max 8.380e-02 rms 1.128e-02)
+PASS fp8   N=10240  K=384   GrMix       T=3   A16    ratio=0.000e+00 match=1.0000
+PASS fp8   N=10240  K=384   GrMix       T=3   A8     ratio=0.000e+00 match=0.9999  (A8 vs unquantized oracle: max 1.127e-01 rms 1.113e-02)
+PASS fp8   N=10240  K=384   GrMix       T=9   A16    ratio=0.000e+00 match=1.0000
+PASS fp8   N=10240  K=384   GrMix       T=9   A8     ratio=2.774e-08 match=1.0000  (A8 vs unquantized oracle: max 1.083e-01 rms 1.217e-02)
+PASS fp8   N=10240  K=384   GrMix       T=16  A16    ratio=2.150e-08 match=0.9999
+PASS fp8   N=10240  K=384   GrMix       T=16  A8     ratio=2.501e-08 match=0.9998  (A8 vs unquantized oracle: max 9.898e-02 rms 1.172e-02)
+PASS fp8   N=10240  K=384   GrMix       T=64  A16    ratio=1.295e-09 match=0.9999
+PASS fp8   N=10240  K=384   GrMix       T=64  A8     ratio=0.000e+00 match=1.0000  (A8 vs unquantized oracle: max 1.362e-01 rms 1.144e-02)
+PASS fp8   N=10240  K=384   GrMix       T=128 A16    ratio=3.720e-08 match=1.0000
+PASS fp8   N=10240  K=384   GrMix       T=128 A8     ratio=1.851e-08 match=1.0000  (A8 vs unquantized oracle: max 1.158e-01 rms 1.159e-02)
+PASS fp8   N=10240  K=384   GrMix       T=300 A16    ratio=0.000e+00 match=0.9999
+PASS fp8   N=10240  K=384   GrMix       T=300 A8     ratio=2.601e-08 match=0.9999  (A8 vs unquantized oracle: max 1.299e-01 rms 1.159e-02)
+PASS bf16  N=10240  K=384   GrMix       T=1   gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=10240  K=384   GrMix       T=3   gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=10240  K=384   GrMix       T=9   gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=10240  K=384   GrMix       T=16  gemv   ratio=2.281e-09 match=0.9999
+PASS bf16  N=10240  K=384   GrMix       T=64  cublas ratio=8.420e-08 match=0.9999
+PASS bf16  N=10240  K=384   GrMix       T=128 cublas ratio=3.625e-07 match=0.9999
+PASS bf16  N=10240  K=384   GrMix       T=300 cublas ratio=1.758e-07 match=0.9999
+PASS fp8   N=10240  K=2560  StoreBf16   T=1   A16    ratio=0.000e+00 match=0.9999
+PASS fp8   N=10240  K=2560  StoreBf16   T=1   A8     ratio=0.000e+00 match=1.0000  (A8 vs unquantized oracle: max 1.409e-01 rms 2.680e-02)
+PASS fp8   N=10240  K=2560  StoreBf16   T=3   A16    ratio=9.299e-08 match=0.9997
+PASS fp8   N=10240  K=2560  StoreBf16   T=3   A8     ratio=0.000e+00 match=0.9999  (A8 vs unquantized oracle: max 1.720e-01 rms 2.627e-02)
+PASS fp8   N=10240  K=2560  StoreBf16   T=9   A16    ratio=1.083e-09 match=0.9999
+PASS fp8   N=10240  K=2560  StoreBf16   T=9   A8     ratio=4.615e-08 match=0.9999  (A8 vs unquantized oracle: max 1.927e-01 rms 2.676e-02)
+PASS fp8   N=10240  K=2560  StoreBf16   T=16  A16    ratio=0.000e+00 match=0.9999
+PASS fp8   N=10240  K=2560  StoreBf16   T=16  A8     ratio=7.493e-08 match=0.9999  (A8 vs unquantized oracle: max 2.240e-01 rms 2.664e-02)
+PASS fp8   N=10240  K=2560  StoreBf16   T=64  A16    ratio=1.617e-06 match=0.9996
+PASS fp8   N=10240  K=2560  StoreBf16   T=64  A8     ratio=1.287e-07 match=0.9999  (A8 vs unquantized oracle: max 2.002e-01 rms 2.652e-02)
+PASS fp8   N=10240  K=2560  StoreBf16   T=128 A16    ratio=5.741e-07 match=0.9996
+PASS fp8   N=10240  K=2560  StoreBf16   T=128 A8     ratio=9.759e-08 match=0.9999  (A8 vs unquantized oracle: max 1.971e-01 rms 2.664e-02)
+PASS fp8   N=10240  K=2560  StoreBf16   T=300 A16    ratio=7.921e-07 match=0.9996
+PASS fp8   N=10240  K=2560  StoreBf16   T=300 A8     ratio=5.522e-08 match=0.9999  (A8 vs unquantized oracle: max 2.285e-01 rms 2.655e-02)
+PASS bf16  N=10240  K=2560  StoreBf16   T=1   gemv   ratio=0.000e+00 match=0.9998
+PASS bf16  N=10240  K=2560  StoreBf16   T=3   gemv   ratio=0.000e+00 match=0.9999
+PASS bf16  N=10240  K=2560  StoreBf16   T=9   gemv   ratio=8.161e-08 match=0.9999
+PASS bf16  N=10240  K=2560  StoreBf16   T=16  gemv   ratio=6.533e-08 match=0.9998
+PASS bf16  N=10240  K=2560  StoreBf16   T=64  cublas ratio=4.267e-07 match=0.9996
+PASS bf16  N=10240  K=2560  StoreBf16   T=128 cublas ratio=3.112e-06 match=0.9986
+PASS bf16  N=10240  K=2560  StoreBf16   T=300 cublas ratio=3.601e-06 match=0.9985
+PASS fp8   N=2560   K=2560  StoreBf16   T=1   A16    ratio=0.000e+00 match=1.0000
+PASS fp8   N=2560   K=2560  StoreBf16   T=1   A8     ratio=0.000e+00 match=1.0000  (A8 vs unquantized oracle: max 1.438e-01 rms 2.519e-02)
+PASS fp8   N=2560   K=2560  StoreBf16   T=3   A16    ratio=0.000e+00 match=0.9999
+PASS fp8   N=2560   K=2560  StoreBf16   T=3   A8     ratio=0.000e+00 match=1.0000  (A8 vs unquantized oracle: max 1.770e-01 rms 2.679e-02)
+PASS fp8   N=2560   K=2560  StoreBf16   T=9   A16    ratio=0.000e+00 match=1.0000
+PASS fp8   N=2560   K=2560  StoreBf16   T=9   A8     ratio=0.000e+00 match=1.0000  (A8 vs unquantized oracle: max 1.662e-01 rms 2.640e-02)
+PASS fp8   N=2560   K=2560  StoreBf16   T=16  A16    ratio=3.679e-08 match=0.9999
+PASS fp8   N=2560   K=2560  StoreBf16   T=16  A8     ratio=0.000e+00 match=0.9999  (A8 vs unquantized oracle: max 1.979e-01 rms 2.650e-02)
+PASS fp8   N=2560   K=2560  StoreBf16   T=64  A16    ratio=5.464e-07 match=0.9995
+PASS fp8   N=2560   K=2560  StoreBf16   T=64  A8     ratio=6.963e-08 match=0.9999  (A8 vs unquantized oracle: max 2.342e-01 rms 2.646e-02)
+PASS fp8   N=2560   K=2560  StoreBf16   T=128 A16    ratio=4.021e-07 match=0.9996
+PASS fp8   N=2560   K=2560  StoreBf16   T=128 A8     ratio=1.556e-07 match=0.9999  (A8 vs unquantized oracle: max 1.949e-01 rms 2.644e-02)
+PASS fp8   N=2560   K=2560  StoreBf16   T=300 A16    ratio=4.536e-07 match=0.9996
+PASS fp8   N=2560   K=2560  StoreBf16   T=300 A8     ratio=1.569e-07 match=1.0000  (A8 vs unquantized oracle: max 1.903e-01 rms 2.652e-02)
+PASS bf16  N=2560   K=2560  StoreBf16   T=1   gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=2560   K=2560  StoreBf16   T=3   gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=2560   K=2560  StoreBf16   T=9   gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=2560   K=2560  StoreBf16   T=16  gemv   ratio=1.091e-08 match=0.9999
+PASS bf16  N=2560   K=2560  StoreBf16   T=64  cublas ratio=4.735e-07 match=0.9996
+PASS bf16  N=2560   K=2560  StoreBf16   T=128 cublas ratio=7.938e-08 match=0.9997
+PASS bf16  N=2560   K=2560  StoreBf16   T=300 cublas ratio=9.693e-07 match=0.9996
+PASS fp8   N=248320 K=2560  StoreF32    T=1   A16    ratio=7.795e-07 match=1.0000
+PASS fp8   N=248320 K=2560  StoreF32    T=3   A16    ratio=1.073e-06 match=1.0000
+PASS fp8   N=248320 K=2560  StoreF32    T=9   A16    ratio=1.138e-06 match=1.0000
+PASS fp8   N=248320 K=2560  StoreF32    T=16  A16    ratio=1.203e-06 match=1.0000
+PASS fp8   N=248320 K=2560  StoreF32    T=64  A16    ratio=1.100e-05 match=1.0000
+PASS fp8   N=248320 K=2560  StoreF32    T=128 A16    ratio=1.325e-05 match=1.0000
+PASS fp8   N=248320 K=2560  StoreF32    T=300 A16    ratio=1.188e-05 match=1.0000
+PASS bf16  N=248320 K=2560  StoreF32    T=1   gemv   ratio=6.729e-07 match=1.0000
+PASS bf16  N=248320 K=2560  StoreF32    T=3   gemv   ratio=8.151e-07 match=1.0000
+PASS bf16  N=248320 K=2560  StoreF32    T=9   gemv   ratio=8.542e-07 match=1.0000
+PASS bf16  N=248320 K=2560  StoreF32    T=16  gemv   ratio=8.398e-07 match=1.0000
+PASS bf16  N=248320 K=2560  StoreF32    T=64  cublas ratio=2.461e-05 match=1.0000
+PASS bf16  N=248320 K=2560  StoreF32    T=128 cublas ratio=2.613e-05 match=1.0000
+PASS bf16  N=248320 K=2560  StoreF32    T=300 cublas ratio=2.560e-05 match=1.0000
+PASS bf16  N=513    K=2560  StoreF32    T=1   gemv   ratio=3.265e-07 match=1.0000
+PASS bf16  N=513    K=2560  StoreF32    T=3   gemv   ratio=4.949e-07 match=1.0000
+PASS bf16  N=513    K=2560  StoreF32    T=9   gemv   ratio=6.118e-07 match=1.0000
+PASS bf16  N=513    K=2560  StoreF32    T=16  gemv   ratio=7.407e-07 match=1.0000
+PASS bf16  N=513    K=2560  StoreF32    T=64  cublas ratio=1.558e-06 match=1.0000
+PASS bf16  N=513    K=2560  StoreF32    T=128 cublas ratio=1.606e-06 match=1.0000
+PASS bf16  N=513    K=2560  StoreF32    T=300 cublas ratio=2.943e-06 match=1.0000
+PASS bf16  N=96     K=2560  StoreF32    T=1   gemv   ratio=2.229e-07 match=1.0000
+PASS bf16  N=96     K=2560  StoreF32    T=3   gemv   ratio=4.719e-07 match=1.0000
+PASS bf16  N=96     K=2560  StoreF32    T=9   gemv   ratio=4.369e-07 match=1.0000
+PASS bf16  N=96     K=2560  StoreF32    T=16  gemv   ratio=4.689e-07 match=1.0000
+PASS bf16  N=96     K=2560  StoreF32    T=64  cublas ratio=1.122e-06 match=1.0000
+PASS bf16  N=96     K=2560  StoreF32    T=128 cublas ratio=1.310e-06 match=1.0000
+PASS bf16  N=96     K=2560  StoreF32    T=300 cublas ratio=1.422e-06 match=1.0000
+PASS bf16  N=640    K=2560  StoreBf16   T=1   gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=640    K=2560  StoreBf16   T=3   gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=640    K=2560  StoreBf16   T=9   gemv   ratio=0.000e+00 match=0.9998
+PASS bf16  N=640    K=2560  StoreBf16   T=16  gemv   ratio=0.000e+00 match=1.0000
+PASS bf16  N=640    K=2560  StoreBf16   T=64  cublas ratio=1.332e-07 match=0.9997
+PASS bf16  N=640    K=2560  StoreBf16   T=128 cublas ratio=2.028e-07 match=0.9998
+PASS bf16  N=640    K=2560  StoreBf16   T=300 cublas ratio=2.000e-07 match=0.9998
+PASS pack  L0.gdn.qkvz: C++ FP8-row rule reproduces dense.bin from dense_bf16.bin
+PASS pack  N=16384  K=2560  StoreBf16   T=1   A16    ratio=0.000e+00 match=0.9999
+PASS pack  N=16384  K=2560  StoreBf16   T=1   A8     ratio=0.000e+00 match=1.0000  (A8 vs unquantized oracle: max 2.185e-01 rms 2.624e-02)
+PASS pack  N=16384  K=2560  StoreBf16   T=9   A16    ratio=3.255e-08 match=0.9999
+PASS pack  N=16384  K=2560  StoreBf16   T=9   A8     ratio=1.560e-08 match=1.0000  (A8 vs unquantized oracle: max 2.269e-01 rms 2.651e-02)
+PASS pack  N=16384  K=2560  StoreBf16   T=64  A16    ratio=5.101e-07 match=0.9996
+PASS pack  N=16384  K=2560  StoreBf16   T=64  A8     ratio=9.457e-08 match=0.9999  (A8 vs unquantized oracle: max 2.221e-01 rms 2.664e-02)
+PASS pack  N=16384  K=2560  StoreBf16   T=1   gemv   ratio=0.000e+00 match=0.9999
+PASS pack  N=16384  K=2560  StoreBf16   T=9   gemv   ratio=1.584e-07 match=0.9999
+PASS pack  N=16384  K=2560  StoreBf16   T=64  cublas ratio=2.915e-06 match=0.9984
+PASS pack  L0.attn_gr.down: C++ FP8-row rule reproduces dense.bin from dense_bf16.bin
+PASS pack  N=320    K=10240 SiluQuarter T=1   A16    ratio=0.000e+00 match=1.0000
+PASS pack  N=320    K=10240 SiluQuarter T=1   A8     ratio=0.000e+00 match=1.0000  (A8 vs unquantized oracle: max 2.351e-01 rms 3.150e-02)
+PASS pack  N=320    K=10240 SiluQuarter T=9   A16    ratio=0.000e+00 match=1.0000
+PASS pack  N=320    K=10240 SiluQuarter T=9   A8     ratio=0.000e+00 match=0.9997  (A8 vs unquantized oracle: max 2.093e-01 rms 2.309e-02)
+PASS pack  N=320    K=10240 SiluQuarter T=64  A16    ratio=3.644e-06 match=0.9972
+PASS pack  N=320    K=10240 SiluQuarter T=64  A8     ratio=6.283e-07 match=0.9995  (A8 vs unquantized oracle: max 3.456e-01 rms 2.835e-02)
+PASS pack  N=320    K=10240 SiluQuarter T=1   gemv   ratio=0.000e+00 match=1.0000
+PASS pack  N=320    K=10240 SiluQuarter T=9   gemv   ratio=0.000e+00 match=1.0000
+PASS pack  N=320    K=10240 SiluQuarter T=64  cublas ratio=0.000e+00 match=0.9997
+PASS pack  L0.attn_gr.up: C++ FP8-row rule reproduces dense.bin from dense_bf16.bin
+PASS pack  N=10240  K=384   GrMix       T=1   A16    ratio=0.000e+00 match=0.9996
+PASS pack  N=10240  K=384   GrMix       T=1   A8     ratio=0.000e+00 match=1.0000  (A8 vs unquantized oracle: max 8.127e-02 rms 1.194e-02)
+PASS pack  N=10240  K=384   GrMix       T=9   A16    ratio=0.000e+00 match=0.9999
+PASS pack  N=10240  K=384   GrMix       T=9   A8     ratio=0.000e+00 match=0.9999  (A8 vs unquantized oracle: max 1.302e-01 rms 1.155e-02)
+PASS pack  N=10240  K=384   GrMix       T=64  A16    ratio=0.000e+00 match=1.0000
+PASS pack  N=10240  K=384   GrMix       T=64  A8     ratio=4.512e-09 match=1.0000  (A8 vs unquantized oracle: max 2.227e-01 rms 1.114e-02)
+PASS pack  N=10240  K=384   GrMix       T=1   gemv   ratio=0.000e+00 match=0.9996
+PASS pack  N=10240  K=384   GrMix       T=9   gemv   ratio=0.000e+00 match=1.0000
+PASS pack  N=10240  K=384   GrMix       T=64  cublas ratio=8.658e-08 match=0.9998
+PASS pack  L0.gdn.out: C++ FP8-row rule reproduces dense.bin from dense_bf16.bin
+PASS pack  N=2560   K=6144  GrWrite     T=1   A16    ratio=1.710e-06 match=1.0000
+PASS pack  N=2560   K=6144  GrWrite     T=1   A8     ratio=4.971e-06 match=1.0000  (A8 vs unquantized oracle: max 1.026e-01 rms 2.642e-02)
+PASS pack  N=2560   K=6144  GrWrite     T=9   A16    ratio=2.802e-06 match=1.0000
+PASS pack  N=2560   K=6144  GrWrite     T=9   A8     ratio=6.173e-06 match=1.0000  (A8 vs unquantized oracle: max 1.812e-01 rms 2.691e-02)
+PASS pack  N=2560   K=6144  GrWrite     T=64  A16    ratio=5.071e-05 match=1.0000
+PASS pack  N=2560   K=6144  GrWrite     T=64  A8     ratio=8.799e-06 match=1.0000  (A8 vs unquantized oracle: max 2.202e-01 rms 2.660e-02)
+PASS pack  N=2560   K=6144  GrWrite     T=1   gemv   ratio=5.674e-07 match=1.0000
+PASS pack  N=2560   K=6144  GrWrite     T=9   gemv   ratio=9.495e-07 match=1.0000
+PASS pack  N=2560   K=6144  GrWrite     T=64  cublas ratio=1.446e-05 match=1.0000
+PASS: 265/265 cases passed
+<end of output>
+Test time =  25.85 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_linear" end time: Oct 04 04:01 CDT
+"kernels_linear" time elapsed: 00:00:25
+----------------------------------------------------------
+
+18/44 Testing: kernels_gr
+18/44 Test: kernels_gr
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_gr"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_gr" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+PASS gr_norm T=1   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=5.844e-08
+PASS gr_norm T=1   inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00
+PASS gr_norm T=3   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=1.906e-07
+PASS gr_norm T=3   inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00
+PASS gr_norm T=9   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=1.132e-07
+PASS gr_norm T=9   inject=0  Xn ratio=0.000e+00 match=0.99998  inj ratio=0.000e+00
+PASS gr_norm T=16  inject=1  Xn ratio=0.000e+00 match=0.99999  inj ratio=1.301e-07
+PASS gr_norm T=16  inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00
+PASS gr_norm T=64  inject=1  Xn ratio=0.000e+00 match=0.99999  inj ratio=1.331e-07
+PASS gr_norm T=64  inject=0  Xn ratio=0.000e+00 match=0.99999  inj ratio=0.000e+00
+PASS gr_norm T=300 inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=1.545e-07
+PASS gr_norm T=300 inject=0  Xn ratio=0.000e+00 match=0.99999  inj ratio=0.000e+00
+PASS gr_norm_down T=1   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=1.075e-07  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=1   inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=2   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=6.876e-08  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=2   inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=3   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=7.420e-08  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=3   inject=0  Xn ratio=0.000e+00 match=0.99997  inj ratio=0.000e+00  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=4   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=8.223e-08  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=4   inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=7   inject=1  Xn ratio=0.000e+00 match=1.00000  inj ratio=1.365e-07  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=7   inject=0  Xn ratio=0.000e+00 match=1.00000  inj ratio=0.000e+00  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=16  inject=1  Xn ratio=0.000e+00 match=0.99999  inj ratio=1.180e-07  r ratio=0.000e+00  token-0 invariant=1
+PASS gr_norm_down T=16  inject=0  Xn ratio=0.000e+00 match=0.99999  inj ratio=0.000e+00  r ratio=0.000e+00  token-0 invariant=1
+PASS: 24/24 cases passed
+<end of output>
+Test time =   3.42 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_gr" end time: Oct 04 04:01 CDT
+"kernels_gr" time elapsed: 00:00:03
+----------------------------------------------------------
+
+19/44 Testing: kernels_moe_experts
+19/44 Test: kernels_moe_experts
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_moe_experts"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_moe_experts" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+PASS decode L0 IQ3_XXS/IQ4_NL      T=1 pairs=9 cold=1 gate_up(h) worst=1.575e-06 [t0/e190] down worst=1.381e-06 [t0/e153]
+PASS decode L0 IQ3_XXS/IQ4_NL      T=3 pairs=27 cold=3 gate_up(h) worst=1.894e-06 [t0/e412] down worst=2.188e-06 [t2/e412]
+PASS decode L0 IQ3_XXS/IQ4_NL      T=9 pairs=82 cold=8 gate_up(h) worst=2.047e-06 [t8/e5] down worst=1.211e-06 [t5/e412]
+PASS prefill L0 IQ3_XXS/IQ4_NL      T=1 pairs=6 cold=4 h: max err/rms=1.534e-02 excess-over-bf16=2.583e-07  y worst=4.197e-06 [t0]
+PASS prefill L0 IQ3_XXS/IQ4_NL      T=3 pairs=14 cold=16 h: max err/rms=2.833e-02 excess-over-bf16=6.648e-07  y worst=3.692e-06 [t1]
+PASS prefill L0 IQ3_XXS/IQ4_NL      T=9 pairs=38 cold=52 h: max err/rms=3.781e-02 excess-over-bf16=7.286e-06  y worst=6.922e-06 [t5]
+PASS prefill L0 IQ3_XXS/IQ4_NL      T=64 pairs=285 cold=355 h: max err/rms=3.984e-02 excess-over-bf16=1.654e-06  y worst=8.074e-06 [t26]
+PASS prefill determinism L0 IQ3_XXS/IQ4_NL T=2048: two runs bit-identical (y_fixed and X)
+PASS decode L1 IQ2_S/Q2_0          T=1 pairs=9 cold=1 gate_up(h) worst=1.257e-06 [t0/e423] down worst=1.188e-06 [t0/e90]
+PASS decode L1 IQ2_S/Q2_0          T=3 pairs=28 cold=2 gate_up(h) worst=1.495e-06 [t1/e90] down worst=1.124e-06 [t0/e164]
+PASS decode L1 IQ2_S/Q2_0          T=9 pairs=85 cold=5 gate_up(h) worst=2.324e-06 [t5/e201] down worst=8.150e-07 [t7/e238]
+PASS prefill L1 IQ2_S/Q2_0          T=1 pairs=3 cold=7 h: max err/rms=1.569e-02 excess-over-bf16=1.197e-06  y worst=1.961e-06 [t0]
+PASS prefill L1 IQ2_S/Q2_0          T=3 pairs=11 cold=19 h: max err/rms=1.649e-02 excess-over-bf16=2.724e-06  y worst=2.304e-06 [t0]
+PASS prefill L1 IQ2_S/Q2_0          T=9 pairs=44 cold=46 h: max err/rms=4.553e-02 excess-over-bf16=1.062e-06  y worst=2.831e-06 [t2]
+PASS prefill L1 IQ2_S/Q2_0          T=64 pairs=293 cold=347 h: max err/rms=3.270e-02 excess-over-bf16=2.121e-06  y worst=3.753e-06 [t49]
+PASS decode L2 IQ2_S/IQ4_NL        T=1 pairs=9 cold=1 gate_up(h) worst=1.586e-06 [t0/e323] down worst=7.012e-07 [t0/e138]
+PASS decode L2 IQ2_S/IQ4_NL        T=3 pairs=27 cold=3 gate_up(h) worst=2.272e-06 [t0/e64] down worst=7.132e-07 [t2/e175]
+PASS decode L2 IQ2_S/IQ4_NL        T=9 pairs=85 cold=5 gate_up(h) worst=3.014e-06 [t7/e249] down worst=1.134e-06 [t4/e286]
+PASS prefill L2 IQ2_S/IQ4_NL        T=1 pairs=4 cold=6 h: max err/rms=2.622e-02 excess-over-bf16=5.648e-08  y worst=2.903e-06 [t0]
+PASS prefill L2 IQ2_S/IQ4_NL        T=3 pairs=11 cold=19 h: max err/rms=3.006e-02 excess-over-bf16=1.022e-06  y worst=3.245e-06 [t2]
+PASS prefill L2 IQ2_S/IQ4_NL        T=9 pairs=41 cold=49 h: max err/rms=2.784e-02 excess-over-bf16=1.049e-06  y worst=3.706e-06 [t0]
+PASS prefill L2 IQ2_S/IQ4_NL        T=64 pairs=290 cold=350 h: max err/rms=3.980e-02 excess-over-bf16=2.339e-06  y worst=5.152e-06 [t14]
+PASS decode L12 IQ3_XXS/Q2_0       T=1 pairs=9 cold=1 gate_up(h) worst=1.496e-06 [t0/e186] down worst=1.037e-06 [t0/e149]
+PASS decode L12 IQ3_XXS/Q2_0       T=3 pairs=26 cold=4 gate_up(h) worst=1.627e-06 [t0/e223] down worst=1.033e-06 [t1/e408]
+PASS decode L12 IQ3_XXS/Q2_0       T=9 pairs=88 cold=2 gate_up(h) worst=1.936e-06 [t7/e445] down worst=1.262e-06 [t7/e112]
+PASS prefill L12 IQ3_XXS/Q2_0       T=1 pairs=3 cold=7 h: max err/rms=2.984e-02 excess-over-bf16=3.687e-07  y worst=2.464e-06 [t0]
+PASS prefill L12 IQ3_XXS/Q2_0       T=3 pairs=14 cold=16 h: max err/rms=2.789e-02 excess-over-bf16=6.146e-06  y worst=2.480e-06 [t1]
+PASS prefill L12 IQ3_XXS/Q2_0       T=9 pairs=36 cold=54 h: max err/rms=1.986e-02 excess-over-bf16=1.895e-06  y worst=2.907e-06 [t4]
+PASS prefill L12 IQ3_XXS/Q2_0       T=64 pairs=299 cold=341 h: max err/rms=5.258e-02 excess-over-bf16=2.338e-06  y worst=3.825e-06 [t49]
+PASS decode L17 IQ3_S/IQ4_NL       T=1 pairs=9 cold=1 gate_up(h) worst=1.531e-06 [t0/e308] down worst=1.207e-06 [t0/e308]
+PASS decode L17 IQ3_S/IQ4_NL       T=3 pairs=28 cold=2 gate_up(h) worst=1.817e-06 [t1/e197] down worst=1.277e-06 [t0/e123]
+PASS decode L17 IQ3_S/IQ4_NL       T=9 pairs=86 cold=4 gate_up(h) worst=2.450e-06 [t1/e382] down worst=1.229e-06 [t0/e271]
+PASS prefill L17 IQ3_S/IQ4_NL       T=1 pairs=5 cold=5 h: max err/rms=3.444e-02 excess-over-bf16=0.000e+00  y worst=3.171e-06 [t0]
+PASS prefill L17 IQ3_S/IQ4_NL       T=3 pairs=13 cold=17 h: max err/rms=2.740e-02 excess-over-bf16=1.151e-06  y worst=3.622e-06 [t0]
+PASS prefill L17 IQ3_S/IQ4_NL       T=9 pairs=36 cold=54 h: max err/rms=2.754e-02 excess-over-bf16=3.532e-06  y worst=3.611e-06 [t5]
+PASS prefill L17 IQ3_S/IQ4_NL       T=64 pairs=297 cold=343 h: max err/rms=3.119e-02 excess-over-bf16=3.145e-06  y worst=4.981e-06 [t1]
+PASS decode L21 IQ3_S/Q2_0         T=1 pairs=9 cold=1 gate_up(h) worst=1.573e-06 [t0/e208] down worst=5.589e-07 [t0/e245]
+PASS decode L21 IQ3_S/Q2_0         T=3 pairs=28 cold=2 gate_up(h) worst=2.822e-06 [t1/e430] down worst=7.810e-07 [t1/e319]
+PASS decode L21 IQ3_S/Q2_0         T=9 pairs=86 cold=4 gate_up(h) worst=2.086e-06 [t2/e282] down worst=7.483e-07 [t2/e245]
+PASS prefill L21 IQ3_S/Q2_0         T=1 pairs=7 cold=3 h: max err/rms=3.159e-02 excess-over-bf16=2.303e-07  y worst=1.431e-06 [t0]
+PASS prefill L21 IQ3_S/Q2_0         T=3 pairs=12 cold=18 h: max err/rms=2.980e-02 excess-over-bf16=6.413e-07  y worst=2.115e-06 [t1]
+PASS prefill L21 IQ3_S/Q2_0         T=9 pairs=40 cold=50 h: max err/rms=3.000e-02 excess-over-bf16=1.897e-06  y worst=2.840e-06 [t1]
+PASS prefill L21 IQ3_S/Q2_0         T=64 pairs=286 cold=354 h: max err/rms=4.540e-02 excess-over-bf16=6.865e-06  y worst=3.428e-06 [t4]
+PASS decode L47 IQ4_XS/IQ4_NL      T=1 pairs=8 cold=2 gate_up(h) worst=2.790e-06 [t0/e182] down worst=7.435e-07 [t0/e145]
+PASS decode L47 IQ4_XS/IQ4_NL      T=3 pairs=28 cold=2 gate_up(h) worst=2.123e-06 [t1/e108] down worst=8.203e-07 [t0/e293]
+PASS decode L47 IQ4_XS/IQ4_NL      T=9 pairs=83 cold=7 gate_up(h) worst=2.090e-06 [t4/e404] down worst=2.730e-06 [t2/e71]
+PASS prefill L47 IQ4_XS/IQ4_NL      T=1 pairs=5 cold=5 h: max err/rms=2.055e-02 excess-over-bf16=2.322e-09  y worst=3.079e-06 [t0]
+PASS prefill L47 IQ4_XS/IQ4_NL      T=3 pairs=15 cold=15 h: max err/rms=2.830e-02 excess-over-bf16=1.197e-06  y worst=3.687e-06 [t2]
+PASS prefill L47 IQ4_XS/IQ4_NL      T=9 pairs=39 cold=51 h: max err/rms=3.364e-02 excess-over-bf16=1.463e-06  y worst=4.467e-06 [t3]
+PASS prefill L47 IQ4_XS/IQ4_NL      T=64 pairs=312 cold=328 h: max err/rms=4.577e-02 excess-over-bf16=6.434e-06  y worst=4.530e-06 [t56]
+PASS decode MTP IQ4_NL/IQ4_NL      T=1 pairs=10 cold=0 gate_up(h) worst=1.411e-06 [t0/e193] down worst=1.117e-06 [t0/e230]
+PASS decode MTP IQ4_NL/IQ4_NL      T=3 pairs=30 cold=0 gate_up(h) worst=2.095e-06 [t2/e341] down worst=8.114e-07 [t2/e230]
+PASS decode MTP IQ4_NL/IQ4_NL      T=9 pairs=90 cold=0 gate_up(h) worst=2.948e-06 [t4/e378] down worst=1.166e-06 [t4/e193]
+PASS prefill MTP IQ4_NL/IQ4_NL      T=1 pairs=10 cold=0 h: max err/rms=2.150e-02 excess-over-bf16=1.282e-06  y worst=3.371e-06 [t0]
+PASS prefill MTP IQ4_NL/IQ4_NL      T=3 pairs=30 cold=0 h: max err/rms=2.983e-02 excess-over-bf16=3.874e-06  y worst=6.177e-06 [t2]
+PASS prefill MTP IQ4_NL/IQ4_NL      T=9 pairs=90 cold=0 h: max err/rms=4.774e-02 excess-over-bf16=2.974e-06  y worst=5.481e-06 [t6]
+PASS prefill MTP IQ4_NL/IQ4_NL      T=64 pairs=640 cold=0 h: max err/rms=4.311e-02 excess-over-bf16=3.018e-06  y worst=5.523e-06 [t29]
+all MoE expert checks passed
+<end of output>
+Test time =   2.78 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_moe_experts" end time: Oct 04 04:01 CDT
+"kernels_moe_experts" time elapsed: 00:00:02
+----------------------------------------------------------
+
+20/44 Testing: kernels_moe_exchange
+20/44 Test: kernels_moe_exchange
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_moe_exchange"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_moe_exchange" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+PASS sparse physical slots, spare512, deterministic hot-pair order
+PASS sparse physical slots, spare512, deterministic hot-pair order
+PASS sparse physical slots, spare512, deterministic hot-pair order
+PASS decode graph: worker saw every publish (T, n_cold, cold lists)
+PASS decode graph: y = hot (slot order) + shared + cpu, 20 replays
+PASS decode graph: GR write X += inj*y
+PASS decode graph: no error flag
+PASS decode n_cold=0: ready released with n_cold=0
+PASS decode n_cold=0: combine did not wait (no timeout, no done needed)
+PASS decode n_cold=0: y = hot + shared
+PASS decode timeout: error = MoeTimeout | (layer+1)
+PASS decode timeout: CPU contribution omitted
+PASS prefill T=64: worker saw compacted rows (64 rows, 453 cold)
+PASS prefill T=64: y = hot + shared + cpu rows; X += inj*y
+PASS prefill: no error flag
+PASS prefill T=32: worker saw compacted rows (0 rows, 0 cold)
+PASS prefill T=32: y = hot + shared + cpu rows; X += inj*y
+PASS prefill: no error flag
+PASS prefill T=16 timeout: error = MoeTimeout | (layer+1), CPU rows omitted
+all MoE exchange checks passed
+<end of output>
+Test time =   0.34 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_moe_exchange" end time: Oct 04 04:01 CDT
+"kernels_moe_exchange" time elapsed: 00:00:00
+----------------------------------------------------------
+
+21/44 Testing: kernels_mtp
+21/44 Test: kernels_mtp
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_mtp"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_mtp" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+PASS rmsnorm_bf16 2560 (bf16 in): worst |err| = 0.5000 bf16 ulp, 0 not nearest (tol: 0.5 ulp + 1e-3)
+PASS rmsnorm_bf16 10240 (fp32 in): worst |err| = 0.5000 bf16 ulp, 0 not nearest (tol: 0.5 ulp + 1e-3)
+PASS mtp_merge_streams bit-exact (0 mismatches)
+kernels_mtp: OK
+<end of output>
+Test time =   0.25 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_mtp" end time: Oct 04 04:01 CDT
+"kernels_mtp" time elapsed: 00:00:00
+----------------------------------------------------------
+
+22/44 Testing: kernels_ple
+22/44 Test: kernels_ple
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_ple"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_ple" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+PASS ple_dequant device rows bit-exact
+PASS ple_dequant waits for ple_ready
+PASS ple_dequant no error after publish
+PASS ple_dequant host-mapped rows bit-exact
+PASS ple_dequant pack rows bit-exact
+PASS ple_mix decode T=9 X delta: max (|err|-allow)/rms(ref)=0.000e+00 (tol 2e-3); raw max|err|/rms=1.208e-06 mean=4.9e-08, 0 elements above tol (rounding flips), max allow/rms=1.09e-01, worst gate rel. uncertainty=8.7e-04
+PASS ple_mix decode T=9 c record: 0 differ from the oracle's rounding, 0 beyond the rounding-flip allowance
+PASS ple_mix decode leaves state unchanged
+PASS ple_mix decode T=1 X delta: max (|err|-allow)/rms(ref)=3.830e-07 (tol 2e-3); raw max|err|/rms=6.749e-07 mean=4.0e-08, 0 elements above tol (rounding flips), max allow/rms=5.56e-02, worst gate rel. uncertainty=1.0e-04
+PASS ple_mix decode T=1 c record: 0 differ from the oracle's rounding, 0 beyond the rounding-flip allowance
+PASS ple_mix prefill T=201 X delta: max (|err|-allow)/rms(ref)=0.000e+00 (tol 2e-3); raw max|err|/rms=2.639e-02 mean=2.9e-06, 845 elements above tol (rounding flips), max allow/rms=1.64e-01, worst gate rel. uncertainty=1.1e-02
+PASS ple_mix prefill T=201 c record: 1122 differ from the oracle's rounding, 0 beyond the rounding-flip allowance
+PASS ple_mix prefill state == last 9 c
+PASS ple_mix prefill chunks 37/64/100 == one chunk (bit-exact)
+PASS ple_mix prefill chunks 3/5/1/192 (shorter than the state) == one chunk
+PASS record+fold n=0 state == sequential T=1 commits (bit-exact)
+PASS record n=0 committed columns X == sequential (bit-exact)
+PASS record+fold n=1 state == sequential T=1 commits (bit-exact)
+PASS record n=1 committed columns X == sequential (bit-exact)
+PASS record+fold n=5 state == sequential T=1 commits (bit-exact)
+PASS record n=5 committed columns X == sequential (bit-exact)
+PASS record+fold n=9 state == sequential T=1 commits (bit-exact)
+PASS record n=9 committed columns X == sequential (bit-exact)
+kernels_ple: OK
+<end of output>
+Test time =   0.48 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_ple" end time: Oct 04 04:01 CDT
+"kernels_ple" time elapsed: 00:00:00
+----------------------------------------------------------
+
+23/44 Testing: kernels_qsa_norm_rope
+23/44 Test: kernels_qsa_norm_rope
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_qsa_norm_rope"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_qsa_norm_rope" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+PASS qk_norm_rope T=1 pos0=0: max_abs=0.000e+00 rms(ref)=1.111e+00 max_abs/rms=0.000e+00; beyond bf16 rounding budget=0.000e+00 (tol 2.0e-03) worst=0
+PASS qk_norm_rope T=9 pos0=2045: max_abs=1.522e-02 rms(ref)=1.122e+00 max_abs/rms=1.356e-02; beyond bf16 rounding budget=0.000e+00 (tol 2.0e-03) worst=0
+PASS qk_norm_rope T=37 pos0=98000: max_abs=1.546e-02 rms(ref)=1.182e+00 max_abs/rms=1.309e-02; beyond bf16 rounding budget=0.000e+00 (tol 2.0e-03) worst=0
+PASS qk_norm_rope T=300 pos0=131000: max_abs=1.562e-02 rms(ref)=1.133e+00 max_abs/rms=1.380e-02; beyond bf16 rounding budget=0.000e+00 (tol 2.0e-03) worst=0
+<end of output>
+Test time =   0.36 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_qsa_norm_rope" end time: Oct 04 04:01 CDT
+"kernels_qsa_norm_rope" time elapsed: 00:00:00
+----------------------------------------------------------
+
+24/44 Testing: kernels_qsa_kv_append
+24/44 Test: kernels_qsa_kv_append
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_qsa_kv_append"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_qsa_kv_append" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+PASS bf16 append: 0/320512 mismatches (exact copy required), 2048 B/token/layer
+PASS k8v4 append: codes 320512 checked, 1 differ from FP64 oracle (0 not at a rounding tie); scales 10642 checked, 0 differ (0 not at a tie); round-trip rms rel err K=0.0262 V=0.0981; 804 B/token/layer
+PASS k8v8 append: codes 320512 checked, 1 differ from FP64 oracle (0 not at a rounding tie); scales 1252 checked, 0 differ (0 not at a tie); round-trip rms rel err K=0.0262 V=0.0262; 1032 B/token/layer
+     V scale granularity (FP64 codec model): per-row FP16 scale rms rel err 0.0262, per-32-group FP16 scales 0.0244 (+14 B/token/head)
+<end of output>
+Test time =   0.72 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_qsa_kv_append" end time: Oct 04 04:01 CDT
+"kernels_qsa_kv_append" time elapsed: 00:00:00
+----------------------------------------------------------
+
+25/44 Testing: kernels_qsa_indexer
+25/44 Test: kernels_qsa_indexer
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_qsa_indexer"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_qsa_indexer" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+PASS indexer_prepare queries (T=3001): max_abs=1.562e-02 rms(ref)=1.195e+00 max_abs/rms=1.307e-02; beyond bf16 rounding budget=0.000e+00 (tol 2.0e-03) worst=0
+PASS indexer_prepare block keys (750 blocks): max_abs=1.546e-02 rms(ref)=1.089e+00 max_abs/rms=1.419e-02; beyond bf16 rounding budget=0.000e+00 (tol 2.0e-03) worst=0
+PASS indexer multi-batch (sizes 5,3,7,1,12,40,16,2,9,17,4,300,1,11 ...): block keys bit-exact, queries bit-exact, final ring 0 bad values
+PASS indexer rollback (754 verify rounds, widths 1..12, random commits): block keys bit-exact vs single pass
+PASS indexer_score_topk decode dense edge: T=1 pos 2050..2050 max_blocks=1024, 0 boundary near-tie swaps
+PASS indexer_score_topk decode first sparse: T=1 pos 2051..2051 max_blocks=1024, 0 boundary near-tie swaps
+PASS indexer_score_topk verify crossing dense->sparse: T=9 pos 2045..2053 max_blocks=1024, 0 boundary near-tie swaps
+PASS indexer_score_topk decode T=3: T=3 pos 6000..6002 max_blocks=2048, 0 boundary near-tie swaps
+PASS indexer_score_topk decode T=9 @90K (shared-memory keys): T=9 pos 89990..89998 max_blocks=24576, 0 boundary near-tie swaps
+PASS indexer_score_topk decode T=3 @100K (global keys): T=3 pos 99990..99992 max_blocks=32768, 0 boundary near-tie swaps
+PASS indexer_score_topk decode T=1 @210K (global keys): T=1 pos 210000..210000 max_blocks=65536, 0 boundary near-tie swaps
+PASS indexer_score_topk prefill T=600 (3 query chunks): T=600 pos 5400..5999 max_blocks=1536, 0 boundary near-tie swaps
+PASS indexer_score_topk prefill T=256 all-equal keys (ties -> lower id): T=256 pos 5000..5255 max_blocks=1536, 0 boundary near-tie swaps
+PASS indexer_score_topk decode all-equal keys @100K (candidate overflow fallback): T=1 pos 99999..99999 max_blocks=32768, 0 boundary near-tie swaps
+PASS indexer_score_topk decode adversarial samples @100K (sparse-candidate fallback): T=1 pos 99999..99999 max_blocks=32768, 0 boundary near-tie swaps
+<end of output>
+Test time =   0.87 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_qsa_indexer" end time: Oct 04 04:01 CDT
+"kernels_qsa_indexer" time elapsed: 00:00:00
+----------------------------------------------------------
+
+26/44 Testing: kernels_qsa_attention
+26/44 Test: kernels_qsa_attention
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_qsa_attention"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_qsa_attention" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+PASS attention bf16-cache decode first token (T=1, pos 0..0, splits 33): max_abs=7.693e-03 rms(ref)=5.542e-01 max_abs/rms=1.388e-02; beyond bf16 rounding budget=4.939e-09 (tol 2.0e-03) worst=5032
+PASS attention k8v4 vs dequantized-cache oracle decode first token: max_abs=7.132e-03 rms(ref)=5.485e-01 max_abs/rms=1.300e-02; beyond bf16 rounding budget=0.000e+00 (tol 2.0e-03) worst=0
+PASS attention k8v4 vs unquantized K/V decode first token: rms_err/rms=9.815e-02 (tol 0.15), max_abs/rms=5.150e-01 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle decode first token: max_abs=7.805e-03 rms(ref)=5.530e-01 max_abs/rms=1.411e-02; beyond bf16 rounding budget=0.000e+00 (tol 2.0e-03) worst=0
+PASS attention k8v8 vs unquantized K/V decode first token: rms_err/rms=2.645e-02 (tol 0.1), max_abs/rms=1.441e-01 (tol 1.5); E4M3 K alone accounts for rms 0.000e+00
+PASS attention bf16-cache verify crossing 32-key chunk (T=4, pos 30..33, splits 33): max_abs=7.686e-03 rms(ref)=3.233e-01 max_abs/rms=2.377e-02; beyond bf16 rounding budget=2.053e-06 (tol 2.0e-03) worst=9413
+PASS attention k8v4 vs dequantized-cache oracle verify crossing 32-key chunk: max_abs=7.811e-03 rms(ref)=3.228e-01 max_abs/rms=2.420e-02; beyond bf16 rounding budget=1.906e-06 (tol 2.0e-03) worst=2102
+PASS attention k8v4 vs unquantized K/V verify crossing 32-key chunk: rms_err/rms=1.006e-01 (tol 0.15), max_abs/rms=7.272e-01 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle verify crossing 32-key chunk: max_abs=7.719e-03 rms(ref)=3.228e-01 max_abs/rms=2.392e-02; beyond bf16 rounding budget=1.450e-06 (tol 2.0e-03) worst=3950
+PASS attention k8v8 vs unquantized K/V verify crossing 32-key chunk: rms_err/rms=4.453e-02 (tol 0.1), max_abs/rms=3.855e-01 (tol 1.5); E4M3 K alone accounts for rms 3.657e-02
+PASS attention bf16-cache decode dense (T=1, pos 100..100, splits 33): max_abs=3.878e-03 rms(ref)=2.621e-01 max_abs/rms=1.480e-02; beyond bf16 rounding budget=2.916e-06 (tol 2.0e-03) worst=2914
+PASS attention k8v4 vs dequantized-cache oracle decode dense: max_abs=3.814e-03 rms(ref)=2.599e-01 max_abs/rms=1.467e-02; beyond bf16 rounding budget=7.381e-07 (tol 2.0e-03) worst=3949
+PASS attention k8v4 vs unquantized K/V decode dense: rms_err/rms=1.018e-01 (tol 0.15), max_abs/rms=7.388e-01 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle decode dense: max_abs=3.796e-03 rms(ref)=2.602e-01 max_abs/rms=1.459e-02; beyond bf16 rounding budget=1.358e-06 (tol 2.0e-03) worst=1268
+PASS attention k8v8 vs unquantized K/V decode dense: rms_err/rms=4.591e-02 (tol 0.1), max_abs/rms=4.023e-01 (tol 1.5); E4M3 K alone accounts for rms 3.796e-02
+PASS attention bf16-cache decode dense max keys (T=1, pos 2050..2050, splits 33): max_abs=3.101e-03 rms(ref)=1.195e-01 max_abs/rms=2.596e-02; beyond bf16 rounding budget=1.248e-06 (tol 2.0e-03) worst=5259
+PASS attention k8v4 vs dequantized-cache oracle decode dense max keys: max_abs=3.908e-03 rms(ref)=1.186e-01 max_abs/rms=3.295e-02; beyond bf16 rounding budget=1.256e-05 (tol 2.0e-03) worst=5144
+PASS attention k8v4 vs unquantized K/V decode dense max keys: rms_err/rms=1.092e-01 (tol 0.15), max_abs/rms=7.342e-01 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle decode dense max keys: max_abs=3.815e-03 rms(ref)=1.184e-01 max_abs/rms=3.221e-02; beyond bf16 rounding budget=1.471e-06 (tol 2.0e-03) worst=4252
+PASS attention k8v8 vs unquantized K/V decode dense max keys: rms_err/rms=6.293e-02 (tol 0.1), max_abs/rms=4.554e-01 (tol 1.5); E4M3 K alone accounts for rms 5.758e-02
+PASS attention bf16-cache verify crossing dense->sparse (T=9, pos 2045..2053, splits 19): max_abs=3.824e-03 rms(ref)=1.207e-01 max_abs/rms=3.168e-02; beyond bf16 rounding budget=2.422e-06 (tol 2.0e-03) worst=7370
+PASS attention k8v4 vs dequantized-cache oracle verify crossing dense->sparse: max_abs=2.849e-03 rms(ref)=1.210e-01 max_abs/rms=2.354e-02; beyond bf16 rounding budget=5.818e-06 (tol 2.0e-03) worst=18906
+PASS attention k8v4 vs unquantized K/V verify crossing dense->sparse: rms_err/rms=1.120e-01 (tol 0.15), max_abs/rms=1.396e+00 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle verify crossing dense->sparse: max_abs=3.527e-03 rms(ref)=1.211e-01 max_abs/rms=2.913e-02; beyond bf16 rounding budget=6.322e-06 (tol 2.0e-03) worst=24582
+PASS attention k8v8 vs unquantized K/V verify crossing dense->sparse: rms_err/rms=6.724e-02 (tol 0.1), max_abs/rms=8.790e-01 (tol 1.5); E4M3 K alone accounts for rms 6.188e-02
+PASS attention bf16-cache decode sparse (T=1, pos 5999..5999, splits 33): max_abs=3.468e-03 rms(ref)=1.308e-01 max_abs/rms=2.652e-02; beyond bf16 rounding budget=1.036e-06 (tol 2.0e-03) worst=5621
+PASS attention k8v4 vs dequantized-cache oracle decode sparse: max_abs=2.412e-03 rms(ref)=1.305e-01 max_abs/rms=1.849e-02; beyond bf16 rounding budget=2.540e-06 (tol 2.0e-03) worst=3399
+PASS attention k8v4 vs unquantized K/V decode sparse: rms_err/rms=1.091e-01 (tol 0.15), max_abs/rms=8.631e-01 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle decode sparse: max_abs=3.691e-03 rms(ref)=1.301e-01 max_abs/rms=2.837e-02; beyond bf16 rounding budget=4.866e-06 (tol 2.0e-03) worst=1195
+PASS attention k8v8 vs unquantized K/V decode sparse: rms_err/rms=5.848e-02 (tol 0.1), max_abs/rms=4.291e-01 (tol 1.5); E4M3 K alone accounts for rms 5.311e-02
+PASS attention bf16-cache verify sparse T=3 (T=3, pos 4000..4002, splits 33): max_abs=3.277e-03 rms(ref)=1.147e-01 max_abs/rms=2.857e-02; beyond bf16 rounding budget=2.469e-06 (tol 2.0e-03) worst=13389
+PASS attention k8v4 vs dequantized-cache oracle verify sparse T=3: max_abs=3.633e-03 rms(ref)=1.150e-01 max_abs/rms=3.159e-02; beyond bf16 rounding budget=2.817e-06 (tol 2.0e-03) worst=14099
+PASS attention k8v4 vs unquantized K/V verify sparse T=3: rms_err/rms=1.102e-01 (tol 0.15), max_abs/rms=1.212e+00 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle verify sparse T=3: max_abs=2.539e-03 rms(ref)=1.145e-01 max_abs/rms=2.217e-02; beyond bf16 rounding budget=1.127e-05 (tol 2.0e-03) worst=1263
+PASS attention k8v8 vs unquantized K/V verify sparse T=3: rms_err/rms=5.976e-02 (tol 0.1), max_abs/rms=5.262e-01 (tol 1.5); E4M3 K alone accounts for rms 5.367e-02
+PASS attention bf16-cache verify sparse T=9 (T=9, pos 5990..5998, splits 19): max_abs=3.770e-03 rms(ref)=1.336e-01 max_abs/rms=2.823e-02; beyond bf16 rounding budget=1.684e-06 (tol 2.0e-03) worst=48922
+PASS attention k8v4 vs dequantized-cache oracle verify sparse T=9: max_abs=3.840e-03 rms(ref)=1.339e-01 max_abs/rms=2.867e-02; beyond bf16 rounding budget=3.781e-06 (tol 2.0e-03) worst=17141
+PASS attention k8v4 vs unquantized K/V verify sparse T=9: rms_err/rms=1.095e-01 (tol 0.15), max_abs/rms=1.205e+00 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle verify sparse T=9: max_abs=3.775e-03 rms(ref)=1.336e-01 max_abs/rms=2.825e-02; beyond bf16 rounding budget=3.097e-06 (tol 2.0e-03) worst=25585
+PASS attention k8v8 vs unquantized K/V verify sparse T=9: rms_err/rms=6.152e-02 (tol 0.1), max_abs/rms=6.320e-01 (tol 1.5); E4M3 K alone accounts for rms 5.556e-02
+PASS attention bf16-cache verify sparse T=16 (T=16, pos 3000..3015, splits 11): max_abs=3.674e-03 rms(ref)=1.183e-01 max_abs/rms=3.104e-02; beyond bf16 rounding budget=4.315e-06 (tol 2.0e-03) worst=49897
+PASS attention k8v4 vs dequantized-cache oracle verify sparse T=16: max_abs=3.827e-03 rms(ref)=1.181e-01 max_abs/rms=3.241e-02; beyond bf16 rounding budget=6.377e-06 (tol 2.0e-03) worst=12998
+PASS attention k8v4 vs unquantized K/V verify sparse T=16: rms_err/rms=1.094e-01 (tol 0.15), max_abs/rms=1.291e+00 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle verify sparse T=16: max_abs=3.650e-03 rms(ref)=1.180e-01 max_abs/rms=3.094e-02; beyond bf16 rounding budget=5.292e-06 (tol 2.0e-03) worst=25879
+PASS attention k8v8 vs unquantized K/V verify sparse T=16: rms_err/rms=5.999e-02 (tol 0.1), max_abs/rms=8.538e-01 (tol 1.5); E4M3 K alone accounts for rms 5.414e-02
+PASS attention bf16-cache prefill dense (T=256, pos 0..255, splits 1): max_abs=7.811e-03 rms(ref)=2.696e-01 max_abs/rms=2.898e-02; beyond bf16 rounding budget=9.413e-06 (tol 2.0e-03) worst=50072
+PASS attention k8v4 vs dequantized-cache oracle prefill dense: max_abs=7.781e-03 rms(ref)=2.698e-01 max_abs/rms=2.884e-02; beyond bf16 rounding budget=5.723e-06 (tol 2.0e-03) worst=1553669
+PASS attention k8v4 vs unquantized K/V prefill dense: rms_err/rms=1.033e-01 (tol 0.15), max_abs/rms=1.251e+00 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle prefill dense: max_abs=7.806e-03 rms(ref)=2.693e-01 max_abs/rms=2.898e-02; beyond bf16 rounding budget=4.999e-06 (tol 2.0e-03) worst=968426
+PASS attention k8v8 vs unquantized K/V prefill dense: rms_err/rms=4.880e-02 (tol 0.1), max_abs/rms=8.379e-01 (tol 1.5); E4M3 K alone accounts for rms 4.106e-02
+PASS attention bf16-cache prefill sparse (T=256, pos 5800..6055, splits 1): max_abs=7.631e-03 rms(ref)=1.246e-01 max_abs/rms=6.124e-02; beyond bf16 rounding budget=5.957e-05 (tol 2.0e-03) worst=82138
+PASS attention k8v4 vs dequantized-cache oracle prefill sparse: max_abs=7.225e-03 rms(ref)=1.245e-01 max_abs/rms=5.804e-02; beyond bf16 rounding budget=3.766e-05 (tol 2.0e-03) worst=1084679
+PASS attention k8v4 vs unquantized K/V prefill sparse: rms_err/rms=1.097e-01 (tol 0.15), max_abs/rms=2.065e+00 (tol 2.5)
+PASS attention k8v8 vs dequantized-cache oracle prefill sparse: max_abs=7.662e-03 rms(ref)=1.245e-01 max_abs/rms=6.155e-02; beyond bf16 rounding budget=4.393e-05 (tol 2.0e-03) worst=473291
+PASS attention k8v8 vs unquantized K/V prefill sparse: rms_err/rms=6.105e-02 (tol 0.1), max_abs/rms=1.226e+00 (tol 1.5); E4M3 K alone accounts for rms 5.515e-02
+k8v4 vs unquantized K/V over all cases: worst rms_err/rms 1.120e-01, worst max_abs/rms 2.065e+00
+k8v8 vs unquantized K/V over all cases: worst rms_err/rms 6.724e-02, worst max_abs/rms 1.226e+00
+<end of output>
+Test time =   2.92 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_qsa_attention" end time: Oct 04 04:01 CDT
+"kernels_qsa_attention" time elapsed: 00:00:02
+----------------------------------------------------------
+
+27/44 Testing: kernels_qsa_determinism
+27/44 Test: kernels_qsa_determinism
+Command: "/home/obelisk/Projects/fngine/build-main/tests/kernels_qsa_determinism"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"kernels_qsa_determinism" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+PASS determinism bf16 dense prefill T=2048 @0: 0 of 6 buffers differ between runs
+PASS attention bf16 dense prefill T=2048 @0 chunk 0 (sampled tokens): max_abs=1.410e-02 rms(ref)=1.671e-01 max_abs/rms=8.438e-02; beyond bf16 rounding budget=6.241e-06 (tol 2.0e-03) worst=10898
+PASS determinism bf16 sparse prefill T=4096 @0 then T=4096 @4096: 0 of 10 buffers differ between runs
+PASS attention bf16 sparse prefill T=4096 @0 then T=4096 @4096 chunk 0 (sampled tokens): max_abs=1.410e-02 rms(ref)=1.217e-01 max_abs/rms=1.159e-01; beyond bf16 rounding budget=8.573e-06 (tol 2.0e-03) worst=10898
+PASS attention bf16 sparse prefill T=4096 @0 then T=4096 @4096 chunk 1 (sampled tokens): max_abs=9.384e-04 rms(ref)=3.589e-02 max_abs/rms=2.615e-02; beyond bf16 rounding budget=2.431e-05 (tol 2.0e-03) worst=60547
+PASS determinism k8v4 dense prefill T=2048 @0: 0 of 6 buffers differ between runs
+PASS attention k8v4 dense prefill T=2048 @0 chunk 0 (sampled tokens): max_abs=1.445e-02 rms(ref)=1.668e-01 max_abs/rms=8.667e-02; beyond bf16 rounding budget=2.376e-06 (tol 2.0e-03) worst=164134
+PASS determinism k8v4 sparse prefill T=4096 @0 then T=4096 @4096: 0 of 10 buffers differ between runs
+PASS attention k8v4 sparse prefill T=4096 @0 then T=4096 @4096 chunk 0 (sampled tokens): max_abs=1.445e-02 rms(ref)=1.214e-01 max_abs/rms=1.190e-01; beyond bf16 rounding budget=3.814e-06 (tol 2.0e-03) worst=250557
+PASS attention k8v4 sparse prefill T=4096 @0 then T=4096 @4096 chunk 1 (sampled tokens): max_abs=8.976e-04 rms(ref)=3.590e-02 max_abs/rms=2.500e-02; beyond bf16 rounding budget=1.847e-05 (tol 2.0e-03) worst=41336
+PASS determinism k8v8 dense prefill T=2048 @0: 0 of 6 buffers differ between runs
+PASS attention k8v8 dense prefill T=2048 @0 chunk 0 (sampled tokens): max_abs=1.441e-02 rms(ref)=1.677e-01 max_abs/rms=8.592e-02; beyond bf16 rounding budget=2.616e-06 (tol 2.0e-03) worst=12429
+PASS determinism k8v8 sparse prefill T=4096 @0 then T=4096 @4096: 0 of 10 buffers differ between runs
+PASS attention k8v8 sparse prefill T=4096 @0 then T=4096 @4096 chunk 0 (sampled tokens): max_abs=1.441e-02 rms(ref)=1.220e-01 max_abs/rms=1.180e-01; beyond bf16 rounding budget=3.593e-06 (tol 2.0e-03) worst=12429
+PASS attention k8v8 sparse prefill T=4096 @0 then T=4096 @4096 chunk 1 (sampled tokens): max_abs=8.990e-04 rms(ref)=3.588e-02 max_abs/rms=2.506e-02; beyond bf16 rounding budget=1.983e-05 (tol 2.0e-03) worst=98085
+<end of output>
+Test time =   4.73 sec
+----------------------------------------------------------
+Test Passed.
+"kernels_qsa_determinism" end time: Oct 04 04:01 CDT
+"kernels_qsa_determinism" time elapsed: 00:00:04
+----------------------------------------------------------
+
+28/44 Testing: test_pack_load
+28/44 Test: test_pack_load
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_pack_load"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_pack_load" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+manifest: 900 tensors, 401 bf16 copies, profile yes, 7 tokenizer files (0.003 s)
+config: hidden 2560 layers 48 vocab 248320 experts 512 top-10 eps 1e-06 theta 1e+07 rotary 64 eos [ 248046 248044 ]
+[2026-10-04 04:01:20.411] [info] dense weights: 5.58 GiB VRAM (dense 6.28 GB/s, mtp experts 6.42 GB/s), embedding 1.19 GiB host (6.31 GB/s, register 0.01 s)
+dense load 1.28 s: VRAM 5.583 GiB (planned 5.583); dense 4.58 GB in 0.73 s = 6.28 GB/s; mtp experts 1.42 GB = 6.42 GB/s; embedding 1.27 GB host = 6.31 GB/s, register 0.01 s
+ok L3.qsa.qkv codes head (1048576 bytes)
+ok L3.qsa.qkv codes tail (4096 bytes)
+ok L3.qsa.qkv scales (26624 bytes)
+ok L0.gdn.conv (163840 bytes)
+ok L0.gdn.A_log (192 bytes)
+ok L1.ple.norm_conv (40960 bytes)
+ok mtp.moe.router (2626560 bytes)
+ok L47.mlp_gr.inject (81920 bytes)
+ok lm_head codes tail (1048576 bytes)
+ok embed host row 0 (5120 bytes)
+ok embed mapped row 0 (5120 bytes)
+ok embed host row 12345 (5120 bytes)
+ok embed mapped row 12345 (5120 bytes)
+ok embed host row 248319 (5120 bytes)
+ok embed mapped row 248319 (5120 bytes)
+ok mtp expert 0 (2764800 bytes)
+ok mtp expert 511 (2764800 bytes)
+[2026-10-04 04:01:20.414] [info] expert scores: 19144320 decode-profile pairs + 0 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+full plan now: GPU 12293 experts 23.41 GiB, RAM 12283 experts 23.57 GiB, predicted hit 87.1%
+[2026-10-04 04:01:20.415] [info] expert scores: 19144320 decode-profile pairs + 0 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 04:01:20.417] [info] expert scores: 19144320 decode-profile pairs + 0 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 04:01:22.347] [info] expert placement: 12 layers; GPU 2256 experts + 1 spare slot per layer (4.00 GiB of 4.00 GiB budget, 23.91 GiB free) + 0 elastic in the context tail (0.00 GiB), RAM 3888 experts (6.85 GiB, registered); predicted hit rate 71.4% (of decode routing); GPU upload 6.14 GB/s, RAM fill 6.55 GB/s in 1.12 s, register 0.05 s
+placement 1.93 s: 12 layers; GPU 2256 experts + 1 spare slot per layer (4.00 GiB of 4.00 GiB budget, 23.91 GiB free) + 0 elastic in the context tail (0.00 GiB), RAM 3888 experts (6.85 GiB, registered); predicted hit rate 71.4% (of decode routing); GPU upload 6.14 GB/s, RAM fill 6.55 GB/s in 1.12 s, register 0.05 s
+expert reads: GPU 4.27 GB at 6.14 GB/s, RAM 7.36 GB at 6.55 GB/s (7.36 GB read)
+ok GPU expert L0 E0 (2176000 bytes)
+ok RAM expert L0 E2 (2176000 bytes)
+ok RAM expert L11 E0 (1971200 bytes)
+ok GPU expert L11 E2 (1971200 bytes)
+PASS pack load
+<end of output>
+Test time =   3.56 sec
+----------------------------------------------------------
+Test Passed.
+"test_pack_load" end time: Oct 04 04:01 CDT
+"test_pack_load" time elapsed: 00:00:03
+----------------------------------------------------------
+
+29/44 Testing: test_expert_swap
+29/44 Test: test_expert_swap
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_expert_swap"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_expert_swap" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+[2026-10-04 04:01:22.688] [info] expert scores: 19144320 decode-profile pairs + 18446744073709551615 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 04:01:22.928] [info] expert placement: 1 layers; GPU 64 experts + 1 spare slot per layer (0.13 GiB of 0.13 GiB budget, 29.50 GiB free) + 0 elastic in the context tail (0.00 GiB), RAM 448 experts (0.91 GiB, registered); predicted hit rate 99.7% (of decode routing); GPU upload 4.47 GB/s, RAM fill 6.53 GB/s in 0.15 s, register 0.01 s
+PASS expert swap (registered RAM): map transitions, bounded planning and captured mixed-tier output
+[2026-10-04 04:01:23.012] [info] expert scores: 19144320 decode-profile pairs + 18446744073709551615 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 04:01:23.237] [warning] expert RAM is not registered: streaming, swaps and loan restores use two 0.06 MiB pinned bounce buffers
+[2026-10-04 04:01:23.237] [info] expert placement: 1 layers; GPU 64 experts + 1 spare slot per layer (0.13 GiB of 0.13 GiB budget, 29.49 GiB free) + 0 elastic in the context tail (0.00 GiB), RAM 448 experts (0.91 GiB, NOT registered); predicted hit rate 99.7% (of decode routing); GPU upload 4.64 GB/s, RAM fill 6.34 GB/s in 0.15 s, register 0.00 s
+PASS expert swap (pageable RAM): map transitions, bounded planning and captured mixed-tier output
+<end of output>
+Test time =   0.89 sec
+----------------------------------------------------------
+Test Passed.
+"test_expert_swap" end time: Oct 04 04:01 CDT
+"test_expert_swap" time elapsed: 00:00:00
+----------------------------------------------------------
+
+30/44 Testing: test_routing_stats
+30/44 Test: test_routing_stats
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_routing_stats"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_routing_stats" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+[2026-10-04 04:01:23.586] [info] routing stats: flushed 60 new routed pairs to /tmp/fngine-routing-345955.bin (stored total 60)
+[2026-10-04 04:01:23.586] [info] routing stats: flushed 4294967350 new routed pairs to /tmp/fngine-routing-345955.bin (stored total 4294967380)
+[2026-10-04 04:01:23.586] [info] routing stats: flushed 1 new routed pairs to /tmp/fngine-routing-345955.bin (stored total 4611686020574871596)
+[2026-10-04 04:01:23.586] [warning] cannot write routing stats /tmp/fngine-routing-345955.bin.part
+[2026-10-04 04:01:23.587] [info] routing stats: flushed 30 new routed pairs to /tmp/fngine-routing-345955.bin (stored total 2305843010287435813)
+[2026-10-04 04:01:23.587] [warning] cannot merge routing stats /tmp/fngine-routing-345955.bin: unreadable or invalid size
+[2026-10-04 04:01:23.587] [info] routing stats: flushed 30 new routed pairs to /tmp/fngine-routing-345955.bin (stored total 1152921505143717921)
+PASS routing stats
+<end of output>
+Test time =   0.28 sec
+----------------------------------------------------------
+Test Passed.
+"test_routing_stats" end time: Oct 04 04:01 CDT
+"test_routing_stats" time elapsed: 00:00:00
+----------------------------------------------------------
+
+31/44 Testing: test_prefill_stream
+31/44 Test: test_prefill_stream
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_prefill_stream"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_prefill_stream" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+[2026-10-04 04:01:23.865] [info] expert scores: 19144320 decode-profile pairs + 0 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 04:01:24.936] [info] expert placement: 5 layers; GPU 828 experts + 1 spare slot per layer (1.49 GiB of 1.50 GiB budget, 29.50 GiB free) + 0 elastic in the context tail (0.00 GiB), RAM 1732 experts (4.13 GiB, registered); predicted hit rate 65.4% (of decode routing); GPU upload 6.09 GB/s, RAM fill 6.23 GB/s in 0.71 s, register 0.04 s
+[2026-10-04 04:01:25.009] [info] prefill cost model: B_pcie 11.6 GB/s, B_cpu 39.2 GB/s (15 experts, 12 threads, T=1 0.7 ms), F_cpu 5.41 TFLOP/s (T=128 4.2 ms)
+[2026-10-04 04:01:25.012] [info] prefill stream plan T=64: 285 experts (0.51 GiB) per chunk, per layer [70,61,62,46,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; predicted CPU expert time per chunk 0.06 s CPU-only vs 0.05 s split
+prompt0 T64 checked 285 streamed expert endpoints
+[2026-10-04 04:01:25.059] [info] prefill stream plan T=3: 27 experts (0.05 GiB) per chunk, per layer [7,6,6,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; predicted CPU expert time per chunk 0.01 s CPU-only vs 0.00 s split
+prompt0 T3 checked 27 streamed expert endpoints
+[2026-10-04 04:01:25.065] [info] prefill stream plan T=64: 285 experts (0.51 GiB) per chunk, per layer [70,61,62,46,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; predicted CPU expert time per chunk 0.06 s CPU-only vs 0.05 s split
+prompt0 T64 checked 285 streamed expert endpoints
+[2026-10-04 04:01:25.479] [info] prefill stream plan T=64: 285 experts (0.51 GiB) per chunk, per layer [70,61,62,46,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; predicted CPU expert time per chunk 0.06 s CPU-only vs 0.05 s split
+prompt1 T64 checked 285 streamed expert endpoints
+[2026-10-04 04:01:25.526] [info] prefill stream plan T=3: 27 experts (0.05 GiB) per chunk, per layer [7,6,6,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; predicted CPU expert time per chunk 0.01 s CPU-only vs 0.00 s split
+prompt1 T3 checked 27 streamed expert endpoints
+[2026-10-04 04:01:25.531] [info] prefill stream plan T=64: 285 experts (0.51 GiB) per chunk, per layer [70,61,62,46,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; predicted CPU expert time per chunk 0.06 s CPU-only vs 0.05 s split
+prompt1 T64 checked 285 streamed expert endpoints
+PASS prefill streaming loan restore and ring buffer reuse
+<end of output>
+Test time =   2.70 sec
+----------------------------------------------------------
+Test Passed.
+"test_prefill_stream" end time: Oct 04 04:01 CDT
+"test_prefill_stream" time elapsed: 00:00:02
+----------------------------------------------------------
+
+32/44 Testing: test_prefill_stream_pageable
+32/44 Test: test_prefill_stream_pageable
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_prefill_stream" "--pageable"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_prefill_stream_pageable" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+[2026-10-04 04:01:26.559] [info] expert scores: 19144320 decode-profile pairs + 0 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 04:01:27.579] [warning] expert RAM is not registered: streaming, swaps and loan restores use two 0.06 MiB pinned bounce buffers
+[2026-10-04 04:01:27.580] [info] expert placement: 5 layers; GPU 828 experts + 1 spare slot per layer (1.49 GiB of 1.50 GiB budget, 29.50 GiB free) + 0 elastic in the context tail (0.00 GiB), RAM 1732 experts (4.13 GiB, NOT registered); predicted hit rate 65.4% (of decode routing); GPU upload 6.02 GB/s, RAM fill 6.39 GB/s in 0.69 s, register 0.00 s
+[2026-10-04 04:01:27.667] [info] prefill cost model: B_pcie 9.9 GB/s, B_cpu 37.4 GB/s (15 experts, 12 threads, T=1 0.8 ms), F_cpu 5.00 TFLOP/s (T=128 4.5 ms)
+[2026-10-04 04:01:27.670] [info] prefill stream plan T=64: 258 experts (0.46 GiB) per chunk, per layer [63,56,56,41,42,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; predicted CPU expert time per chunk 0.06 s CPU-only vs 0.05 s split
+prompt0 T64 checked 258 streamed expert endpoints
+[2026-10-04 04:01:27.731] [info] prefill stream plan T=3: 24 experts (0.04 GiB) per chunk, per layer [6,5,5,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; predicted CPU expert time per chunk 0.01 s CPU-only vs 0.00 s split
+prompt0 T3 checked 24 streamed expert endpoints
+[2026-10-04 04:01:27.735] [info] prefill stream plan T=64: 258 experts (0.46 GiB) per chunk, per layer [63,56,56,41,42,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; predicted CPU expert time per chunk 0.06 s CPU-only vs 0.05 s split
+prompt0 T64 checked 258 streamed expert endpoints
+[2026-10-04 04:01:28.194] [info] prefill stream plan T=64: 258 experts (0.46 GiB) per chunk, per layer [63,56,56,41,42,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; predicted CPU expert time per chunk 0.06 s CPU-only vs 0.05 s split
+prompt1 T64 checked 258 streamed expert endpoints
+[2026-10-04 04:01:28.250] [info] prefill stream plan T=3: 24 experts (0.04 GiB) per chunk, per layer [6,5,5,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; predicted CPU expert time per chunk 0.01 s CPU-only vs 0.00 s split
+prompt1 T3 checked 24 streamed expert endpoints
+[2026-10-04 04:01:28.254] [info] prefill stream plan T=64: 258 experts (0.46 GiB) per chunk, per layer [63,56,56,41,42,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; predicted CPU expert time per chunk 0.06 s CPU-only vs 0.05 s split
+prompt1 T64 checked 258 streamed expert endpoints
+PASS prefill streaming loan restore and ring buffer reuse
+<end of output>
+Test time =   2.76 sec
+----------------------------------------------------------
+Test Passed.
+"test_prefill_stream_pageable" end time: Oct 04 04:01 CDT
+"test_prefill_stream_pageable" time elapsed: 00:00:02
+----------------------------------------------------------
+
+33/44 Testing: test_elastic_experts
+33/44 Test: test_elastic_experts
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_elastic_experts"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_elastic_experts" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+[2026-10-04 04:01:29.319] [info] expert scores: 19144320 decode-profile pairs + 0 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 04:01:29.882] [info] expert placement: 3 layers; GPU 106 experts + 1 spare slot per layer (0.19 GiB of 0.19 GiB budget, 29.50 GiB free) + 94 elastic in the context tail (0.16 GiB), RAM 1430 experts (2.52 GiB, registered); predicted hit rate 32.0% (of decode routing); GPU upload 5.60 GB/s, RAM fill 6.43 GB/s in 0.42 s, register 0.02 s
+PASS elastic experts: 94 slots, 48 kept at 6848 tokens
+<end of output>
+Test time =   0.98 sec
+----------------------------------------------------------
+Test Passed.
+"test_elastic_experts" end time: Oct 04 04:01 CDT
+"test_elastic_experts" time elapsed: 00:00:00
+----------------------------------------------------------
+
+34/44 Testing: test_speculative_real
+34/44 Test: test_speculative_real
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_speculative_real"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_speculative_real" start time: Oct 04 04:01 CDT
+Output:
+----------------------------------------------------------
+[2026-10-04 04:01:31.869] [info] dense weights: 5.58 GiB VRAM (dense 6.19 GB/s, mtp experts 6.12 GB/s), embedding 1.19 GiB host (6.51 GB/s, register 0.01 s)
+[2026-10-04 04:01:31.870] [info] MTP draft head: 32768 draft-vocabulary rows (80.0 MiB)
+[2026-10-04 04:01:31.870] [info] expert scores: 19144320 decode-profile pairs + 0 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 04:01:40.311] [info] expert placement: 48 layers; GPU 11936 experts + no spare slots (22.68 GiB of 22.75 GiB budget, 23.83 GiB free) + 0 elastic in the context tail (0.00 GiB), RAM 12640 experts (25.65 GiB, registered); predicted hit rate 86.2% (of decode routing); GPU upload 6.17 GB/s, RAM fill 6.56 GB/s in 4.20 s, register 0.23 s
+[2026-10-04 04:01:40.311] [info] prefill borrowing 1.44 GiB of expert slots for workspace/ring (decode scratch 0.03 GiB)
+[2026-10-04 04:01:40.419] [info] prefill cost model: B_pcie 11.6 GB/s, B_cpu 22.7 GB/s (32 experts, 12 threads, T=1 2.9 ms), F_cpu 5.70 TFLOP/s (T=128 9.9 ms)
+[2026-10-04 04:01:40.431] [info] runtime ready in 9.9 s: dense 5.66141 GiB, experts GPU 11936 (22.6811 GiB) / CPU 12640 (25.6465 GiB), predicted hit rate 0.862269, state+workspace 0.58577 GiB, ctx 4096, chunk 1024, kv k8v8, dense fp8, cpu workers 12, prefill streaming ring 2x192 (0.952148 GiB), B_pcie 11.6305 GB/s, B_cpu 22.7384 GB/s, F_cpu 5.69703 TFLOP/s, prefill storage borrowed
+[2026-10-04 04:01:40.433] [info] prefill stream plan T=31: 857 experts (1.63 GiB) per chunk, per layer [17,19,20,23,20,16,19,17,18,19,17,18,16,15,17,18,16,15,16,16,21,22,20,26,19,18,19,16,16,16,16,17,15,14,18,15,16,18,19,18,19,19,20,21,17,17,15,18]; predicted CPU expert time per chunk 0.19 s CPU-only vs 0.15 s split
+[2026-10-04 04:01:43.450] [info] prefill stream plan T=31: 857 experts (1.63 GiB) per chunk, per layer [17,19,20,23,20,16,19,17,18,19,17,18,16,15,17,18,16,15,16,16,21,22,20,26,19,18,19,16,16,16,16,17,15,14,18,15,16,18,19,18,19,19,20,21,17,17,15,18]; predicted CPU expert time per chunk 0.19 s CPU-only vs 0.15 s split
+[2026-10-04 04:01:45.671] [info] prefill stream plan T=31: 857 experts (1.63 GiB) per chunk, per layer [17,19,20,23,20,16,19,17,18,19,17,18,16,15,17,18,16,15,16,16,21,22,20,26,19,18,19,16,16,16,16,17,15,14,18,15,16,18,19,18,19,19,20,21,17,17,15,18]; predicted CPU expert time per chunk 0.19 s CPU-only vs 0.15 s split
+[check1] prompt 0: PASS (first divergence -1, top-2 gaps plain 0.0000 / auto 0.0000); auto rounds 106, MTP accepted 171/251 drafts
+[2026-10-04 04:01:47.746] [info] prefill stream plan T=33: 897 experts (1.71 GiB) per chunk, per layer [17,20,20,24,21,17,20,17,19,20,18,19,17,16,18,18,16,16,16,17,22,23,21,27,20,19,20,17,17,17,17,18,16,14,19,16,16,19,20,19,20,20,21,22,18,18,16,19]; predicted CPU expert time per chunk 0.20 s CPU-only vs 0.16 s split
+[2026-10-04 04:01:51.469] [info] prefill stream plan T=33: 897 experts (1.71 GiB) per chunk, per layer [17,20,20,24,21,17,20,17,19,20,18,19,17,16,18,18,16,16,16,17,22,23,21,27,20,19,20,17,17,17,17,18,16,14,19,16,16,19,20,19,20,20,21,22,18,18,16,19]; predicted CPU expert time per chunk 0.20 s CPU-only vs 0.16 s split
+[2026-10-04 04:01:54.241] [info] prefill stream plan T=33: 897 experts (1.71 GiB) per chunk, per layer [17,20,20,24,21,17,20,17,19,20,18,19,17,16,18,18,16,16,16,17,22,23,21,27,20,19,20,17,17,17,17,18,16,14,19,16,16,19,20,19,20,20,21,22,18,18,16,19]; predicted CPU expert time per chunk 0.20 s CPU-only vs 0.16 s split
+[check1] prompt 1: PASS (first divergence -1, top-2 gaps plain 0.0000 / auto 0.0000); auto rounds 101, MTP accepted 184/210 drafts
+[2026-10-04 04:01:56.539] [info] prefill stream plan T=26: 748 experts (1.42 GiB) per chunk, per layer [15,17,17,20,17,14,17,15,16,17,15,16,14,13,15,15,14,13,14,14,18,19,18,23,16,16,16,14,14,14,14,15,13,12,16,13,14,16,16,16,16,17,17,18,15,15,13,16]; predicted CPU expert time per chunk 0.17 s CPU-only vs 0.13 s split
+[2026-10-04 04:02:02.273] [info] prefill stream plan T=26: 748 experts (1.42 GiB) per chunk, per layer [15,17,17,20,17,14,17,15,16,17,15,16,14,13,15,15,14,13,14,14,18,19,18,23,16,16,16,14,14,14,14,15,13,12,16,13,14,16,16,16,16,17,17,18,15,15,13,16]; predicted CPU expert time per chunk 0.17 s CPU-only vs 0.13 s split
+[2026-10-04 04:02:07.915] [info] prefill stream plan T=26: 748 experts (1.42 GiB) per chunk, per layer [15,17,17,20,17,14,17,15,16,17,15,16,14,13,15,15,14,13,14,14,18,19,18,23,16,16,16,14,14,14,14,15,13,12,16,13,14,16,16,16,16,17,17,18,15,15,13,16]; predicted CPU expert time per chunk 0.17 s CPU-only vs 0.13 s split
+[check1] prompt 2: PASS (first divergence -1, top-2 gaps plain 0.0000 / auto 0.0000); auto rounds 211, MTP accepted 126/384 drafts
+[check2] MTP first-draft acceptance 0.727 (PASS >= 0.55)
+[2026-10-04 04:02:14.898] [info] dense weights: 4.26 GiB VRAM (dense 6.19 GB/s), embedding 1.19 GiB host (6.43 GB/s, register 0.01 s)
+[2026-10-04 04:02:14.899] [info] expert scores: 19144320 decode-profile pairs + 0 routing-stats pairs (decode), 78528480 prefill profile pairs (weight 0.20)
+[2026-10-04 04:02:23.391] [info] expert placement: 48 layers; GPU 12642 experts + no spare slots (24.01 GiB of 24.07 GiB budget, 25.21 GiB free) + 0 elastic in the context tail (0.00 GiB), RAM 11934 experts (24.32 GiB, registered); predicted hit rate 88.0% (of decode routing); GPU upload 6.21 GB/s, RAM fill 6.45 GB/s in 4.05 s, register 0.22 s
+[2026-10-04 04:02:23.392] [info] prefill borrowing 1.45 GiB of expert slots for workspace/ring (decode scratch 0.03 GiB)
+[2026-10-04 04:02:23.498] [info] prefill cost model: B_pcie 11.7 GB/s, B_cpu 22.8 GB/s (32 experts, 12 threads, T=1 2.9 ms), F_cpu 5.11 TFLOP/s (T=128 10.7 ms)
+[2026-10-04 04:02:23.514] [info] runtime ready in 9.6 s: dense 4.26474 GiB, experts GPU 12642 (24.0144 GiB) / CPU 11934 (24.3223 GiB), predicted hit rate 0.879869, state+workspace 0.636155 GiB, ctx 4096, chunk 1024, kv bf16, dense fp8, cpu workers 12, prefill streaming ring 2x192 (0.952148 GiB), B_pcie 11.7317 GB/s, B_cpu 22.7581 GB/s, F_cpu 5.10693 TFLOP/s, prefill storage borrowed
+[2026-10-04 04:02:23.515] [info] prefill stream plan T=27: 698 experts (1.33 GiB) per chunk, per layer [12,15,16,19,16,13,15,13,16,16,13,15,13,11,14,15,13,12,13,13,18,17,17,21,15,14,15,13,14,13,14,14,12,11,15,13,13,14,15,16,16,17,16,18,14,13,12,15]; predicted CPU expert time per chunk 0.15 s CPU-only vs 0.12 s split
+[2026-10-04 04:02:25.934] [info] prefill stream plan T=27: 698 experts (1.33 GiB) per chunk, per layer [12,15,16,19,16,13,15,13,16,16,13,15,13,11,14,15,13,12,13,13,18,17,17,21,15,14,15,13,14,13,14,14,12,11,15,13,13,14,15,16,16,17,16,18,14,13,12,15]; predicted CPU expert time per chunk 0.15 s CPU-only vs 0.12 s split
+[2026-10-04 04:02:27.408] [info] prefill stream plan T=27: 698 experts (1.33 GiB) per chunk, per layer [12,15,16,19,16,13,15,13,16,16,13,15,13,11,14,15,13,12,13,13,18,17,17,21,15,14,15,13,14,13,14,14,12,11,15,13,13,14,15,16,16,17,16,18,14,13,12,15]; predicted CPU expert time per chunk 0.15 s CPU-only vs 0.12 s split
+[check3] snapshot region 0 (GDN recurrent): rms(diff)/rms 0.000e+00
+[check3] snapshot region 1 (GDN conv): rms(diff)/rms 0.000e+00
+[check3] snapshot region 2 (PLE conv): rms(diff)/rms 0.000e+00
+[check3] snapshot region 3 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 4 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 5 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 6 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 7 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 8 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 9 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 10 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 11 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 12 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 13 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 14 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 15 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] QSA cache 0: K 0.000e+00 V 0.000e+00 block keys 0.000e+00
+[check3] QSA cache 11: K 0.000e+00 V 0.000e+00 block keys 0.000e+00
+[check3] 37 rounds with a rejection, 13 fully accepted; committed 129 tokens; worst rms(diff)/rms 0.000e+00
+[check3] PASS
+[2026-10-04 04:02:28.690] [info] prefill stream plan T=13: 381 experts (0.73 GiB) per chunk, per layer [6,8,9,11,9,7,8,7,8,9,7,8,7,6,7,8,7,7,7,7,10,10,9,12,8,8,8,7,8,7,7,8,7,6,8,7,7,8,8,9,9,9,9,10,8,7,6,8]; predicted CPU expert time per chunk 0.08 s CPU-only vs 0.07 s split
+[2026-10-04 04:02:28.778] [info] prefill stream plan T=14: 407 experts (0.77 GiB) per chunk, per layer [7,9,9,11,9,8,9,8,9,9,8,9,7,7,8,9,7,7,7,8,11,10,10,13,8,8,9,8,8,8,8,8,7,6,9,7,8,8,9,9,9,10,10,10,8,8,7,8]; predicted CPU expert time per chunk 0.08 s CPU-only vs 0.07 s split
+[2026-10-04 04:02:29.287] [info] prefill stream plan T=14: 407 experts (0.77 GiB) per chunk, per layer [7,9,9,11,9,8,9,8,9,9,8,9,7,7,8,9,7,7,7,8,11,10,10,13,8,8,9,8,8,8,8,8,7,6,9,7,8,8,9,9,9,10,10,10,8,8,7,8]; predicted CPU expert time per chunk 0.08 s CPU-only vs 0.07 s split
+[check4] session snapshot at 13 of 27 prompt tokens: state identical, continuation identical -> PASS
+PASS speculative checks
+<end of output>
+Test time =  60.19 sec
+----------------------------------------------------------
+Test Passed.
+"test_speculative_real" end time: Oct 04 04:02 CDT
+"test_speculative_real" time elapsed: 00:01:00
+----------------------------------------------------------
+
+35/44 Testing: test_openai_schema
+35/44 Test: test_openai_schema
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_openai_schema"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_openai_schema" start time: Oct 04 04:02 CDT
+Output:
+----------------------------------------------------------
+OpenAI Chat protocol tests passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_openai_schema" end time: Oct 04 04:02 CDT
+"test_openai_schema" time elapsed: 00:00:00
+----------------------------------------------------------
+
+36/44 Testing: test_serve_options
+36/44 Test: test_serve_options
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_serve_options"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_serve_options" start time: Oct 04 04:02 CDT
+Output:
+----------------------------------------------------------
+serve options tests passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_serve_options" end time: Oct 04 04:02 CDT
+"test_serve_options" time elapsed: 00:00:00
+----------------------------------------------------------
+
+37/44 Testing: test_http_transport
+37/44 Test: test_http_transport
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_http_transport"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_http_transport" start time: Oct 04 04:02 CDT
+Output:
+----------------------------------------------------------
+ok
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_http_transport" end time: Oct 04 04:02 CDT
+"test_http_transport" time elapsed: 00:00:00
+----------------------------------------------------------
+
+38/44 Testing: test_cli_options
+38/44 Test: test_cli_options
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_cli_options"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_cli_options" start time: Oct 04 04:02 CDT
+Output:
+----------------------------------------------------------
+CLI option tests passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_cli_options" end time: Oct 04 04:02 CDT
+"test_cli_options" time elapsed: 00:00:00
+----------------------------------------------------------
+
+39/44 Testing: test_bench_support
+39/44 Test: test_bench_support
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_bench_support"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_bench_support" start time: Oct 04 04:02 CDT
+Output:
+----------------------------------------------------------
+bench support tests passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_bench_support" end time: Oct 04 04:02 CDT
+"test_bench_support" time elapsed: 00:00:00
+----------------------------------------------------------
+
+40/44 Testing: test_tokenizer
+40/44 Test: test_tokenizer
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_tokenizer"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_tokenizer" start time: Oct 04 04:02 CDT
+Output:
+----------------------------------------------------------
+tokenizer cases: 40, vocab 248077, failures 0
+<end of output>
+Test time =   0.42 sec
+----------------------------------------------------------
+Test Passed.
+"test_tokenizer" end time: Oct 04 04:02 CDT
+"test_tokenizer" time elapsed: 00:00:00
+----------------------------------------------------------
+
+41/44 Testing: test_chat_template
+41/44 Test: test_chat_template
+Command: "/home/obelisk/Projects/fngine/build-main/tests/test_chat_template"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"test_chat_template" start time: Oct 04 04:02 CDT
+Output:
+----------------------------------------------------------
+ok thinking_default (59 tokens)
+ok no_thinking (19 tokens)
+ok tools (348 tokens)
+ok reasoning_effort_low (47 tokens)
+ok preserve_thinking_false (82 tokens)
+ok multi_turn (99 tokens)
+failures 0
+<end of output>
+Test time =   0.82 sec
+----------------------------------------------------------
+Test Passed.
+"test_chat_template" end time: Oct 04 04:02 CDT
+"test_chat_template" time elapsed: 00:00:00
+----------------------------------------------------------
+
+42/44 Testing: text_output_session
+42/44 Test: text_output_session
+Command: "/home/obelisk/Projects/fngine/build-main/tests/text_output_session"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"text_output_session" start time: Oct 04 04:02 CDT
+Output:
+----------------------------------------------------------
+failures 0
+<end of output>
+Test time =   0.42 sec
+----------------------------------------------------------
+Test Passed.
+"text_output_session" end time: Oct 04 04:02 CDT
+"text_output_session" time elapsed: 00:00:00
+----------------------------------------------------------
+
+43/44 Testing: text_tool_call_parser
+43/44 Test: text_tool_call_parser
+Command: "/home/obelisk/Projects/fngine/build-main/tests/text_tool_call_parser"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"text_tool_call_parser" start time: Oct 04 04:02 CDT
+Output:
+----------------------------------------------------------
+ok
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"text_tool_call_parser" end time: Oct 04 04:02 CDT
+"text_tool_call_parser" time elapsed: 00:00:00
+----------------------------------------------------------
+
+44/44 Testing: text_prompt_lookup
+44/44 Test: text_prompt_lookup
+Command: "/home/obelisk/Projects/fngine/build-main/tests/text_prompt_lookup"
+Directory: /home/obelisk/Projects/fngine/build-main/tests
+"text_prompt_lookup" start time: Oct 04 04:02 CDT
+Output:
+----------------------------------------------------------
+OK prompt_lookup
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"text_prompt_lookup" end time: Oct 04 04:02 CDT
+"text_prompt_lookup" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 04 04:02 CDT
