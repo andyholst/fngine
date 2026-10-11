@@ -153,9 +153,12 @@ void gdn_recurrent_record(const __nv_bfloat16* conv_out, const float* g, const f
 
 // One launch for all 36 layers: replays record columns [0, commit) from the source slot into the
 // destination slot (recurrent state and conv history = tail3(old history ‖ conv record[0:commit])).
-// commit = 0 copies the source image. `width` is the record width of the step (1..16).
+// commit = 0 copies the source image. `width` is the record width of the step (1..16). `ctas` > 0
+// runs that many CTAs, each sweeping its share of the 13824 (head, layer, state tile) tiles, for a
+// background launch that leaves most SMs to concurrent work; 0 launches one CTA per tile. The
+// result does not depend on it.
 void gdn_fold(const GdnStatePool& pool, const GdnRecords& records, const GdnStepControl* control,
-              std::int32_t width, cudaStream_t stream);
+              std::int32_t width, cudaStream_t stream, std::int32_t ctas = 0);
 
 // Swaps control->source_slot and control->destination_slot (single-thread kernel).
 void gdn_swap_slots(GdnStepControl* control, cudaStream_t stream);

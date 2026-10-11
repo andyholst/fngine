@@ -1,0 +1,94 @@
+{
+ "round": 6,
+ "date": "2026-10-11",
+ "model": "Qwen3.8-Flash-Next (abliterated pack)",
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "conclusion": "Hot-expert kernels stream on persistent grids (the decode MoE expert pipeline is 13-16% faster at width 4 and 6-11% at width 1, bit-identical), the combine's CPU-tier wait overlaps hot_down, the GR norm/down kernel preloads its inject rows and row scales, and the verify step's GDN/PLE folds run beside the MTP drafts. Coding chat decodes 3.5% / 9.3% more tokens per second with 7-8% less time per speculative round; corpus decode changes are within run-to-run noise except the 32K prompt.",
+ "baseline": {
+  "description": "Frozen round-six baseline build (tree after the fifth pass)",
+  "binaries": "/mnt/data/fngine/baseline-round6/bin",
+  "bench_sha256": "5a93eb64e27ce62d098d8b07503b51336d85ab38ff50f9f19fd035586fa3cc9d"
+ },
+ "current": {
+  "bench_sha256": "a3e99e41bc497b706ac0207a2c8522c4715df04453021e941c48977b2bfb7b08",
+  "runtime_changes": [
+   "hot_gate_up: persistent grid (CTAs per SM from the occupancy API) over (item, 8-row) tiles; one tile buffer streamed in five K slices, slice i - 1 of the next tile requested as soon as slice i of the current one is decoded",
+   "hot_down: persistent grid over (item, 32-row) tiles in contiguous ranges, two cp.async stages, h quantized to q8 once per item per CTA; triggers its dependent first thing",
+   "combine: the CPU-tier wait (done[l]) and the PCIe read of the CPU result run before pdl_wait, beside hot_down; the ablation direction is loaded first",
+   "gr_norm_down: inject rows (cluster 0) and down row scales (rank 0) load before pdl_wait",
+   "verify steps with MTP drafts: the GDN fold (64-CTA swept grid) and the PLE fold run on the prefetch stream beside the drafts, joined at the end of the step"
+  ],
+  "test_changes": [
+   "kernels_moe_experts --bench: width-4 decode case (28 experts, 40 pairs) and select timings with and without a host exchange",
+   "kernels_gdn_fold: the in-place fold also by a 37-CTA swept grid, bit-exact against the reference"
+  ]
+ },
+ "unchanged": {
+  "weights": true,
+  "precision": true,
+  "numerical_thresholds": true,
+  "mtp_drafts": 3,
+  "draft_vocabulary": 32768,
+  "desktop_and_hardware_configuration": true
+ },
+ "method": {
+  "routing_stats_persistence_disabled": true,
+  "context": 262144,
+  "speculation": "auto",
+  "order": "baseline then current per round, separate processes",
+  "desktop_running": true,
+  "note": "End-to-end runs include adaptive expert placement and the speculation controller, whose width choice follows measured step latencies; both vary between processes."
+ },
+ "throughput": {
+  "coding": "round6/coding.json",
+  "corpus": "round6/corpus.json",
+  "decode_tok_s": [
+   {"case": "coding-turn1", "baseline": [176.5, 15.3], "current": [182.6, 12.9], "n": 12, "us_per_round": [14743, 13697]},
+   {"case": "coding-turn2", "baseline": [191.7, 10.8], "current": [209.5, 18.9], "n": 12, "us_per_round": [14587, 13385]},
+   {"case": "pp1024+tg256", "baseline": [143.6, 21.5], "current": [147.3, 7.0], "n": 6, "us_per_round": [17400, 17002]},
+   {"case": "pp4096+tg256", "baseline": [138.8, 15.1], "current": [135.6, 9.7], "n": 6, "us_per_round": [20800, 21113]},
+   {"case": "pp32768+tg256", "baseline": [114.0, 19.1], "current": [124.4, 10.4], "n": 6, "us_per_round": [18751, 15552]}
+  ],
+  "earlier_pair_hot_path_only": {"coding-turn1": [172.3, 181.3], "coding-turn2": [188.5, 200.3], "n": 10}
+ },
+ "kernel_results": {
+  "moe_decode_select_gate_up_down_combine_us": {
+   "method": "kernels_moe_experts --bench-only: 16 steps per graph (working set beyond L2), min of 300 replays; width 1 = 10 experts, width 4 = 28 experts / 40 pairs; baseline and current test binaries back to back",
+   "L0 IQ3_XXS/IQ4_NL": {"T1": [27.0, 25.3], "T4": [61.7, 52.3]},
+   "L2 IQ2_S/IQ4_NL": {"T1": [27.0, 24.2], "T4": [60.4, 50.8]},
+   "L17 IQ3_S/IQ4_NL": {"T1": [28.7, 26.1], "T4": [65.6, 55.4]},
+   "L47 IQ4_XS/IQ4_NL": {"T1": [30.2, 26.9], "T4": [69.2, 60.2]}
+  },
+  "gr_read_pair_us": {
+   "method": "gr_norm_down + GR up (GrMix) in a 32-call graph, min of 100 replays (scratch harness against the built libraries)",
+   "T4_l2_warm": [9.66, 9.02],
+   "T4_16_rotating_weight_sets": [10.78, 9.24],
+   "T1_l2_warm": [5.32, 5.31]
+  },
+  "verify_step_tail_nsys_median_us": {
+   "method": "nsys coding chat, width-4 verify graph, same session state for both builds",
+   "lm_head_end_to_mtp_start": [137.4, 20.9],
+   "mtp_chain": [678.6, 734.6],
+   "lm_head_end_to_step_end": [820.2, 756.2],
+   "fold_kernel": [110.4, 460.5],
+   "fold_170_ctas": {"fold_kernel": 144.7, "mtp_chain": 809.8, "lm_head_end_to_step_end": 831.5}
+  }
+ },
+ "fidelity": {
+  "decode_path_vs_baseline": "fngine-validate --decode-width W --no-adaptive --expert-vram-mib 22000 --compare-logits: G1 W=1, G1 W=4 and G2 W=4 top-1 agreement 1.0, mean and max KLD 0",
+  "default_path_interleaved": {
+   "baseline": [{"g1": [0.8755, 0.06288], "g2": [0.9156, 0.02657]}, {"g1": [0.8940, 0.06138], "g2": [0.9158, 0.02650]}],
+   "current": [{"g1": [0.8945, 0.05512], "g2": [0.9130, 0.02663]}, {"g1": [0.9014, 0.06051], "g2": [0.9148, 0.02671]}, {"g1": [0.8701, 0.07772], "g2": [0.9125, 0.02634]}]
+  },
+  "tests": "46/46 ctest (FNGINE_TEST_PACK, FNGINE_TEST_REF), including test_speculative_real"
+ },
+ "rejected_experiments": [
+  {"experiment": "Double-buffered persistent gate/up (2 CTAs = 8 warps per SM)", "result": "Decode-latency bound: width-4 gate/up 30.2 -> 37.8 us; compute alone 5.5 -> 20.6 us"},
+  {"experiment": "Uniform slice windows of 1-3 slices for the streaming gate/up", "result": "Width 4 slower than the eager refill (28.5 vs 29.2-30.1 us); width 1 mixed"},
+  {"experiment": "K-sliced cp.async groups in the one-tile-per-CTA gate/up", "result": "Width 4 30.2 -> 29.8 us, width 1 mixed (12.5 -> 11.9 / 12.6 -> 13.4 us)"},
+  {"experiment": "Batched h quantization alone in the one-tile-per-CTA down kernel", "result": "Unchanged (29.4 us at width 4): the kernel was bound by synchronized waves, not by the quantization"},
+  {"experiment": "Three or four hot_down stages", "result": "No faster than two"},
+  {"experiment": "x rows published to the host before routing in select_publish", "result": "Select with a host exchange 4.7 -> 4.8 us: bound by the system fence"},
+  {"experiment": "Background fold on 170 CTAs", "result": "MTP chain +131 us from DRAM contention; step tail 820 -> 832 us"}
+ ]
+}

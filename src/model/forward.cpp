@@ -143,6 +143,14 @@ void Forward::join_prefetch(cudaStream_t s) {
   pending_join_ = false;
 }
 
+cudaStream_t Forward::fork_background(cudaStream_t s) {
+  if (!fork_) return nullptr;
+  check(cudaEventRecord(fork_, s), "background fork");
+  check(cudaStreamWaitEvent(ctx_.prefetch_stream, fork_, 0), "background fork wait");
+  pending_join_ = true;
+  return ctx_.prefetch_stream;
+}
+
 cudaStream_t Forward::fork_aux(const StepIo& io, cudaStream_t s) {
   if (!aux_fork_ || io.pass == Pass::Prefill) return nullptr;
   check(cudaEventRecord(aux_fork_, s), "aux fork");

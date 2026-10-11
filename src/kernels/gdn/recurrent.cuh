@@ -215,9 +215,11 @@ __device__ __forceinline__ void fold_conv_history(const StagedParams& p, std::in
     destination[2 * kConvChannels] = h2;
 }
 
+// One tile (value head, z) of gdn_staged_kernel, z = state tile (layer * kStateTiles + state tile
+// in a fold). `valid` columns of the step are applied.
 template <StagedMode Mode>
-__global__ void __launch_bounds__(kWarpSize* kNumWarps, 2)
-    gdn_staged_kernel(const __grid_constant__ StagedParams p) {
+__device__ __forceinline__ void staged_tile(const StagedParams& p, const GdnStepControl& control,
+                                            std::int32_t valid, int tile) {
     constexpr bool kFold          = Mode == StagedMode::Fold;
     constexpr int kThreads        = kWarpSize * kNumWarps;
     constexpr int kPacksPerColumn = kStateDim / 8;
@@ -225,24 +227,14 @@ __global__ void __launch_bounds__(kWarpSize* kNumWarps, 2)
     const int lane                = static_cast<int>(threadIdx.x);
     const int warp                = static_cast<int>(threadIdx.y);
     const int thread              = warp * kWarpSize + lane;
-    const std::uint32_t value_head = blockIdx.x;
+    const std::uint32_t value_head = static_cast<std::uint32_t>(tile % kValueHeadCount);
+    const std::int32_t z           = tile / kValueHeadCount;
     const std::uint32_t qk_head    = value_head / kGroup;
-    const std::int32_t layer =
-        kFold ? static_cast<std::int32_t>(blockIdx.z) / kStateTiles : p.layer;
-    const std::int32_t state_tile =
-        kFold ? static_cast<std::int32_t>(blockIdx.z) % kStateTiles
-              : static_cast<std::int32_t>(blockIdx.z);
+    const std::int32_t layer       = kFold ? z / kStateTiles : p.layer;
+    const std::int32_t state_tile  = kFold ? z % kStateTiles : z;
     const std::uint32_t tile_dv  = static_cast<std::uint32_t>(state_tile * kBlockDv);
     const std::uint32_t dv_base  = tile_dv + static_cast<std::uint32_t>(warp * kDvPerWarp);
     const std::uint32_t dqk_base = static_cast<std::uint32_t>(lane * kQkPerLane);
-
-    // Programmatic dependent (pdl.cuh): the step control, state and columns all come from earlier
-    // kernels (back-to-back launches update the same state tile), so it waits first.
-    pdl_trigger();
-    pdl_wait();
-    const GdnStepControl control = *p.control;
-    std::int32_t valid           = p.width;
-    if constexpr (kFold) { valid = min(max(control.commit, 0), p.width); }
 
     const std::int64_t head_offset =
         static_cast<std::int64_t>(value_head) * kStateDim * kStateDim;
@@ -408,6 +400,29 @@ __global__ void __launch_bounds__(kWarpSize* kNumWarps, 2)
             fold_conv_history(p, layer, static_cast<std::int32_t>(value_head) * kStateTiles + state_tile,
                               thread, control, valid);
         }
+    }
+}
+
+// Decode and record launch one CTA per tile (grid kValueHeadCount x 1 x kStateTiles); a fold grid
+// (kValueHeadCount x 1 x kLayers * kStateTiles, or any smaller one, e.g. for a background launch
+// that leaves SMs to concurrent work) sweeps the tiles in turn. Every tile's arithmetic is
+// independent of the grid.
+template <StagedMode Mode>
+__global__ void __launch_bounds__(kWarpSize* kNumWarps, 2)
+    gdn_staged_kernel(const __grid_constant__ StagedParams p) {
+    constexpr bool kFold = Mode == StagedMode::Fold;
+    constexpr int kTiles = kValueHeadCount * (kFold ? kLayers : 1) * kStateTiles;
+    // Programmatic dependent (pdl.cuh): the step control, state and columns all come from earlier
+    // kernels (back-to-back launches update the same state tile), so it waits first.
+    pdl_trigger();
+    pdl_wait();
+    const GdnStepControl control = *p.control;
+    std::int32_t valid           = p.width;
+    if constexpr (kFold) { valid = min(max(control.commit, 0), p.width); }
+    const int ctas = static_cast<int>(gridDim.x * gridDim.z);
+    for (int tile = static_cast<int>(blockIdx.z * gridDim.x + blockIdx.x); tile < kTiles; tile += ctas) {
+        staged_tile<Mode>(p, control, valid, tile);
+        if (tile + ctas < kTiles) __syncthreads();  // the next tile restages the shared columns
     }
 }
 

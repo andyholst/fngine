@@ -230,7 +230,18 @@ bool run_width(Fixture& f, int T, bool graphs) {
         std::printf("FAIL %s T=%d: in-place fold differs in %llu words\n", mode, T, in_place);
         ok = false;
     }
-    if (ok) std::printf("PASS %s T=%d: n=0..%d folds, outputs and in-place fold bit-exact\n", mode, T, T);
+    // The same in-place fold by a small swept grid (CTAs take several tiles in turn, as in the
+    // background launch beside the MTP drafts).
+    copy_slot(f.initial.pool, 0, f.pool.pool, 2);
+    gdn_fold(f.pool.pool, f.records, f.control.get(), T, nullptr, 37);  // ordered after the copy
+    FNGINE_TEST_CUDA(cudaDeviceSynchronize());
+    const unsigned long long swept = slot_mismatches(f.pool.pool, 2, f.ref.pool, 0);
+    if (swept != 0) {
+        std::printf("FAIL %s T=%d: 37-CTA swept fold differs in %llu words\n", mode, T, swept);
+        ok = false;
+    }
+    if (ok) std::printf("PASS %s T=%d: n=0..%d folds, outputs and in-place folds (full and swept grid) bit-exact\n",
+                        mode, T, T);
     return ok;
 }
 

@@ -150,8 +150,14 @@ void StepRunner::enqueue_step(int32_t T, cudaStream_t s, bool draft) {
                           out_dev_->licensed, &out_dev_->licensed_count, &out_dev_->accepted,
                           ws.accept_ws, ws.accept_ws_bytes, s);
     step_set_gdn_commit(out_dev_, st.gdn_control(), s);
-    k::gdn_fold(st.gdn_pool(), st.gdn_records(), st.gdn_control(), T, s);
-    k::ple_fold(st.ple_conv_state(), ws.c_record, &out_dev_->licensed_count, T, s);
+    // The folds only feed the next step and the MTP drafts touch neither GDN nor PLE state, so
+    // they run beside the drafts. The fold moves ~226 MB (state read + write); 64 CTAs spread that
+    // over most of the drafts' span and leave the SMs and much of the DRAM bandwidth to them.
+    constexpr int32_t kBackgroundFoldCtas = 64;
+    const cudaStream_t bg = draft ? fwd.fork_background(s) : nullptr;
+    k::gdn_fold(st.gdn_pool(), st.gdn_records(), st.gdn_control(), T, bg ? bg : s,
+                bg ? kBackgroundFoldCtas : 0);
+    k::ple_fold(st.ple_conv_state(), ws.c_record, &out_dev_->licensed_count, T, bg ? bg : s);
   }
   if (draft) enqueue_mtp(T, ws.X, s);
   fwd.join_prefetch(s);

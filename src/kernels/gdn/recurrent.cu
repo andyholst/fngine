@@ -95,12 +95,13 @@ void gdn_recurrent_record(const __nv_bfloat16* conv_out, const float* g, const f
 }
 
 void gdn_fold(const GdnStatePool& pool, const GdnRecords& records, const GdnStepControl* control,
-              std::int32_t width, cudaStream_t stream) {
+              std::int32_t width, cudaStream_t stream, std::int32_t ctas) {
     constexpr const char* kOp = "gdn_fold";
     require_pool(pool, 0, control, kOp);
     require(aligned(pool.conv, 16), kOp, "invalid conv state pool");
     require_records(records, kOp);
     require(width >= 1 && width <= gdn_dims::kMaxRecordWidth, kOp, "width must be 1..16");
+    require(ctas >= 0, kOp, "ctas must be non-negative");
     StagedParams p{};
     p.key_record   = records.key;
     p.value_record = records.value;
@@ -110,7 +111,7 @@ void gdn_fold(const GdnStatePool& pool, const GdnRecords& records, const GdnStep
     p.conv_state   = pool.conv;
     p.control      = control;
     p.width        = width;
-    const dim3 grid(gdn::kValueHeadCount, 1, gdn_dims::kLayers * gdn::kStateTiles);
+    const dim3 grid = ctas > 0 ? dim3(ctas) : dim3(gdn::kValueHeadCount, 1, gdn_dims::kLayers * gdn::kStateTiles);
     CUDA_CHECK(pdl_launch(gdn::gdn_staged_kernel<StagedMode::Fold>, grid, kBlock, 0, stream, p));
 }
 

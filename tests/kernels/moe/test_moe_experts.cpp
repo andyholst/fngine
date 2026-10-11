@@ -551,89 +551,120 @@ std::pair<double, double> time_min_median(cudaStream_t s, int reps, F&& launch) 
   return {ms.front(), ms[ms.size() / 2]};
 }
 
+// Decode: 16 steps (working set >> L2) of T tokens, all hot. Each step has `distinct` experts and
+// token t routes to 10 of them starting at t * (distinct - 10) / (T - 1), so consecutive tokens
+// share some experts, like speculative verify steps (T = 4: 28 distinct experts, 40 pairs).
+void bench_decode(const Case& c, const std::string& pack, int T, int distinct, cudaStream_t s) {
+  constexpr int kGroups = 16;
+  const int step = T > 1 ? (distinct - kTopK) / (T - 1) : 0;
+  std::vector<int> experts;
+  for (int i = 0; i < kGroups * distinct; ++i) experts.push_back((i * 3 + 1) % kExperts);
+  Loaded L;
+  L.c = c;
+  load(L, pack, experts, false);
+  DeviceArray<int32_t> d_slot(L.slot_of);
+  DeviceArray<uint32_t> d_seq(std::vector<uint32_t>{1u});
+  DeviceArray<__nv_bfloat16> d_x(make_x(T, 5));
+  DeviceArray<float> d_ysh(std::vector<float>(size_t(T) * kHidden, 0.f));
+  DeviceArray<float> d_inj(std::vector<float>(size_t(T) * 4, 0.5f));
+  DeviceArray<float> d_X(std::vector<float>(size_t(T) * 4 * kHidden, 0.f));
+  std::vector<DeviceArray<float>> logits;
+  std::vector<DeviceArray<uint8_t>> ws_mem;
+  std::vector<kernels::MoeDecodeWorkspace> ws;
+  for (int g = 0; g < kGroups; ++g) {
+    auto l = make_logits(T, {}, 0.f, 100 + g);
+    for (int t = 0; t < T; ++t)
+      for (int i = 0; i < kTopK; ++i) l[size_t(t) * kRouter + experts[g * distinct + t * step + i]] += 20.f;
+    logits.emplace_back(l);
+    ws_mem.emplace_back(kernels::moe_decode_workspace_bytes());
+    ws.push_back(kernels::make_moe_decode_workspace(ws_mem.back().ptr));
+  }
+  // DeviceArray zero-fills on the legacy stream; finish that before using the non-blocking one.
+  FNGINE_TEST_CUDA(cudaDeviceSynchronize());
+  for (int g = 0; g < kGroups; ++g)
+    FNGINE_TEST_CUDA(kernels::moe_select_publish(logits[g].ptr, d_x.ptr, d_slot.ptr, 0, d_seq.ptr,
+                                                 nullptr, T, ws[g], s));
+  FNGINE_TEST_CUDA(cudaStreamSynchronize(s));
+  for (int g = 0; g < kGroups; ++g) {
+    kernels::MoeDecodeWork w;
+    FNGINE_TEST_CUDA(cudaMemcpy(&w, ws[g].work, sizeof(w), cudaMemcpyDeviceToHost));
+    if (w.n_items != distinct || w.n_pairs != T * kTopK) {
+      std::printf("bench: unexpected %d items / %d pairs in step %d\n", w.n_items, w.n_pairs, g);
+      std::exit(1);
+    }
+  }
+  // Select alone runs against a host-mapped exchange (layer g for step g) with each token's 10th
+  // expert swapped for a CPU-tier one, so it publishes cold lists and x rows like a real step.
+  Mapped<DecodeExchange> ex(sizeof(DecodeExchange));
+  std::vector<int> cold;
+  for (int e = 0; e < kExperts; ++e)
+    if (L.slot_of[e] < 0) cold.push_back(e);
+  std::vector<DeviceArray<float>> logits_cold;
+  for (int g = 0; g < kGroups; ++g) {
+    auto l = make_logits(T, {}, 0.f, 100 + g);
+    for (int t = 0; t < T; ++t) {
+      for (int i = 0; i + 1 < kTopK; ++i) l[size_t(t) * kRouter + experts[g * distinct + t * step + i]] += 20.f;
+      l[size_t(t) * kRouter + cold[size_t(g * T + t) % cold.size()]] += 20.f;
+    }
+    logits_cold.emplace_back(l);
+  }
+  // mode: 0 = gate_up + down, 1 = select + gate_up + down + combine, 2 = gate_up, 3 = down,
+  // 4 = select (no exchange), 5 = select publishing to the host exchange.
+  auto capture = [&](int mode) {
+    cudaGraph_t graph;
+    cudaGraphExec_t exec;
+    FNGINE_TEST_CUDA(cudaStreamBeginCapture(s, cudaStreamCaptureModeGlobal));
+    for (int g = 0; g < kGroups; ++g) {
+      if (mode == 1)
+        FNGINE_TEST_CUDA(kernels::moe_select_publish(logits[g].ptr, d_x.ptr, d_slot.ptr, g, d_seq.ptr,
+                                                     nullptr, T, ws[g], s));
+      if (mode == 4 || mode == 5)
+        FNGINE_TEST_CUDA(kernels::moe_select_publish(logits_cold[g].ptr, d_x.ptr, d_slot.ptr, g, d_seq.ptr,
+                                                     mode == 5 ? ex.dev : nullptr, T, ws[g], s));
+      if (mode >= 4) continue;
+      if (mode != 3) FNGINE_TEST_CUDA(kernels::moe_hot_gate_up(L.layout, T, ws[g], s));
+      if (mode != 2) FNGINE_TEST_CUDA(kernels::moe_hot_down(L.layout, T, ws[g], s));
+      if (mode == 1)
+        FNGINE_TEST_CUDA(kernels::moe_combine(ws[g], d_ysh.ptr, nullptr, 0, d_seq.ptr, d_inj.ptr, d_X.ptr,
+                                              nullptr, T, kernels::kMoeExchangeTimeoutCycles, nullptr, 1.0f, s));
+    }
+    FNGINE_TEST_CUDA(cudaStreamEndCapture(s, &graph));
+    FNGINE_TEST_CUDA(cudaGraphInstantiate(&exec, graph, 0));
+    cudaGraphDestroy(graph);
+    return exec;
+  };
+  double us[6], us_med[6];
+  for (int mode = 0; mode < 6; ++mode) {
+    cudaGraphExec_t exec = capture(mode);
+    const auto t = time_min_median(s, 300, [&] { FNGINE_TEST_CUDA(cudaGraphLaunch(exec, s)); });
+    us[mode] = t.first * 1e3 / kGroups;
+    us_med[mode] = t.second * 1e3 / kGroups;
+    cudaGraphExecDestroy(exec);
+  }
+  const double bytes = double(distinct) * double(c.blob_bytes);
+  const double gu_bytes = double(distinct) * 2 * kInter * double(kernels::moe_row_bytes(c.gu, kHidden));
+  std::printf("BENCH decode %s T=%d, %d hot experts (%.2f MB), per step (min of 300 graph replays / 16 steps):\n"
+              "  gate_up+down %.1f us = %.0f GB/s (median %.1f us); gate_up alone %.1f us (%.0f GB/s), down "
+              "alone %.1f us (%.0f GB/s); select+gate_up+down+combine %.1f us (median %.1f us); select alone "
+              "%.1f us, with host exchange %.1f us\n",
+              c.name.c_str(), T, distinct, bytes / 1e6, us[0], bytes / (us[0] * 1e-6) / 1e9, us_med[0], us[2],
+              gu_bytes / (us[2] * 1e-6) / 1e9, us[3], (bytes - gu_bytes) / (us[3] * 1e-6) / 1e9, us[1], us_med[1],
+              us[4], us[5]);
+}
+
 void bench(const Case& c, const std::string& pack) {
   cudaStream_t s;
   FNGINE_TEST_CUDA(cudaStreamCreateWithFlags(&s, cudaStreamNonBlocking));
-  // Decode: 16 groups of 10 experts (working set >> L2), T = 1, all hot.
+  bench_decode(c, pack, 1, 10, s);
+  bench_decode(c, pack, 4, 28, s);
   {
-    constexpr int kGroups = 16;
-    std::vector<int> experts;
-    for (int i = 0; i < kGroups * 10; ++i) experts.push_back((i * 3 + 1) % kExperts);
-    Loaded L;
-    L.c = c;
-    load(L, pack, experts, false);
-    DeviceArray<int32_t> d_slot(L.slot_of);
-    DeviceArray<uint32_t> d_seq(std::vector<uint32_t>{1u});
-    DeviceArray<__nv_bfloat16> d_x(make_x(1, 5));
-    DeviceArray<float> d_ysh(std::vector<float>(kHidden, 0.f));
-    DeviceArray<float> d_inj(std::vector<float>(4, 0.5f));
-    DeviceArray<float> d_X(std::vector<float>(4 * kHidden, 0.f));
-    std::vector<DeviceArray<float>> logits;
-    std::vector<DeviceArray<uint8_t>> ws_mem;
-    std::vector<kernels::MoeDecodeWorkspace> ws;
-    for (int g = 0; g < kGroups; ++g) {
-      std::vector<int> grp(experts.begin() + g * 10, experts.begin() + g * 10 + 10);
-      logits.emplace_back(make_logits(1, grp, 20.f, 100 + g));
-      ws_mem.emplace_back(kernels::moe_decode_workspace_bytes());
-      ws.push_back(kernels::make_moe_decode_workspace(ws_mem.back().ptr));
-    }
-    // DeviceArray zero-fills on the legacy stream; finish that before using the non-blocking one.
-    FNGINE_TEST_CUDA(cudaDeviceSynchronize());
-    for (int g = 0; g < kGroups; ++g)
-      FNGINE_TEST_CUDA(kernels::moe_select_publish(logits[g].ptr, d_x.ptr, d_slot.ptr, 0,
-                                                   d_seq.ptr, nullptr, 1, ws[g], s));
-    FNGINE_TEST_CUDA(cudaStreamSynchronize(s));
-    for (int g = 0; g < kGroups; ++g) {
-      kernels::MoeDecodeWork w;
-      FNGINE_TEST_CUDA(cudaMemcpy(&w, ws[g].work, sizeof(w), cudaMemcpyDeviceToHost));
-      if (w.n_items != 10) {
-        std::printf("bench: unexpected item count %d in group %d\n", w.n_items, g);
-        std::exit(1);
-      }
-    }
-    // mode: 0 = gate_up + down, 1 = select + gate_up + down + combine, 2 = gate_up, 3 = down.
-    auto capture = [&](int mode) {
-      cudaGraph_t graph;
-      cudaGraphExec_t exec;
-      FNGINE_TEST_CUDA(cudaStreamBeginCapture(s, cudaStreamCaptureModeGlobal));
-      for (int g = 0; g < kGroups; ++g) {
-        if (mode == 1)
-          FNGINE_TEST_CUDA(kernels::moe_select_publish(logits[g].ptr, d_x.ptr, d_slot.ptr, 0,
-                                                       d_seq.ptr, nullptr, 1, ws[g], s));
-        if (mode != 3) FNGINE_TEST_CUDA(kernels::moe_hot_gate_up(L.layout, 1, ws[g], s));
-        if (mode != 2) FNGINE_TEST_CUDA(kernels::moe_hot_down(L.layout, 1, ws[g], s));
-        if (mode == 1)
-          FNGINE_TEST_CUDA(kernels::moe_combine(ws[g], d_ysh.ptr, nullptr, 0, d_seq.ptr, d_inj.ptr,
-                                                d_X.ptr, nullptr, 1, kernels::kMoeExchangeTimeoutCycles, nullptr, 1.0f, s));
-      }
-      FNGINE_TEST_CUDA(cudaStreamEndCapture(s, &graph));
-      FNGINE_TEST_CUDA(cudaGraphInstantiate(&exec, graph, 0));
-      cudaGraphDestroy(graph);
-      return exec;
-    };
-    double us[4], us_med[4];
-    for (int mode = 0; mode < 4; ++mode) {
-      cudaGraphExec_t exec = capture(mode);
-      const auto t = time_min_median(s, 300, [&] { FNGINE_TEST_CUDA(cudaGraphLaunch(exec, s)); });
-      us[mode] = t.first * 1e3 / kGroups;
-      us_med[mode] = t.second * 1e3 / kGroups;
-      cudaGraphExecDestroy(exec);
-    }
     // Device-to-device copy of 256 MiB under the same conditions (read + write bytes).
     DeviceArray<uint8_t> c0(256u << 20), c1(256u << 20);
     FNGINE_TEST_CUDA(cudaDeviceSynchronize());
     auto t_copy = time_min_median(s, 20, [&] {
       FNGINE_TEST_CUDA(cudaMemcpyAsync(c1.ptr, c0.ptr, 256u << 20, cudaMemcpyDeviceToDevice, s));
     });
-    const double bytes = 10.0 * double(c.blob_bytes);
-    const double gu_bytes = 10.0 * 2 * kInter * double(kernels::moe_row_bytes(c.gu, kHidden));
-    std::printf("BENCH decode %s T=1, 10 hot experts (%.2f MB), per step (min of 300 graph replays "
-                "/ 16 steps):\n  gate_up+down %.1f us = %.0f GB/s (median %.1f us); gate_up alone "
-                "%.1f us (%.0f GB/s), down alone %.1f us (%.0f GB/s); select+gate_up+down+combine "
-                "%.1f us (median %.1f us); reference D2D copy %.0f GB/s (read+write)\n",
-                c.name.c_str(), bytes / 1e6, us[0], bytes / (us[0] * 1e-6) / 1e9, us_med[0], us[2],
-                gu_bytes / (us[2] * 1e-6) / 1e9, us[3], (bytes - gu_bytes) / (us[3] * 1e-6) / 1e9,
-                us[1], us_med[1], 2.0 * (256u << 20) / (t_copy.first * 1e-3) / 1e9);
+    std::printf("  reference D2D copy %.0f GB/s (read+write)\n", 2.0 * (256u << 20) / (t_copy.first * 1e-3) / 1e9);
   }
   // Prefill: T = 4096, all 512 experts hot.
   {

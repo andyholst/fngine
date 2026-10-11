@@ -207,13 +207,23 @@ gr_norm_down_kernel(const float* __restrict__ x, int tokens, const float* __rest
     pdl_trigger();
     asm volatile("barrier.cluster.arrive.relaxed.aligned;\n" ::: "memory");
 
-    // Weights first: they do not depend on X (and are requested before pdl_wait()).
+    // Weights first: they do not depend on X (and are requested before pdl_wait()), as are the
+    // inject rows (cluster 0) and the row scales of the epilogue (rank 0, thread i < 8 * tokens
+    // finishes row i / tokens).
     uint2 wq[kFuseRows];
 #pragma unroll
     for (int j = 0; j < kFuseRows; ++j)
         wq[j] = load_codes_cg(codes + static_cast<std::int64_t>(group * kFuseRows + j) * kWidth + k0);
     float h[kFuseValues];
     load_f32x8(hc_norm + k0, h);
+    uint4 iw[4] = {};
+    if (Inject && owner) {
+#pragma unroll
+        for (int q = 0; q < 4; ++q) iw[q] = load_vec<uint4>(inject + static_cast<std::int64_t>(q) * kWidth + k0);
+    }
+    static_assert(kFuseRows * kFuseMaxTokens <= kFuseThreads, "one epilogue item per thread");
+    const float row_scale = __bfloat162float(
+        scales[group * kFuseRows + min(static_cast<int>(threadIdx.x) / tokens, kFuseRows - 1)]);
     pdl_wait();
 
     // Pass 1: per-token sum of squares of stream s (lane chain, warp butterfly, warps in order).
@@ -294,8 +304,8 @@ gr_norm_down_kernel(const float* __restrict__ x, int tokens, const float* __rest
         if (Inject && owner) {
 #pragma unroll
             for (int q = 0; q < 4; ++q) {
-                const uint4 iw = load_vec<uint4>(inject + static_cast<std::int64_t>(q) * kWidth + k0);
-                const std::uint32_t words[4] = {iw.x, iw.y, iw.z, iw.w};
+                const uint4 iwq = iw[q];
+                const std::uint32_t words[4] = {iwq.x, iwq.y, iwq.z, iwq.w};
                 float w[kFuseValues];
 #pragma unroll
                 for (int i = 0; i < 4; ++i) {
@@ -338,7 +348,7 @@ gr_norm_down_kernel(const float* __restrict__ x, int tokens, const float* __rest
 #pragma unroll
         for (int q = 0; q < 4; ++q) v += s_cta[q][j][t];
         const int row = group * kFuseRows + j;
-        v *= __bfloat162float(scales[row]);
+        v *= row_scale;
         r[static_cast<std::int64_t>(t) * kRLd + row] = __float2bfloat16_rn(silu(v * 0.25f));
     }
     if (Inject && owner) {

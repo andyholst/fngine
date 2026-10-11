@@ -99,9 +99,14 @@ class Forward {
   // positions in io.positions), io.tokens = the tokens that follow those positions. Leaves the
   // MTP's own pre-mixer streams in ws.X_mtp. x_src may not alias ws.X_mtp.
   void mtp_layer(const float* x_src, const StepIo& io, cudaStream_t s);
-  // Joins the L2 prefetch branch forked by the layers enqueued since the last join into `s`
-  // (required before the end of a graph capture; no-op when nothing was forked).
+  // Joins the L2 prefetch branch forked by the layers enqueued since the last join, and the
+  // background branch, into `s` (required before the end of a graph capture; no-op when nothing
+  // was forked).
   void join_prefetch(cudaStream_t s);
+  // Background branch for work only the next step consumes (a verify's GDN/PLE folds beside the
+  // MTP drafts) on the prefetch stream, ordered behind `s`; join_prefetch() joins it. Null when
+  // there is no prefetch stream: the caller then enqueues the work on `s`.
+  cudaStream_t fork_background(cudaStream_t s);
 
   [[nodiscard]] const ForwardContext& context() const noexcept { return ctx_; }
 
