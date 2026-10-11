@@ -1,0 +1,188 @@
+{
+ "adaptive": {
+  "command": "--coding-chat -n 512 -r 2 --warmup 1",
+  "binaries_sha256": {
+   "base": "15cb933f8dd1916abd70599445f041d0ee31e9ed73206385b96d12490a2b97b0",
+   "delayed": "6964e240123fa81368baab7af6d58b922dce227eeca7442a98b08f2506257363"
+  },
+  "cases": [
+   {
+    "case": "coding-turn1",
+    "base": {
+     "repetitions": 6,
+     "decode_tok_s_mean": 180.35,
+     "decode_tok_s_sample_sd": 7.69,
+     "process_decode_means": [
+      184.07,
+      177.89,
+      179.08
+     ],
+     "us_per_round_mean": 14456,
+     "rounds": [
+      169,
+      190,
+      207,
+      210,
+      214,
+      199
+     ],
+     "prefill_tok_s_mean": 191.3
+    },
+    "delayed": {
+     "repetitions": 6,
+     "decode_tok_s_mean": 163.52,
+     "decode_tok_s_sample_sd": 17.02,
+     "process_decode_means": [
+      176.78,
+      156.95,
+      156.82
+     ],
+     "us_per_round_mean": 14654,
+     "rounds": [
+      218,
+      216,
+      219,
+      200,
+      241,
+      203
+     ],
+     "prefill_tok_s_mean": 179.5
+    },
+    "decode_change_percent": -9.33,
+    "us_per_round_change_percent": 1.37
+   },
+   {
+    "case": "coding-turn2",
+    "base": {
+     "repetitions": 6,
+     "decode_tok_s_mean": 192.42,
+     "decode_tok_s_sample_sd": 11.93,
+     "process_decode_means": [
+      181.89,
+      198.02,
+      197.36
+     ],
+     "us_per_round_mean": 14093,
+     "rounds": [
+      184,
+      194,
+      189,
+      187,
+      197,
+      188
+     ],
+     "prefill_tok_s_mean": 692.4
+    },
+    "delayed": {
+     "repetitions": 6,
+     "decode_tok_s_mean": 179.2,
+     "decode_tok_s_sample_sd": 11.65,
+     "process_decode_means": [
+      181.5,
+      183.24,
+      172.88
+     ],
+     "us_per_round_mean": 14595,
+     "rounds": [
+      218,
+      211,
+      182,
+      175,
+      210,
+      191
+     ],
+     "prefill_tok_s_mean": 682.9
+    },
+    "decode_change_percent": -6.87,
+    "us_per_round_change_percent": 3.56
+   }
+  ]
+ },
+ "fixed": {
+  "command": "--coding-chat -n 512 -r 2 --warmup 1 --no-adaptive-experts",
+  "binaries_sha256": {
+   "base": "15cb933f8dd1916abd70599445f041d0ee31e9ed73206385b96d12490a2b97b0",
+   "delayed": "6964e240123fa81368baab7af6d58b922dce227eeca7442a98b08f2506257363"
+  },
+  "cases": [
+   {
+    "case": "coding-turn1",
+    "base": {
+     "repetitions": 4,
+     "decode_tok_s_mean": 126.78,
+     "decode_tok_s_sample_sd": 6.66,
+     "process_decode_means": [
+      130.63,
+      122.92
+     ],
+     "us_per_round_mean": 16516,
+     "rounds": [
+      239,
+      301,
+      239,
+      221
+     ],
+     "prefill_tok_s_mean": 162.6
+    },
+    "delayed": {
+     "repetitions": 4,
+     "decode_tok_s_mean": 129.08,
+     "decode_tok_s_sample_sd": 5.59,
+     "process_decode_means": [
+      124.72,
+      133.45
+     ],
+     "us_per_round_mean": 16798,
+     "rounds": [
+      239,
+      239,
+      224,
+      246
+     ],
+     "prefill_tok_s_mean": 168.8
+    },
+    "decode_change_percent": 1.81,
+    "us_per_round_change_percent": 1.71
+   },
+   {
+    "case": "coding-turn2",
+    "base": {
+     "repetitions": 4,
+     "decode_tok_s_mean": 112.29,
+     "decode_tok_s_sample_sd": 10.1,
+     "process_decode_means": [
+      104.78,
+      119.8
+     ],
+     "us_per_round_mean": 20689,
+     "rounds": [
+      235,
+      258,
+      212,
+      188
+     ],
+     "prefill_tok_s_mean": 620.9
+    },
+    "delayed": {
+     "repetitions": 4,
+     "decode_tok_s_mean": 114.65,
+     "decode_tok_s_sample_sd": 5.83,
+     "process_decode_means": [
+      117.41,
+      111.88
+     ],
+     "us_per_round_mean": 20429,
+     "rounds": [
+      212,
+      212,
+      225,
+      229
+     ],
+     "prefill_tok_s_mean": 608.4
+    },
+    "decode_change_percent": 2.1,
+    "us_per_round_change_percent": -1.26
+   }
+  ]
+ }
+}

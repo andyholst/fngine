@@ -632,10 +632,22 @@
    }
   },
   "sensitivity": {
-   "experiment": "Scratch build with a 10 us delay at the end of every hot_down call, against an otherwise identical build (coding chat, n = 6)",
-   "decode_change_percent": {
-    "coding-turn1": -9.3,
-    "coding-turn2": -6.9
+   "report": "round6/hot-down-delay.json",
+   "experiment": "Scratch build pair: a base build and the same source with a 10 us delay at the end of every hot_down call (coding chat, -n 512 -r 2 --warmup 1, base then delayed process per round)",
+   "adaptive_placement": {
+    "n": 6,
+    "decode_change_percent": {
+     "coding-turn1": -9.33,
+     "coding-turn2": -6.87
+    }
+   },
+   "fixed_placement_no_adaptive_experts": {
+    "n": 4,
+    "decode_change_percent": {
+     "coding-turn1": 1.81,
+     "coding-turn2": 2.1
+    },
+    "predicted_gpu_hit_rate": 0.79
    }
   }
  },
@@ -804,7 +816,8 @@
   ],
   "gr_read_pair": "round6/gr-bench.txt",
   "verify_tail": "round6/verify-tail-nsys.txt",
-  "verification_output": "round6/verification.log"
+  "verification_output": "round6/verification.log",
+  "hot_down_delay_sensitivity": "round6/hot-down-delay.json"
  },
  "cleanup": {
   "temporary_harnesses_removed": true,
