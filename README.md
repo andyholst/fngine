@@ -2,7 +2,13 @@
 
 Text-only C++20/CUDA engine for Qwen3.8-Flash-Next (`qwen4_exp`), targeting an RTX 5090 (32 GiB) and approximately 60 GiB host RAM. Routed experts retain their native GSQ-RCO GGUF IQ formats; dense weights are BF16-derived FP8-row, the n-gram table is page-packed IQ4_NL on NVMe, and MTP experts are resident IQ4_NL. See `NOTICE` and `LICENSE` for upstream licensing.
 
-**To run the published abliterated model, use the installer:** [flash-next-abliterated-fngine](https://github.com/satellitedown/flash-next-abliterated-fngine) builds this engine at a pinned commit with an isolated CUDA toolchain, downloads and verifies the pack, starts the server and updates both. The rest of this README covers building and developing the engine directly.
+**To run the published abliterated model, use the installer:** [flash-next-abliterated-fngine](https://github.com/satellitedown/flash-next-abliterated-fngine) builds this engine at a pinned commit with an isolated CUDA toolchain, downloads and verifies the pack, starts the server and updates both. One command (Linux, RTX 5090, 64 GB RAM); choose 1 to install, then 3 to start:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/satellitedown/flash-next-abliterated-fngine/main/get.sh | bash
+```
+
+The rest of this README covers building and developing the engine directly.
 
 ## Status and verification
 
