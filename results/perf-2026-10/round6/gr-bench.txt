@@ -1,0 +1,18 @@
+# GR read pair (gr_norm_down + GR up/GrMix), 32 calls per graph, min of 100 replays per call; args: tokens, rotating weight sets
+# fifth = src/kernels/gr/gr.cu at a9ac035, sixth = current; same harness and other libraries
+fifth T=4 sets=16: norm_down+up 10.80 us, norm_down alone 5.34 us, up alone 3.58 us
+sixth T=4 sets=16: norm_down+up 9.25 us, norm_down alone 5.25 us, up alone 3.56 us
+fifth T=4 sets=1: norm_down+up 9.70 us, norm_down alone 5.30 us, up alone 3.79 us
+sixth T=4 sets=1: norm_down+up 9.07 us, norm_down alone 5.20 us, up alone 3.78 us
+fifth T=1 sets=1: norm_down+up 5.36 us, norm_down alone 2.76 us, up alone 1.98 us
+sixth T=1 sets=1: norm_down+up 5.38 us, norm_down alone 2.71 us, up alone 1.98 us
+fifth T=1 sets=16: norm_down+up 6.13 us, norm_down alone 2.75 us, up alone 1.99 us
+sixth T=1 sets=16: norm_down+up 6.01 us, norm_down alone 2.73 us, up alone 1.98 us
+fifth T=4 sets=16: norm_down+up 10.81 us, norm_down alone 5.32 us, up alone 3.56 us
+sixth T=4 sets=16: norm_down+up 9.27 us, norm_down alone 5.23 us, up alone 3.56 us
+fifth T=4 sets=1: norm_down+up 9.70 us, norm_down alone 5.29 us, up alone 3.79 us
+sixth T=4 sets=1: norm_down+up 9.08 us, norm_down alone 5.17 us, up alone 3.78 us
+fifth T=1 sets=1: norm_down+up 5.35 us, norm_down alone 2.75 us, up alone 2.00 us
+sixth T=1 sets=1: norm_down+up 5.35 us, norm_down alone 2.70 us, up alone 1.97 us
+fifth T=1 sets=16: norm_down+up 6.12 us, norm_down alone 2.73 us, up alone 1.99 us
+sixth T=1 sets=16: norm_down+up 5.99 us, norm_down alone 2.74 us, up alone 1.99 us

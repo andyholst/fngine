@@ -1,0 +1,16 @@
+BENCH decode L0 IQ3_XXS/IQ4_NL T=1, 10 hot experts (21.76 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 22.2 us = 978 GB/s (median 22.4 us); gate_up alone 12.5 us (1001 GB/s), down alone 12.0 us (768 GB/s); select+gate_up+down+combine 26.9 us (median 27.1 us)
+BENCH decode L0 IQ3_XXS/IQ4_NL T=4, 28 hot experts (60.93 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 56.7 us = 1075 GB/s (median 57.2 us); gate_up alone 30.2 us (1162 GB/s), down alone 29.4 us (877 GB/s); select+gate_up+down+combine 61.5 us (median 61.9 us)
+BENCH decode L2 IQ2_S/IQ4_NL T=1, 10 hot experts (19.71 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 22.5 us = 876 GB/s (median 22.9 us); gate_up alone 12.6 us (836 GB/s), down alone 12.1 us (764 GB/s); select+gate_up+down+combine 26.9 us (median 27.1 us)
+BENCH decode L2 IQ2_S/IQ4_NL T=4, 28 hot experts (55.19 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 56.4 us = 979 GB/s (median 56.9 us); gate_up alone 29.0 us (1012 GB/s), down alone 29.4 us (877 GB/s); select+gate_up+down+combine 60.2 us (median 60.7 us)
+BENCH decode L17 IQ3_S/IQ4_NL T=1, 10 hot experts (23.30 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 24.6 us = 949 GB/s (median 24.9 us); gate_up alone 14.4 us (975 GB/s), down alone 11.8 us (781 GB/s); select+gate_up+down+combine 28.7 us (median 29.0 us)
+BENCH decode L17 IQ3_S/IQ4_NL T=4, 28 hot experts (65.23 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 61.0 us = 1069 GB/s (median 61.5 us); gate_up alone 34.1 us (1156 GB/s), down alone 29.4 us (877 GB/s); select+gate_up+down+combine 65.3 us (median 65.9 us)
+BENCH decode L47 IQ4_XS/IQ4_NL T=1, 10 hot experts (26.62 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 25.7 us = 1035 GB/s (median 26.0 us); gate_up alone 16.0 us (1090 GB/s), down alone 12.1 us (760 GB/s); select+gate_up+down+combine 30.1 us (median 30.4 us)
+BENCH decode L47 IQ4_XS/IQ4_NL T=4, 28 hot experts (74.55 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 65.2 us = 1144 GB/s (median 65.9 us); gate_up alone 37.9 us (1287 GB/s), down alone 29.3 us (881 GB/s); select+gate_up+down+combine 69.1 us (median 69.7 us)

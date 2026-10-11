@@ -1,0 +1,19 @@
+# nsys coding chat (fngine-bench --coding-chat -n 512 -r 1 --warmup 1 --spec auto, --ctx 262144), width-4 verify graph, per verify step; /tmp/tail_detail.py over /mnt/data/fngine/prof7
+== fifth pass (baseline-round6 fngine-bench)
+  lm_end->mtp_transition                     mean    195.3 us  median    137.4
+  mtp chain (transition->last mtp kernel)    mean    915.0 us  median    678.6
+  fold duration                              mean    163.3 us  median    110.4
+  fold end - mtp end                         mean   -925.0 us  median   -685.3
+  lm_end->step end                           mean   1110.3 us  median    820.2
+== sixth pass, 64-CTA background fold
+  lm_end->mtp_transition                     mean     28.1 us  median     20.9
+  mtp chain (transition->last mtp kernel)    mean   1041.1 us  median    734.6
+  fold duration                              mean    602.0 us  median    460.5
+  fold end - mtp end                         mean   -437.7 us  median   -304.2
+  lm_end->step end                           mean   1069.2 us  median    756.2
+== sixth pass, 170-CTA background fold
+  lm_end->mtp_transition                     mean     40.4 us  median     21.0
+  mtp chain (transition->last mtp kernel)    mean   1150.3 us  median    809.8
+  fold duration                              mean    199.6 us  median    144.7
+  fold end - mtp end                         mean   -947.6 us  median   -659.5
+  lm_end->step end                           mean   1190.7 us  median    831.5

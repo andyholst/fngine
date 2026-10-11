@@ -1,0 +1,108 @@
+# ctest (build-main, FNGINE_TEST_PACK, FNGINE_TEST_REF, FNGINE_NO_ROUTING_STATS=1, -j1)
+test_exchange_layout: Passed
+test_host_memory: Passed
+test_cpu_topology: Passed
+cpu_q8_quant: Passed
+cpu_iq_kernels: Passed
+cpu_expert_pool: Passed
+cpu_doorbell: Passed
+test_engine_session: Passed
+test_engine_real: Passed
+test_adaptive_experts: Passed
+test_speculation: Passed
+test_ngram: Passed
+kernels_gdn_recurrent: Passed
+kernels_gdn_fold: Passed
+kernels_gdn_ops: Passed
+kernels_head: Passed
+kernels_linear: Passed
+kernels_gr: Passed
+kernels_moe_experts: Passed
+kernels_moe_exchange: Passed
+kernels_moe_ablate: Passed
+kernels_mtp: Passed
+kernels_ple: Passed
+kernels_qsa_norm_rope: Passed
+kernels_qsa_kv_append: Passed
+kernels_qsa_indexer: Passed
+kernels_qsa_attention: Passed
+kernels_qsa_determinism: Passed
+test_pack_load: Passed
+test_expert_swap: Passed
+test_routing_stats: Passed
+test_prefill_stream: Passed
+test_prefill_stream_pageable: Passed
+test_elastic_experts: Passed
+test_context_capacity: Passed
+test_speculative_real: Passed
+test_openai_schema: Passed
+test_serve_options: Passed
+test_http_transport: Passed
+test_cli_options: Passed
+test_bench_support: Passed
+test_tokenizer: Passed
+test_chat_template: Passed
+text_output_session: Passed
+text_tool_call_parser: Passed
+text_prompt_lookup: Passed
+total 46, passed 46
+
+# test_speculative_real and kernels_gdn_fold
+[check1] prompt 0: PASS (first divergence -1, top-2 gaps plain 0.0000 / auto 0.0000); auto rounds 100, MTP accepted 171/249 drafts
+[check1] prompt 1: PASS (first divergence -1, top-2 gaps plain 0.0000 / auto 0.0000); auto rounds 94, MTP accepted 181/218 drafts
+[check1] prompt 2: PASS (first divergence -1, top-2 gaps plain 0.0000 / auto 0.0000); auto rounds 150, MTP accepted 127/381 drafts
+[check2] MTP first-draft acceptance 0.730 (PASS >= 0.55)
+[check3] snapshot region 0 (GDN recurrent): rms(diff)/rms 0.000e+00
+[check3] snapshot region 1 (GDN conv): rms(diff)/rms 0.000e+00
+[check3] snapshot region 2 (PLE conv): rms(diff)/rms 0.000e+00
+[check3] snapshot region 3 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 4 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 5 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 6 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 7 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 8 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 9 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 10 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 11 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 12 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 13 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 14 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] snapshot region 15 (indexer ring): rms(diff)/rms 0.000e+00
+[check3] QSA cache 0: K 0.000e+00 V 0.000e+00 block keys 0.000e+00
+[check3] QSA cache 11: K 0.000e+00 V 0.000e+00 block keys 0.000e+00
+[check3] 37 rounds with a rejection, 13 fully accepted; committed 129 tokens; worst rms(diff)/rms 0.000e+00
+[check3] PASS
+[check4] session snapshot at 13 of 27 prompt tokens: state identical, continuation identical -> PASS
+PASS eager T=1: n=0..1 folds, outputs and in-place folds (full and swept grid) bit-exact
+PASS eager T=2: n=0..2 folds, outputs and in-place folds (full and swept grid) bit-exact
+PASS eager T=3: n=0..3 folds, outputs and in-place folds (full and swept grid) bit-exact
+PASS eager T=4: n=0..4 folds, outputs and in-place folds (full and swept grid) bit-exact
+PASS eager T=5: n=0..5 folds, outputs and in-place folds (full and swept grid) bit-exact
+PASS eager T=6: n=0..6 folds, outputs and in-place folds (full and swept grid) bit-exact
+PASS eager T=7: n=0..7 folds, outputs and in-place folds (full and swept grid) bit-exact
+PASS eager T=8: n=0..8 folds, outputs and in-place folds (full and swept grid) bit-exact
+PASS eager T=9: n=0..9 folds, outputs and in-place folds (full and swept grid) bit-exact
+PASS eager T=16: n=0..16 folds, outputs and in-place folds (full and swept grid) bit-exact
+PASS graph T=2: n=0..2 folds, outputs and in-place folds (full and swept grid) bit-exact
+PASS graph T=5: n=0..5 folds, outputs and in-place folds (full and swept grid) bit-exact
+PASS graph T=9: n=0..9 folds, outputs and in-place folds (full and swept grid) bit-exact
+
+# fngine-validate --compare-logits vs the fifth-pass build (fixed placement)
+g1: 2047 positions in 25.7 s  top-1 0.8617 (FAIL >= 0.960)  mean KLD 0.08267 over 255 rows (FAIL <= 0.030)  max KLD 1.6925
+  vs /tmp/logits_base_w1_g1.bin: top-1 agreement 1.00000 over 2047 positions, mean KLD(saved || ours) 0.000e+00 over 63 rows (PASS <= 1e-3), max 0.000e+00
+g1: 2047 positions in 34.9 s  top-1 0.8617 (FAIL >= 0.960)  mean KLD 0.08267 over 255 rows (FAIL <= 0.030)  max KLD 1.6925
+  vs /tmp/logits_base_w4_g1.bin: top-1 agreement 1.00000 over 2047 positions, mean KLD(saved || ours) 0.000e+00 over 63 rows (PASS <= 1e-3), max 0.000e+00
+g2: 8191 positions in 94.6 s  top-1 0.9134 (FAIL >= 0.960)  mean KLD 0.02679 over 255 rows (PASS <= 0.030)  max KLD 0.1976
+  vs /tmp/logits_base_w4_g2.bin: top-1 agreement 1.00000 over 8191 positions, mean KLD(saved || ours) 0.000e+00 over 255 rows (PASS <= 1e-3), max 0.000e+00
+
+# default path, golden (fifth/sixth interleaved after one sixth run)
+sixth: g1: 2048 positions in 2.4 s  top-1 0.8701 (FAIL >= 0.960)  mean KLD 0.07772 over 256 rows (FAIL <= 0.030)  max KLD 2.9393
+sixth: g2: 8192 positions in 5.1 s  top-1 0.9125 (FAIL >= 0.960)  mean KLD 0.02634 over 256 rows (PASS <= 0.030)  max KLD 0.1770
+fifth: g1: 2048 positions in 2.4 s  top-1 0.8755 (FAIL >= 0.960)  mean KLD 0.06288 over 256 rows (FAIL <= 0.030)  max KLD 1.7051
+fifth: g2: 8192 positions in 5.1 s  top-1 0.9156 (FAIL >= 0.960)  mean KLD 0.02657 over 256 rows (PASS <= 0.030)  max KLD 0.1363
+sixth: g1: 2048 positions in 2.4 s  top-1 0.8945 (FAIL >= 0.960)  mean KLD 0.05512 over 256 rows (FAIL <= 0.030)  max KLD 1.4088
+sixth: g2: 8192 positions in 5.2 s  top-1 0.9130 (FAIL >= 0.960)  mean KLD 0.02663 over 256 rows (PASS <= 0.030)  max KLD 0.2021
+fifth: g1: 2048 positions in 2.4 s  top-1 0.8940 (FAIL >= 0.960)  mean KLD 0.06138 over 256 rows (FAIL <= 0.030)  max KLD 1.8117
+fifth: g2: 8192 positions in 5.2 s  top-1 0.9158 (FAIL >= 0.960)  mean KLD 0.02650 over 256 rows (PASS <= 0.030)  max KLD 0.1724
+sixth: g1: 2048 positions in 2.4 s  top-1 0.9014 (FAIL >= 0.960)  mean KLD 0.06051 over 256 rows (FAIL <= 0.030)  max KLD 3.3276
+sixth: g2: 8192 positions in 5.2 s  top-1 0.9148 (FAIL >= 0.960)  mean KLD 0.02671 over 256 rows (PASS <= 0.030)  max KLD 0.1782

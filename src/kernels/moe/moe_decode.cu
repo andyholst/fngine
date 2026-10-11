@@ -608,11 +608,12 @@ __device__ __forceinline__ CpuPart combine_cpu_part(const MoeDecodeWork* work, D
   return c;
 }
 
-// Programmatic dependent of hot_down (and, through a full edge, of the shared expert's down
-// projection): the CPU-tier half runs first (combine_cpu_part), then it waits for their outputs.
-// pdl_trigger() once both are in: the next layer's GR read (a programmatic dependent) streams its
-// weights in while this kernel adds the results. Triggering before the CPU wait would let whole
-// chains of programmatic dependents sit resident through it and starve the L2 prefetch.
+// Programmatic dependent of hot_down and of the shared expert's down projection (the captured
+// join keeps both edges programmatic): the CPU-tier half runs first (combine_cpu_part), then it
+// waits for their outputs. pdl_trigger() once both are in: the next layer's GR read (a
+// programmatic dependent) streams its weights in while this kernel adds the results. Triggering
+// before the CPU wait would let whole chains of programmatic dependents sit resident through it
+// and starve the L2 prefetch.
 __global__ void __launch_bounds__(kCombineThreads)
 combine_kernel(const MoeDecodeWork* __restrict__ work, const float* __restrict__ partial,
                const float* __restrict__ y_shared, DecodeExchange* exchange, int32_t layer,

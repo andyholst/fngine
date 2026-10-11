@@ -130,12 +130,14 @@ cudaError_t moe_select_publish(const float* router_logits, const __nv_bfloat16* 
                                const MoeDecodeWorkspace& ws, cudaStream_t stream,
                                uint32_t* routing_counts = nullptr);
 
-// h[pair][j] = silu(gate_j . x_t) * (up_j . x_t) for every hot pair (CTAs of 8 rows x item; the
-// gate/up rows are staged into shared memory with cp.async, then decoded).
+// h[pair][j] = silu(gate_j . x_t) * (up_j . x_t) for every hot pair (persistent CTAs over tiles of
+// 8 rows x item; each tile's gate/up rows stream into shared memory with cp.async in five K slices
+// while the previous tile is decoded).
 cudaError_t moe_hot_gate_up(const MoeExpertLayout& layout, int32_t tokens,
                             const MoeDecodeWorkspace& ws, cudaStream_t stream);
-// partial[pair][n] = w_pair * (down_n . q8(h[pair])) (CTAs of 64 rows x item). Partials are stored
-// per hot pair ([160][2560]) rather than [items][T][2560].
+// partial[pair][n] = w_pair * (down_n . q8(h[pair])) (persistent CTAs over contiguous ranges of
+// 32-row x item tiles, two staged). Partials are stored per hot pair ([160][2560]) rather than
+// [items][T][2560].
 cudaError_t moe_hot_down(const MoeExpertLayout& layout, int32_t tokens,
                          const MoeDecodeWorkspace& ws, cudaStream_t stream);
 

@@ -25,8 +25,10 @@
 // reads its predecessor's output before the dependent's own pdl_wait() triggers after its own
 // pdl_wait() instead: hot_gate_up does, so the routing work list that hot_down reads early (to
 // stage the right expert's weights) is complete before hot_down can launch; hot_down reads it with
-// pdl_load_settled. Both device helpers are no-ops in ordinary launches, so the same kernel serves
-// eager prefill and captured decode.
+// pdl_load_settled. The combine after hot_down can only launch later still, so it reads the work
+// list and seq the same way before its pdl_wait() (to wait for the CPU tier beside hot_down).
+// Both device helpers are no-ops in ordinary launches, so the same kernel serves eager prefill and
+// captured decode.
 #include <cuda_runtime.h>
 
 #include <utility>

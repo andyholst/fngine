@@ -1,0 +1,16 @@
+BENCH decode L0 IQ3_XXS/IQ4_NL T=1, 10 hot experts (21.76 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 21.0 us = 1038 GB/s (median 21.3 us); gate_up alone 12.6 us (992 GB/s), down alone 7.8 us (1178 GB/s); select+gate_up+down+combine 25.2 us (median 25.4 us); select alone 2.9 us, with host exchange 3.9 us
+BENCH decode L0 IQ3_XXS/IQ4_NL T=4, 28 hot experts (60.93 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 51.6 us = 1181 GB/s (median 52.3 us); gate_up alone 28.4 us (1235 GB/s), down alone 20.0 us (1289 GB/s); select+gate_up+down+combine 52.1 us (median 52.8 us); select alone 3.4 us, with host exchange 4.7 us
+BENCH decode L2 IQ2_S/IQ4_NL T=1, 10 hot experts (19.71 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 20.2 us = 975 GB/s (median 20.5 us); gate_up alone 12.9 us (813 GB/s), down alone 7.8 us (1185 GB/s); select+gate_up+down+combine 24.1 us (median 24.3 us); select alone 2.9 us, with host exchange 3.9 us
+BENCH decode L2 IQ2_S/IQ4_NL T=4, 28 hot experts (55.19 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 48.2 us = 1144 GB/s (median 50.9 us); gate_up alone 27.5 us (1069 GB/s), down alone 20.1 us (1286 GB/s); select+gate_up+down+combine 50.7 us (median 51.5 us); select alone 3.4 us, with host exchange 4.7 us
+BENCH decode L17 IQ3_S/IQ4_NL T=1, 10 hot experts (23.30 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 21.9 us = 1065 GB/s (median 22.1 us); gate_up alone 14.7 us (961 GB/s), down alone 7.5 us (1223 GB/s); select+gate_up+down+combine 26.0 us (median 26.2 us); select alone 2.9 us, with host exchange 3.9 us
+BENCH decode L17 IQ3_S/IQ4_NL T=4, 28 hot experts (65.23 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 50.7 us = 1288 GB/s (median 51.4 us); gate_up alone 31.9 us (1238 GB/s), down alone 19.8 us (1301 GB/s); select+gate_up+down+combine 55.5 us (median 56.2 us); select alone 3.4 us, with host exchange 4.7 us
+BENCH decode L47 IQ4_XS/IQ4_NL T=1, 10 hot experts (26.62 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 22.9 us = 1163 GB/s (median 23.2 us); gate_up alone 16.2 us (1075 GB/s), down alone 7.8 us (1180 GB/s); select+gate_up+down+combine 26.8 us (median 27.0 us); select alone 2.9 us, with host exchange 3.9 us
+BENCH decode L47 IQ4_XS/IQ4_NL T=4, 28 hot experts (74.55 MB), per step (min of 300 graph replays / 16 steps):
+  gate_up+down 55.8 us = 1336 GB/s (median 57.6 us); gate_up alone 35.5 us (1371 GB/s), down alone 19.7 us (1310 GB/s); select+gate_up+down+combine 60.0 us (median 60.7 us); select alone 3.4 us, with host exchange 4.7 us

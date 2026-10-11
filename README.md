@@ -326,40 +326,40 @@ The mixed signs and process variance do **not** establish an across-the-board wh
 
 Final verification: 44/44 C++/CUDA tests and 23/23 Python tests passed; CUDA memcheck reported zero errors for GR and QSA attention. Against the frozen fourth-pass build, G2 at widths 1, 2 and 4 has top-1 agreement 1.0 and mean/max KLD 0 over 127 saved full-logit rows per width. Three 256-token speculative continuations match plain greedy output exactly; mixed acceptance/rejection state checks and session restoration pass. The pre-existing HF-reference numerical gates still fail, with thresholds unchanged.
 
-Hot-expert streaming and step-tail overlap (sixth pass), against the frozen fifth-pass build; raw measurements in `results/perf-2026-10/round6.json` and `round6/`:
+Hot-expert streaming and step-tail overlap (sixth pass), against the frozen fifth-pass build; numbers and raw outputs in `results/perf-2026-10/round6.json` and `round6/`:
 
-- **Why the hot experts ran at 0.9–1.2 TB/s.** Every hot-expert CTA staged its whole tile, then decoded it, and a width-4 step needs 2.6 waves of gate/up CTAs and 2.2 of down CTAs. The CTAs of a wave receive their data together at the end of the wave's DRAM burst and decode together while DRAM idles, then the next wave launches. Removing the decode from a down kernel left its time unchanged (29.4 µs at width 4) because the h quantization took its place; removing both cut it to 20.4 µs.
-- **Persistent hot_down.** As many CTAs as fit on the SMs take contiguous ranges of (expert, 32-row) tiles and keep two tiles staged (cp.async double buffering), so the next tile's weights stream in while the current one is decoded; each CTA quantizes the h rows of an expert once instead of once per 64 rows. The kernel triggers its dependent first thing.
-- **Streaming hot_gate_up.** Its decode needs several CTAs per SM (a double-buffered persistent version, with 8 warps per SM, slowed width 4 from 30.2 to 37.8 µs), so each persistent CTA keeps one tile buffer and streams it in five K slices: as soon as slice i of the current tile is decoded, slice i − 1 of the next tile is requested into its place (`warp_stage_slice` keeps the two apart for any row alignment).
-- **Combine beside hot_down.** The CPU-tier wait and the PCIe read of the CPU experts' result now run before `pdl_wait()`: the combine's CTAs wait for the CPU tier while hot_down runs, and only the partial sums wait for it. Both incoming graph edges (hot_down and the shared expert) are programmatic, as inspecting a captured graph confirmed.
+- **Hot experts.** Each fifth-pass hot-expert CTA staged one whole tile and then decoded it: a width-4 layer launched 3,200 gate/up and 1,600 down CTAs. Alone at width 4, gate/up streamed 1.01–1.29 TB/s and down 0.88 TB/s; a gate/up variant that only staged its weights (no decode) reached 1.45–1.6 TB/s against 1.0–1.16 TB/s for the full kernel in the same measurement, so DRAM sat idle while the CTAs decoded and between waves.
+  - **Persistent hot_down.** As many 128-thread CTAs as fit on the SMs take contiguous ranges of (expert, 32-row) tiles and keep two staged (cp.async double buffering), so the next tile streams in while the current one is decoded. A CTA quantizes an expert's h rows once for all its tiles of that expert, instead of once per 64-row tile, and triggers its dependent first thing. Alone: 29.3–29.4 → 19.7–20.1 µs at width 4, 11.8–12.1 → 7.5–7.8 µs at width 1.
+  - **Streaming hot_gate_up.** Its decode needs several CTAs per SM (a double-buffered persistent version slowed width 4 from 30.2 to 37.8 µs), so each persistent CTA keeps one tile buffer and streams it in five K slices: once slice i of the current tile is decoded, slice i − 1 of the next tile is requested into the space of the current tile's slice i − 1. The one-slice gap keeps the refill clear of the slices still in flight for any 16-byte row alignment (`warp_stage_slice`). Alone at width 4: 30.2 / 29.0 / 34.1 / 37.9 → 28.4 / 27.5 / 31.9 / 35.5 µs (L0 / L2 / L17 / L47); width 1 is 0.1–0.3 µs slower.
+  - **Combine beside hot_down.** The CPU-tier wait and the PCIe read of the CPU experts' result run before `pdl_wait()`, so the combine waits for the CPU tier while hot_down runs. A capture of the same launch sequence (shared expert on the side stream, joined before the combine) keeps both edges into the combine programmatic.
 
-  Decode MoE pipeline (`kernels_moe_experts --bench-only`, select + gate/up + down + combine per step, 16 steps per graph, both test binaries back to back):
+  Decode MoE pipeline per step (`kernels_moe_experts --bench-only`: select, gate/up, down and combine; 16 steps per graph so the weights stream from DRAM; minimum of 300 replays; the fifth-pass kernels in an earlier build of the same bench):
 
   | Layer formats | Width 1, 10 experts | Width 4, 28 experts / 40 pairs |
   | --- | ---: | ---: |
-  | L0 IQ3_XXS/IQ4_NL | 27.0 → 25.3 µs | 61.7 → 52.3 µs |
-  | L2 IQ2_S/IQ4_NL | 27.0 → 24.2 µs | 60.4 → 50.8 µs |
-  | L17 IQ3_S/IQ4_NL | 28.7 → 26.1 µs | 65.6 → 55.4 µs |
-  | L47 IQ4_XS/IQ4_NL | 30.2 → 26.9 µs | 69.2 → 60.2 µs |
+  | L0 IQ3_XXS/IQ4_NL | 26.9 → 25.2 µs | 61.5 → 52.1 µs |
+  | L2 IQ2_S/IQ4_NL | 26.9 → 24.1 µs | 60.2 → 50.7 µs |
+  | L17 IQ3_S/IQ4_NL | 28.7 → 26.0 µs | 65.3 → 55.5 µs |
+  | L47 IQ4_XS/IQ4_NL | 30.1 → 26.8 µs | 69.1 → 60.0 µs |
 
-- **GR norm/down preloads.** The fused kernel read the inject rows (cluster 0) and the down row scales (rank 0) after `pdl_wait()`, two dependent round trips on the path of every GR read. Both now load with the weights: the width-4 GR read pair (norm/down + up) takes 9.66 → 9.02 µs with L2-resident weights and 10.78 → 9.24 µs across 16 rotating weight sets; width 1 is unchanged.
-- **Verify folds beside the MTP drafts.** The GDN fold (226 MB of recurrent state read and written, 110 µs) and the PLE fold only feed the next step, and the drafts touch neither state, so they now run on the prefetch stream beside the drafts, on a 64-CTA grid that sweeps the fold's 13,824 tiles. In nsys (median width-4 verify step) the time from the end of `lm_head` to the end of the step fell from 820 to 756 µs; the drafts take 56 µs longer from DRAM contention. A 170-CTA fold finished sooner but slowed the drafts by 131 µs.
+- **GR norm/down preloads.** The fused kernel read the inject rows (cluster 0) and the down row scales (rank 0) after `pdl_wait()`, that is, after the previous kernel finished. Both now load with the weights. GR read pair (norm/down + up, fifth-pass and current `gr.cu` in one harness, two interleaved runs): width 4 9.70 → 9.07–9.08 µs with L2-resident weights and 10.80–10.81 → 9.25–9.27 µs across 16 rotating weight sets; width 1 unchanged with L2-resident weights (5.35–5.36 → 5.35–5.38 µs), 6.12–6.13 → 5.99–6.01 µs across 16 sets.
+- **Verify folds beside the MTP drafts.** The GDN fold reads and writes back 113 MB of fp32 recurrent state (36 layers × 48 heads × 128 × 128), a median 110 µs per width-4 verify step. It and the PLE fold only feed the next step, and the MTP drafts (one QSA layer without PLE) read neither state, so both now run on the prefetch stream beside the drafts, the GDN fold on 64 CTAs that sweep its 13,824 tiles. nsys medians (coding chat, 720–738 width-4 verify steps per build): from the end of `lm_head` to the end of the step 820 µs in the fifth pass and 756 µs now; the draft chain took 679 and 735 µs, as it now shares DRAM with the fold. With 170 CTAs the fold took 145 instead of 461 µs, but the drafts 810 µs and the step tail 832 µs.
 
-Paired runs, `--ctx 262144`, automatic speculation, baseline then current per round (decode tok/s, mean ± SD; time per speculative round):
+Paired runs, `--ctx 262144`, automatic speculation, a fifth-pass then a sixth-pass process per round, one warm-up and two measured repetitions per process (decode tok/s, mean ± SD; time per speculative round):
 
 | Workload | Fifth pass | Sixth pass | Time per round |
 | --- | ---: | ---: | ---: |
 | Coding turn 1 (n = 12) | 176.5 ± 15.3 | 182.6 ± 12.9 | 14.74 → 13.70 ms |
 | Coding turn 2 (n = 12) | 191.7 ± 10.8 | 209.5 ± 18.9 | 14.59 → 13.38 ms |
-| Corpus, 1K prompt (n = 6) | 143.6 ± 21.5 | 147.3 ± 7.0 | 17.40 → 17.00 ms |
+| Corpus, 1K prompt (n = 6) | 143.6 ± 21.6 | 147.3 ± 7.0 | 17.40 → 17.00 ms |
 | Corpus, 4K prompt (n = 6) | 138.8 ± 15.1 | 135.6 ± 9.7 | 20.80 → 21.11 ms |
 | Corpus, 32K prompt (n = 6) | 114.0 ± 19.1 | 124.4 ± 10.4 | 18.75 → 15.55 ms |
 
-The speculation controller picks draft counts from measured step latencies, so faster width-4 steps also change the rounds; the round counts vary between processes (coding turn 1: 172–262). The corpus differences other than 32K are within that noise; prefill is unchanged.
+The speculation controller sizes each round from measured step latencies, and default-path numerics vary between processes of one build (the golden runs below), so generated text and round counts vary (coding turn 1: 172–262 rounds). The 1K and 4K corpus differences are within that variance, and prefill moved within noise. A scratch build that added 10 µs at the end of every hot_down call decoded 9.3% and 6.9% fewer coding tokens per second (n = 6): per-layer MoE latency sits on the decode critical path.
 
-Measured without gain and not kept: K-sliced cp.async groups in the one-tile-per-CTA gate/up, batching the per-CTA h quantization of the old down kernel, uniform 1–3-slice windows for the streaming gate/up, three or four hot_down stages, and publishing the x rows to the host before routing (the select kernel is bound by its system fence: 4.7 → 4.8 µs).
+Measured and not kept: uniform 1-, 2- or 3-slice refill windows for the streaming gate/up (slower than the eager refill), forcing 3–6 gate/up CTAs per SM, three or four hot_down stages, hot_down reading a q8 copy of h from global memory, copying the x rows to the host early in select (select with a host exchange 4.7 → 4.8 µs), and the 170-CTA fold.
 
-Sixth-pass verification: 46/46 tests passed (`kernels_gdn_fold` now also folds with a 37-CTA swept grid). Against the frozen fifth-pass build, decode-path logits with fixed placement are identical (top-1 agreement 1.0, mean and max KLD 0) for G1 at widths 1 and 4 and for G2 at width 4. Interleaved default-path runs: fifth pass G1 87.6% / 0.063 and 89.4% / 0.061, G2 91.56% / 0.0266 and 91.58% / 0.0265; sixth pass G1 89.5% / 0.055, 90.1% / 0.061 and 87.0% / 0.078, G2 91.30% / 0.0266, 91.48% / 0.0267 and 91.25% / 0.0263. Speculative greedy output stays exact (`test_speculative_real`).
+Sixth-pass verification: 46/46 tests passed (`kernels_gdn_fold` now also folds with a 37-CTA swept grid, bit-exact). In `test_speculative_real`, greedy decoding with automatic speculation produced the same 256 tokens as plain greedy decoding for all three prompts. After 50 verify rounds (37 with a rejected draft), the GDN recurrent, GDN conv and PLE conv states, the indexer rings and the KV equal a plain decode exactly. Against the frozen fifth-pass build, decode-path logits with fixed placement are identical (top-1 agreement 1.0, mean and max KLD 0) for G1 at widths 1 and 4 and for G2 at width 4. Default path (adaptive placement): fifth pass G1 87.6% / 0.063 and 89.4% / 0.061, G2 91.56% / 0.0266 and 91.58% / 0.0265; sixth pass G1 87.0% / 0.078, 89.5% / 0.055 and 90.1% / 0.061, G2 91.25% / 0.0263, 91.30% / 0.0266 and 91.48% / 0.0267. The HF-reference gates still fail, with thresholds unchanged.
 
 Remaining bottlenecks on this machine:
 
